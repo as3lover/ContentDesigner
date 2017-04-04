@@ -18,6 +18,8 @@ public class TimeLine extends Sprite
     private var _currentBox:TextField;
     private var _totalBox:TextField;
 
+    private var _updateFunc:Function;
+
     public function TimeLine()
     {
         _timeBar = new TimeBar();
@@ -61,6 +63,10 @@ public class TimeLine extends Sprite
 
         _currentMSec = currentMSec;
         _currentBox.text = currentTime;
+
+        if(updateFunc)
+                updateFunc();
+
         trace(_currentBox.text, currentMSec)
     }
 
@@ -206,5 +212,14 @@ public class TimeLine extends Sprite
         }
     }
 
+    public function get updateFunc():Function
+    {
+        return _updateFunc;
+    }
+
+    public function set updateFunc(value:Function):void
+    {
+        _updateFunc = value;
+    }
 }
 }

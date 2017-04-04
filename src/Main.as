@@ -11,7 +11,13 @@ public class Main extends Sprite
     public function Main()
     {
         _timeLine = new TimeLine();
+        _timeLine.updateFunc = updateFunc;
         addChild(_timeLine)
+    }
+
+    private function updateFunc():void
+    {
+
     }
 
 }

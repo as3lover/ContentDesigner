@@ -5,8 +5,10 @@ package
 {
 public class TweenLine
 {
+    _timeLine:TimeLineL
     public function TweenLine()
     {
+
     }
 }
 }
