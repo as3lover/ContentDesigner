@@ -53,7 +53,7 @@ public class TimeLine extends Sprite
         addChild(_totalBox);
 
 
-        totalSec = 20000;
+        totalSec = 100;
     }
 
     private function func(percent:Number):void
@@ -65,7 +65,7 @@ public class TimeLine extends Sprite
         _currentBox.text = currentTime;
 
         if(updateFunc)
-                updateFunc();
+                updateFunc(currentMSec/1000);
 
         trace(_currentBox.text, currentMSec)
     }
@@ -106,7 +106,7 @@ public class TimeLine extends Sprite
 
     public function set currentTime(value:String):void
     {
-        _timeBar.percent = timeToSec(value) / totalSec;
+        _timeBar.percent = Utils.timeToSec(value) / totalSec;
     }
 
     //////////// Total Time (String)
@@ -117,7 +117,7 @@ public class TimeLine extends Sprite
 
     public function set totalTime(value:String):void
     {
-       totalSec = timeToSec(value);
+       totalSec = Utils.timeToSec(value);
     }
 
     /////////////////////// milli Sec to String
@@ -147,28 +147,7 @@ public class TimeLine extends Sprite
         }
     }
 
-    //convert time format to Number data type
-    private function timeToSec(t:Object):Number
-    {
-        if (t is Number)
-            return Number(t);
-        else if (t is String)
-        {
-            var parts:Array=new Array(3);
-            parts=t.split(":",3);
-            if (parts[1]==undefined)
-                return Number(parts[0]);
-            else if (parts[2]==undefined)
-                return Number(parts[0])*60+Number(parts[1]);
-            else
-                return Number(parts[0])*3600+Number(parts[1])*60+Number(parts[2]);
-        }
-        else
-        {
-            trace("time type is wrong!");
-            return 0;
-        }
-    }
+
 
     public function get currentMSec():int
     {

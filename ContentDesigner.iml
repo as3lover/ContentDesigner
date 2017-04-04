@@ -8,11 +8,17 @@
             <entry library-id="b5519df7-2f60-4569-892d-926ea644b9f5">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="597722a5-a0fe-4f93-9cb2-3d051a2f06a4">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="b1b620fa-f212-4e5d-a214-838dd24d72aa">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop package-file-name="ContentDesigner" />
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Main-descriptor.xml" package-file-name="ContentDesigner" />
         <packaging-android />
         <packaging-ios />
       </configuration>
@@ -31,6 +37,26 @@
         <properties id="b5519df7-2f60-4569-892d-926ea644b9f5" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/../GreenSock-AS3/src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="597722a5-a0fe-4f93-9cb2-3d051a2f06a4" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../native-mouse/NativeMouseBuild/NativeMouse.ane!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="b1b620fa-f212-4e5d-a214-838dd24d72aa" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../senocular/display/transform" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
