@@ -3,12 +3,15 @@
  */
 package
 {
+import com.greensock.TimelineLite;
+
 public class TweenLine
 {
-    _timeLine:TimeLineL
+    private var _timeLine:TimelineLite;
+
     public function TweenLine()
     {
-
+        
     }
 }
 }

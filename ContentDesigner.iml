@@ -4,6 +4,11 @@
     <configurations>
       <configuration name="ContentDesigner" target-platform="Desktop" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/out/production/ContentDesigner">
         <dependencies>
+          <entries>
+            <entry library-id="b5519df7-2f60-4569-892d-926ea644b9f5">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
         <compiler-options />
@@ -21,5 +26,15 @@
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK_Compiler" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="b5519df7-2f60-4569-892d-926ea644b9f5" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../GreenSock-AS3/src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
