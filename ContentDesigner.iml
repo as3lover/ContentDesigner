@@ -11,7 +11,7 @@
             <entry library-id="597722a5-a0fe-4f93-9cb2-3d051a2f06a4">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="b1b620fa-f212-4e5d-a214-838dd24d72aa">
+            <entry library-id="9caae429-1beb-4fed-92a3-29a604ec5e56">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -54,9 +54,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="b1b620fa-f212-4e5d-a214-838dd24d72aa" />
+        <properties id="9caae429-1beb-4fed-92a3-29a604ec5e56" />
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../senocular/display/transform" />
+          <root url="file://$MODULE_DIR$/../TransformTool/src/as" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

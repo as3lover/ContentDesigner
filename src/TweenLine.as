@@ -4,6 +4,8 @@
 package
 {
 import com.greensock.TimelineMax;
+import com.greensock.plugins.*;
+
 
 public class TweenLine
 {
@@ -20,14 +22,19 @@ public class TweenLine
     private var _scaleY:Number;
     private var _rotation:int;
     private var _alpha:Number;
+    private var _totalTime:Number;
+    private var _startTime:Number;
 
     public function TweenLine()
     {
+        TweenPlugin.activate([AutoAlphaPlugin]);
+
         _timeLine = new TimelineMax();
     }
 
     public function build(list:Array, time:Number):void
     {
+        _totalTime = 0;
         _timeLine.pause();
         _timeLine = null;
         _timeLine = new TimelineMax();
@@ -37,15 +44,17 @@ public class TweenLine
         for (var i:int=0; i<length; i++)
         {
             list[i].from.object.visible = false;
-            addToTimeLine(list[i].from);
+            _startTime = list[i].from.startTime;
+            addToTimeLine(list[i].from, true);
             addToTimeLine(list[i].to);
         }
 
         _timeLine.pause(time);
     }
 
-    private function addToTimeLine(obj:Object):void
+    private function addToTimeLine(obj:Object, start:Boolean = false):void
     {
+
         for (var field:String in obj)
         {
             switch(field)
@@ -56,10 +65,6 @@ public class TweenLine
 
                 case 'duration':
                     _duration = obj[field];
-                    break;
-
-                case 'changeTime':
-                    _changeTime = obj[field];
                     break;
 
                 case 'alpha':
@@ -86,18 +91,43 @@ public class TweenLine
                     _scaleY = obj[field];
                     break;
 
-                case 'delay':
-                    _delay = obj[field];
-                    break;
-
                 default:
                     trace('Error: undefined property: ' + field , obj[field]);
                     break;
             }
         }
 
+        if(start)
+        {
+            _object.x = _x;
+            _object.y = _y;
+            _object.scaleX = _scaleX;
+            _object.scaleY = _scaleY;
+            _object.alpha = _alpha;
+            _object.rotation = _rotation;
+            return;
+        }
+
+        _delay = 0;
+        _changeTime = "-=" + String(0);
+        trace(_startTime)
+        if (_totalTime == _startTime)
+        {
+            _totalTime += _duration;
+        }
+        else if (_totalTime > _startTime)
+        {
+            _changeTime = "-=" + String(_totalTime - _startTime);
+            _totalTime = Math.max(_startTime + _duration, _totalTime)
+        }
+        else
+        {
+            _delay = _startTime - _totalTime;
+            _totalTime += _delay + _duration;
+        }
+
         _timeLine.to(_object, _duration, {x:_x, y:_y, scaleX:_scaleX, scaleY:_scaleY,
-                                          autoAlpha:_alpha, rotation:_rotation, delay:_delay}, _changeTime);
+                    autoAlpha:_alpha, rotation:_rotation, delay:_delay}, _changeTime);
     }
 
     public function seek(seconds:Number):void
