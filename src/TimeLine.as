@@ -7,43 +7,59 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.FocusEvent;
 import flash.events.KeyboardEvent;
+import flash.events.MouseEvent;
 import flash.text.TextField;
 
 public class TimeLine extends Sprite
 {
     private var _timeBar:TimeBar;
+
     private var _totalMSec:int;
+    private var _totalSec:Number;
     private var _currentMSec:int;
+    private var _currentSec:Number;
 
     private var _currentBox:TextField;
     private var _totalBox:TextField;
 
     private var _updateFunc:Function;
 
-    public function TimeLine()
+    private var _playBtn:Button
+
+    private var _animation:Animations;
+
+    public function TimeLine(animation:Animations)
     {
+        _animation = animation;
+
+        //==========Seek Bar
         _timeBar = new TimeBar();
-        _timeBar.x = 100;
+        _timeBar.x = 150;
         _timeBar.y = 400;
-        _timeBar.width = 600;
-        _timeBar.updateFunction = func;
+        _timeBar.width = 500;
+        _timeBar.onChange = changePercent;
         _timeBar.start();
         addChild(_timeBar);
 
+        //==========Button
+        _playBtn = new Button('>||',0,0,40,20);
+        _playBtn.x = _timeBar.x - _playBtn.width - 5;
+        _playBtn.y = _timeBar.y - 5;
+        _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
+        addChild(_playBtn);
 
+        //==========Text Fields
         _currentBox = new TextField();
         _totalBox = new TextField();
 
         _currentBox.width = _totalBox.width = 60;
         _currentBox.height = _totalBox.height = 20;
 
-        _currentBox.x = _timeBar.x - _currentBox.width - 10;
+        _currentBox.x = _playBtn.x - _currentBox.width - 10;
         _totalBox.x = _timeBar.x + _timeBar.width + 10;
 
         _currentBox.y = _timeBar.y + (_timeBar.height - _currentBox.height) / 2;
         _totalBox.y = _currentBox.y;
-
-        _currentBox.text = '00:00';
 
         _currentBox.type = 'input';
         _currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
@@ -52,119 +68,118 @@ public class TimeLine extends Sprite
         addChild(_currentBox);
         addChild(_totalBox);
 
-
-        totalSec = 100;
+        //================ init
+        totalSec = 20;
+        currentSec = 0;
     }
 
-    private function func(percent:Number):void
+    //////////////////////Change percent by user click on timeBar
+    private function changePercent(percent:Number):void
     {
-        if(_currentMSec == currentMSec)
-                return
+        if(_animation.paused == false)
+            _animation.pause();
 
-        _currentMSec = currentMSec;
-        _currentBox.text = currentTime;
-
-        if(updateFunc)
-                updateFunc(currentMSec/1000);
-
-        trace(_currentBox.text, currentMSec)
+        currentMSec = percent * totalMSec;
     }
 
-    //////////////////////////
 
+    ////////////////////////////////
+    private function onPausePlayBtn(event:MouseEvent):void
+    {
+        _animation.pausePlay();
+    }
+
+    //==================================== Time
     /////// total seconds
-    public function get totalSec():int
+    public function get totalSec():Number
     {
-        return int(totalMSec / 1000);
+        return _totalSec;
     }
 
-    public function set totalSec(value:int):void
+    public function set totalSec(value:Number):void
     {
         totalMSec = value * 1000;
     }
 
     /////////// total Milli Seconds
-    public function get totalMSec():int
+    private function get totalMSec():int
     {
         return _totalMSec;
     }
 
-    public function set totalMSec(value:int):void
+    private function set totalMSec(value:int):void
     {
         if(value < 0)
             value = 0;
 
         _totalMSec = value;
+        _totalSec = value / 1000;
         _totalBox.text = totalTime;
+        //update timeBar
+        _timeBar.percent = currentMSec / totalMSec;
     }
 
     /////////////// Current Time (String)
-    public function get currentTime():String
+    private function get currentTime():String
     {
-        return timeFormat(int(_timeBar.percent * totalMSec));
+        return Utils.timeFormat(_currentMSec);
     }
 
-    public function set currentTime(value:String):void
+    private function set currentTime(value:String):void
     {
-        _timeBar.percent = Utils.timeToSec(value) / totalSec;
+        changePercent(Utils.timeToSec(value) / totalSec);
     }
 
     //////////// Total Time (String)
-    public function get totalTime():String
+    private function get totalTime():String
     {
-        return timeFormat(totalMSec);
+        return Utils.timeFormat(totalMSec);
     }
 
-    public function set totalTime(value:String):void
+    private function set totalTime(value:String):void
     {
        totalSec = Utils.timeToSec(value);
     }
 
-    /////////////////////// milli Sec to String
-    private function timeFormat(milliSeconds:Number):String
+    ///////////// Current Seconds
+    public function get currentSec():Number
     {
-        var t:int = milliSeconds;
-        if (t < 1 * 60 * 60 * 1000)
-        {
-            return addZero(t / 1000 / 60) + " : " + addZero(t / 1000 % 60);
-        }
-        else
-        {
-            return String(int(t / 1000 / 60 / 60)) + " : " + addZero(t / 1000 % 3600 / 60)+ " : " + addZero(t / 1000 % 60);
-        }
+        return _currentSec;
     }
 
-    /////////////// addZero
-    private function addZero(num:Number):String
+    public function set currentSec(value:Number):void
     {
-        if ((num < 10))
-        {
-            return "0" + int(num);
-        }
-        else
-        {
-            return String(int(num));
-        }
+        currentMSec = value*1000;
     }
 
-
-
-    public function get currentMSec():int
+    ///////////// Current Milli Seconds
+    private function get currentMSec():int
     {
-        return int(_timeBar.percent * totalMSec);
+        return _currentMSec;
     }
 
-    public function set currentMSec(value:int):void
+    private function set currentMSec(value:int):void
     {
         if(value < 0)
                 value = 0;
 
         _currentMSec = value;
+        _currentSec = value / 1000;
         _timeBar.percent = value/totalMSec;
+        showTime();
+
+        if(_updateFunc != null)
+                _updateFunc(currentSec);
 
     }
 
-    /////////////////
+    //Show Time
+    private function showTime():void
+    {
+        _currentBox.text = currentTime;
+    }
+
+    ///////////////// Insert Current Time By User
     private function changeTime(event:Event = null):void
     {
         currentTime = _currentBox.text;
@@ -191,6 +206,7 @@ public class TimeLine extends Sprite
         }
     }
 
+    ////////////////////////////////////// onUpdate Function
     public function get updateFunc():Function
     {
         return _updateFunc;
@@ -200,5 +216,6 @@ public class TimeLine extends Sprite
     {
         _updateFunc = value;
     }
+
 }
 }

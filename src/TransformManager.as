@@ -51,7 +51,8 @@ public class TransformManager
         area.setChildIndex(_tool, area.numChildren-1);
         object.addEventListener(MouseEvent.MOUSE_DOWN, _tool.select);
         object.addEventListener(MouseEvent.MOUSE_DOWN, selectObject);
-        _tool.target = object;
+        //_tool.target = object;
+        _tool.target = null;
         /*
         _tool.registrationManager.setRegistration(object, new Point(20, 20));
         trace(_tool.registrationManager.getRegistration(object));

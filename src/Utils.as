@@ -33,6 +33,34 @@ public class Utils
         }
     }
 
+
+    /////////////////////// milli Sec to String
+    public static function timeFormat(milliSeconds:Number):String
+    {
+        var t:int = milliSeconds;
+        if (t < 1 * 60 * 60 * 1000)
+        {
+            return addZero(t / 1000 / 60) + " : " + addZero(t / 1000 % 60);
+        }
+        else
+        {
+            return String(int(t / 1000 / 60 / 60)) + " : " + addZero(t / 1000 % 3600 / 60)+ " : " + addZero(t / 1000 % 60);
+        }
+    }
+
+    /////////////// addZero
+    public static function addZero(num:Number):String
+    {
+        if ((num < 10))
+        {
+            return "0" + int(num);
+        }
+        else
+        {
+            return String(int(num));
+        }
+    }
+
     public static function drawRect(object:Object, x:int, y:int, width:int, height:int, color:int = 0x333333):void
     {
         object.graphics.beginFill(color);

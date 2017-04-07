@@ -6,13 +6,15 @@ package
 import com.greensock.TimelineMax;
 import com.greensock.plugins.*;
 
+import flash.events.TimerEvent;
+import flash.utils.Timer;
 
-public class TweenLine
+
+public class Animations
 {
     private var _timeLine:TimelineMax;
 
     private var _object;
-    private var _time:Number;
     private var _duration:Number;
     private var _delay:Number;
     private var _changeTime:String;
@@ -24,13 +26,28 @@ public class TweenLine
     private var _alpha:Number;
     private var _totalTime:Number;
     private var _startTime:Number;
+    private var _paused:Boolean;
 
-    public function TweenLine()
+    private var _updateTimeLine:Function;
+    private var _timer:Timer;
+
+    public function Animations(updateTimeLine:Function)
     {
         TweenPlugin.activate([AutoAlphaPlugin]);
-
+        _updateTimeLine = updateTimeLine;
         _timeLine = new TimelineMax();
+        _timer = new Timer(1000/60);
+        _timer.addEventListener(TimerEvent.TIMER, onTimer);
     }
+
+    private function onTimer(event:TimerEvent):void
+    {
+        _updateTimeLine();
+
+        if(_timeLine.time() == _timeLine.duration())
+            pause();
+    }
+
 
     public function build(list:Array, time:Number):void
     {
@@ -49,7 +66,7 @@ public class TweenLine
             addToTimeLine(list[i].to);
         }
 
-        _timeLine.pause(time);
+        pause(time);
     }
 
     private function addToTimeLine(obj:Object, start:Boolean = false):void
@@ -135,19 +152,57 @@ public class TweenLine
         _timeLine.seek(seconds);
     }
 
-    public function pause():void
+    public function pause(time:int = -1):void
     {
-        _timeLine.pause();
+        if(time == -1)
+            _timeLine.pause();
+        else
+            _timeLine.pause(time);
+
+        paused = true;
     }
 
     public function play():void
     {
         _timeLine.play();
+        paused = false;
     }
 
     public function stop():void
     {
+        pause();
         _timeLine.stop();
     }
+
+    public function pausePlay():void
+    {
+        if(_paused)
+            play();
+        else
+            pause();
+    }
+
+    public function get paused():Boolean
+    {
+        return _paused;
+    }
+
+    public function set paused(value:Boolean):void
+    {
+        if(_paused == value)
+                return;
+
+        _paused = value;
+        if(value)
+            _timer.stop();
+        else
+            _timer.start();
+    }
+
+    public function get time():Number
+    {
+        return _timeLine.time();
+    }
+
 }
 }
