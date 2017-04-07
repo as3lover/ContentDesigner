@@ -27,10 +27,12 @@ public class TimeLine extends Sprite
     private var _playBtn:Button
 
     private var _animation:Animations;
+    private var _transformer:TransformManager;
 
-    public function TimeLine(animation:Animations)
+    public function TimeLine(animation:Animations, transformer:TransformManager)
     {
         _animation = animation;
+        _transformer = transformer;
 
         //==========Seek Bar
         _timeBar = new TimeBar();
@@ -76,6 +78,8 @@ public class TimeLine extends Sprite
     //////////////////////Change percent by user click on timeBar
     private function changePercent(percent:Number):void
     {
+        _transformer.deselect();
+
         if(_animation.paused == false)
             _animation.pause();
 
@@ -86,6 +90,7 @@ public class TimeLine extends Sprite
     ////////////////////////////////
     private function onPausePlayBtn(event:MouseEvent):void
     {
+        _transformer.deselect();
         _animation.pausePlay();
     }
 

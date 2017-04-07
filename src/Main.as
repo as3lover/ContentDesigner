@@ -24,23 +24,35 @@ public class Main extends Sprite
         _workArea = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
         addChild(_workArea);
 
+        _transformer = new TransformManager(stage, _workArea.target, onChangeObject);
+
         _animation = new Animations(updateTimeLine);
 
-        _timeLine = new TimeLine(_animation);
+        _timeLine = new TimeLine(_animation, _transformer);
         _timeLine.updateFunc = updateAnimation;
         addChild(_timeLine);
-
-        _transformer = new TransformManager(stage, _workArea.target);
 
         new TitleBar(stage, this);
 
     }
 
-    private function onAddObject(object:DisplayObject):void
+    private function onAddObject(object:Item):void
     {
+        object.startTime = _timeLine.currentSec;
+
         _transformer.add(object);
         _objectManager.add(object, _timeLine.currentSec);
         _animation.build(_objectManager.list, _timeLine.currentSec)
+    }
+
+    private function onChangeObject(object:Item):void
+    {
+
+        //var time:Number = _timeLine.currentSec;
+        _objectManager.change(object);
+        return;
+        _animation.build(_objectManager.list, object.startTime)
+        //_timeLine.currentSec = time;
     }
 
     private function updateAnimation(seconds:Number):void

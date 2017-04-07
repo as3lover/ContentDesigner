@@ -51,7 +51,7 @@ public class ObjectManager
         to.rotation = item.rotation;
         to.duration = 1;
 
-        var from:Object = object.from
+        var from:Object = object.from;
         from.object = item;
         from.x = item.x -100;
         from.y = item.y -100;
@@ -81,6 +81,18 @@ public class ObjectManager
             }
         }
 
+    }
+
+    public function change(item:Item):void
+    {
+        for(var i:int = 0; i<_length; i++)
+        {
+            if(_list[i].from.object == item)
+            {
+                setObject(_list[i], item, item.startTime);
+                return;
+            }
+        }
     }
 }
 }
