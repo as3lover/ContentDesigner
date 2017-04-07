@@ -1,8 +1,6 @@
 package {
 
-import flash.display.DisplayObject;
 import flash.display.Sprite;
-import flash.events.Event;
 
 [SWF(width="800", height="450", frameRate=60, backgroundColor='0xabcde')]
 
@@ -50,7 +48,6 @@ public class Main extends Sprite
 
         //var time:Number = _timeLine.currentSec;
         _objectManager.change(object);
-        return;
         _animation.build(_objectManager.list, object.startTime)
         //_timeLine.currentSec = time;
     }
