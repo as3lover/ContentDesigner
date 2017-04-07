@@ -142,6 +142,11 @@ public class DragManager extends Sprite
         _loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loadCompleteHandler);
 
         var content:Bitmap = (_loader.content) as Bitmap;
+        if(!content)
+        {
+            removeListenrs();
+            return;
+        }
         _moveBitmap.bitmapData = content.bitmapData;
         _moveBitmap.smoothing = true;
         _moveBitmap.alpha = .8;
