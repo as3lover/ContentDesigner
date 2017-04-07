@@ -26,10 +26,11 @@ public class Animations
     private var _alpha:Number;
     private var _totalTime:Number;
     private var _startTime:Number;
-    private var _paused:Boolean;
+    private var _paused:Boolean = true;
 
     private var _updateTimeLine:Function;
     private var _timer:Timer;
+    private var _list:Array=[];
 
     public function Animations(updateTimeLine:Function)
     {
@@ -49,8 +50,11 @@ public class Animations
     }
 
 
-    public function build(list:Array, time:Number):void
+    public function build(list:Array, time:Number, paused:Boolean = true):void
     {
+        _list = list;
+        _paused = paused;
+
         _totalTime = 0;
         _timeLine.pause();
         _timeLine = null;
@@ -62,16 +66,24 @@ public class Animations
         {
             list[i].from.object.visible = false;
             _startTime = list[i].from.startTime;
-            addToTimeLine(list[i].from, true);
+            if(!paused)
+                addToTimeLine(list[i].from, true);
+            else
+            {
+                addToTimeLine(list[i].to, true);
+                list[i].from.object.alpha = 0;
+            }
             addToTimeLine(list[i].to);
         }
 
-        pause(time);
+        if(paused)
+            _timeLine.pause(time);
+        else
+            _timeLine.seek(time);
     }
 
     private function addToTimeLine(obj:Object, start:Boolean = false):void
     {
-
         for (var field:String in obj)
         {
             switch(field)
@@ -125,9 +137,12 @@ public class Animations
             return;
         }
 
+        if(_paused)
+            _duration = 0;
+
         _delay = 0;
         _changeTime = "-=" + String(0);
-        trace(_startTime)
+
         if (_totalTime == _startTime)
         {
             _totalTime += _duration;
@@ -143,6 +158,8 @@ public class Animations
             _totalTime += _delay + _duration;
         }
 
+
+        trace(_timeLine.duration(), _delay, _changeTime, _duration );
         _timeLine.to(_object, _duration, {x:_x, y:_y, scaleX:_scaleX, scaleY:_scaleY,
                     autoAlpha:_alpha, rotation:_rotation, delay:_delay}, _changeTime);
     }
@@ -152,19 +169,13 @@ public class Animations
         _timeLine.seek(seconds);
     }
 
-    public function pause(time:int = -1):void
+    public function pause():void
     {
-        if(time == -1)
-            _timeLine.pause();
-        else
-            _timeLine.pause(time);
-
         paused = true;
     }
 
     public function play():void
     {
-        _timeLine.play();
         paused = false;
     }
 
@@ -193,6 +204,9 @@ public class Animations
                 return;
 
         _paused = value;
+
+        build(_list, time, _paused);
+
         if(value)
             _timer.stop();
         else
