@@ -69,7 +69,7 @@ public class DragManager extends Sprite
         var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
         currentFile = files[0];
         var arrPath:Array = currentFile.name.split('.');
-        var type:String = arrPath[arrPath.length-1];
+        var type:String = String(arrPath[arrPath.length-1]).toLowerCase();
         if (!currentFile.isDirectory && (type == 'png' || type == 'jpg'))
         {
             NativeDragManager.acceptDragDrop(_target);
