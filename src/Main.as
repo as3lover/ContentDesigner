@@ -6,28 +6,21 @@ import flash.display.Sprite;
 
 public class Main extends Sprite
 {
-    private var _timeLine:TimeLine;
-
-    private var _animation:Animations;
-    private var _workArea:DragManager;
-
+    private static var _timeLine:TimeLine;
+    private var _dragManager:DragManager;
     private var _transformer:TransformManager;
-    private var _objectManager:ObjectManager;
-
+    public static var _animationControl:AnimationControl;
 
     public function Main()
     {
-        _objectManager = new ObjectManager();
+        _animationControl = new AnimationControl();
 
-        _workArea = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
-        addChild(_workArea);
+        _dragManager = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
+        addChild(_dragManager);
 
-        _transformer = new TransformManager(stage, _workArea.target, onChangeObject);
+        _transformer = new TransformManager(stage, _dragManager.target);
 
-        _animation = new Animations(updateTimeLine);
-
-        _timeLine = new TimeLine(_animation, _transformer);
-        _timeLine.updateFunc = updateAnimation;
+        _timeLine = new TimeLine(_transformer, updateAnimation);
         addChild(_timeLine);
 
         new TitleBar(stage, this);
@@ -36,37 +29,39 @@ public class Main extends Sprite
 
     private function onAddObject(object:Item):void
     {
-        object.startTime = _timeLine.currentSec;
-
         _transformer.add(object);
-        _objectManager.add(object, _timeLine.currentSec);
-        _animation.build(_objectManager.list, _timeLine.currentSec)
+        _animationControl.add(object, _timeLine.currentSec)
     }
 
-    private function onChangeObject(object:Item):void
-    {
-
-        //var time:Number = _timeLine.currentSec;
-        _objectManager.change(object);
-        _animation.build(_objectManager.list, object.startTime)
-        //_timeLine.currentSec = time;
-    }
 
     private function updateAnimation(seconds:Number):void
     {
         _transformer.deselect();
-        if(_animation.paused)
-            _animation.seek(seconds);
+        _animationControl.time = seconds;
     }
 
     private function updateTimeLine():void
     {
-        _timeLine.currentSec = _animation.time;
+        //_timeLine.currentSec = _animation.time;
     }
 
     private function removeAnimation(item:Item):void
     {
-        _objectManager.removeAnimation(item)
+       _animationControl.removeAnimation(item)
+    }
+
+    public static function hightLight(Class = null):void
+    {
+        var obj = null;
+        switch(Class)
+        {
+            case TimeLine:
+                obj = _timeLine;
+                break;
+        }
+
+
+        HightLigher.add(obj)
     }
 }
 }

@@ -67,5 +67,28 @@ public class Utils
         object.graphics.drawRect(x, y, width, height);
         object.graphics.endFill();
     }
+
+    public static function get time():Number
+    {
+        return Main._animationControl.time;
+    }
+
+    public static function removeObjectFromArray(list:Array, item:Object)
+    {
+        var length:int = list.length
+        for (var i: int = 0; i < length; i++)
+        {
+            if (list[i] == item)
+            {
+                removeItemAtIndex(list, i)
+                return;
+            }
+        }
+    }
+
+    public static function removeItemAtIndex(list:Array, index:int)
+    {
+        list.splice(index, 1);
+    }
 }
 }

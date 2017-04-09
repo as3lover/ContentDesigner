@@ -17,26 +17,24 @@ public class TransformManager
     public var stage:Stage;
     public var area:Sprite;
     private var _tool:TransformTool;
-    private var onChange:Function;
     private var _target:Item;
 
-    public function TransformManager(stage:Stage, area:Sprite, onChange:Function)
+    public function TransformManager(stage:Stage, area:Sprite)
     {
         this.stage = stage;
         this.area = area;
-        this.onChange = onChange;
 
         _tool = new TransformTool(new ControlSetStandard());
         area.addChild(_tool)
         stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
         stage.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
         area.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
-        stage.addEventListener(KeyboardEvent.KEY_DOWN, onDown)
-        area.addEventListener(KeyboardEvent.KEY_DOWN, onDown)
+        stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
+        area.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
 
     }
 
-    private function onDown(e:KeyboardEvent):void
+    private function onKeyDown(e:KeyboardEvent):void
     {
         if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46))
         {
@@ -51,7 +49,7 @@ public class TransformManager
     {
         area.setChildIndex(_tool, area.numChildren-1);
         object.addEventListener(MouseEvent.MOUSE_DOWN, _tool.select);
-        object.setPrps();
+        object.setProps();
         onStage();
     }
 
@@ -95,13 +93,12 @@ public class TransformManager
 
     private function deselectObject(target:Item):void
     {
-        if(target.changed)
-                onChange(target);
+        target.changed
     }
 
     private function selectObject(target:Item):void
     {
-        if(target.parent && target.parent == area)
+        if(target && target.parent && target.parent == area)
         {
             area.setChildIndex(target, area.numChildren-1);
             area.setChildIndex(_tool, area.numChildren-1);

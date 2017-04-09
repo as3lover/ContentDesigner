@@ -3,12 +3,15 @@
  */
 package
 {
+import soundPlayer;
+
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.FocusEvent;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.utils.getTimer;
 
 public class TimeLine extends Sprite
 {
@@ -26,13 +29,21 @@ public class TimeLine extends Sprite
 
     private var _playBtn:Button
 
-    private var _animation:Animations;
     private var _transformer:TransformManager;
 
-    public function TimeLine(animation:Animations, transformer:TransformManager)
+    private var _sound:soundPlayer;
+    private var _lastTime:int;
+    private var _elapsedTime:int;
+    private var _paused:Boolean;
+
+    public function TimeLine(transformer:TransformManager, updateFunction)
     {
-        _animation = animation;
         _transformer = transformer;
+        _updateFunc = updateFunction;
+
+        _paused = true;
+
+        _sound = new soundPlayer();
 
         //==========Seek Bar
         _timeBar = new TimeBar();
@@ -73,17 +84,33 @@ public class TimeLine extends Sprite
         //================ init
         totalSec = 20;
         currentSec = 0;
+
+        sound = 'http://dl1.pop-music.ir/m/Mohsen%20CHavoshi/Mohsen%20Chavoshi%20-%20Man%20Khode%20Aan%2013%20Am/01%20-%20Ghalat%20Kardam.mp3';
+    }
+
+
+    //////////////////////
+    public function set sound(path:String):void
+    {
+        _sound.addEventListener('duration', onLoad);
+        _sound.load(path);
+    }
+
+    private function onLoad(event:Event):void
+    {
+        _sound.removeEventListener('duration', onLoad);
+        _sound.pause();
+        totalSec = _sound.duration;
     }
 
     //////////////////////Change percent by user click on timeBar
     private function changePercent(percent:Number):void
     {
         _transformer.deselect();
-
-        if(_animation.paused == false)
-            _animation.pause();
-
-        currentMSec = percent * totalMSec;
+        if(!_paused && _sound)
+            _sound.setTime(percent * totalSec);
+        else
+            currentMSec = percent * totalMSec;
     }
 
 
@@ -91,7 +118,63 @@ public class TimeLine extends Sprite
     private function onPausePlayBtn(event:MouseEvent):void
     {
         _transformer.deselect();
-        _animation.pausePlay();
+        if(_paused)
+        {
+            playTimeLine();
+        }
+        else
+        {
+            pause();
+        }
+    }
+
+    private function pause():void
+    {
+        _paused = true;
+        this.removeEventListener(Event.ENTER_FRAME, moveTime);
+        stage.removeEventListener(MouseEvent.MOUSE_DOWN, onStage);
+        if(_sound)
+            _sound.pause();
+    }
+
+    private function playTimeLine():void
+    {
+        _paused = false;
+        this.addEventListener(Event.ENTER_FRAME, moveTime);
+        
+        if(_sound)
+        {
+            _sound.setTime(currentSec);
+            _sound.Resume();
+            return;
+        }
+
+        _lastTime = getTimer();
+
+        stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
+    }
+
+    private function onStage(e:MouseEvent):void
+    {
+        if(e.target != _playBtn && e.target.parent != _playBtn)
+            pause();
+    }
+
+    private function moveTime(event:Event):void
+    {
+        if(_sound)
+        {
+            currentSec = _sound.getTime();
+        }
+        else
+        {
+            _elapsedTime = getTimer() - _lastTime;
+            _lastTime += _elapsedTime;
+            currentMSec += _elapsedTime;
+        }
+
+        if(currentMSec == totalMSec)
+                pause();
     }
 
     //==================================== Time
@@ -166,7 +249,9 @@ public class TimeLine extends Sprite
     private function set currentMSec(value:int):void
     {
         if(value < 0)
-                value = 0;
+            value = 0;
+        else if(value >= totalMSec)
+                value = totalMSec;
 
         _currentMSec = value;
         _currentSec = value / 1000;
@@ -175,7 +260,6 @@ public class TimeLine extends Sprite
 
         if(_updateFunc != null)
                 _updateFunc(currentSec);
-
     }
 
     //Show Time
@@ -209,17 +293,6 @@ public class TimeLine extends Sprite
             if(stage.focus == _currentBox);
                 stage.focus = null;
         }
-    }
-
-    ////////////////////////////////////// onUpdate Function
-    public function get updateFunc():Function
-    {
-        return _updateFunc;
-    }
-
-    public function set updateFunc(value:Function):void
-    {
-        _updateFunc = value;
     }
 
 }
