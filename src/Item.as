@@ -5,10 +5,18 @@ package
 {
 import com.greensock.TweenLite;
 
+import flash.display.Bitmap;
+
+import flash.display.Loader;
+import flash.display.LoaderInfo;
+
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.ui.Mouse;
+import flash.filesystem.File;
+import flash.net.URLRequest;
+import flash.utils.getTimer;
+import flash.utils.setTimeout;
 
 public class Item extends Sprite
 {
@@ -24,16 +32,27 @@ public class Item extends Sprite
     public var startProps:Object;
     private var _motion:String;
     private const distance:Number = 100;
+    private var _path:String;
 
-    public function Item(removeAnimataion:Function)
+    private var _saved:Boolean = false;
+
+    private var _number:int = -1;
+
+    private var _index:int;
+    private var _bitmap:Bitmap;
+    private var _newPath:String;
+
+    public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
         super();
         _removeAnimation = removeAnimataion;
+        _path = path;
 
         var menu:ItemMenu = new ItemMenu();
         this.contextMenu = menu.menu;
 
         startProps = new Object();
+        _motion = motion;
 
         this.addEventListener(MouseEvent.CONTEXT_MENU, rightClick)
     }
@@ -42,6 +61,7 @@ public class Item extends Sprite
     private function rightClick(event:MouseEvent):void
     {
         ItemMenu.currentItem = this;
+        changed;
     }
 
     public function remove():void
@@ -217,6 +237,222 @@ public class Item extends Sprite
                 visible = true;
         else
                 visible = false;
+    }
+
+    public function get index():int
+    {
+        if(!parent)
+                return 0;
+        return parent.getChildIndex(this);
+    }
+
+    public function set index(i:int):void
+    {
+        if(!parent)
+                return;
+
+        if(i == -100 || i >= parent.numChildren)
+            i = parent.numChildren - 1
+        else if(i < 0)
+            i = 0;
+
+        parent.setChildIndex(this, i);
+
+    }
+
+    public function get path():String
+    {
+        return _path;
+    }
+
+    public function get all():Object
+    {
+        var obj = new Object();
+        obj.x = _x
+        obj.y = _y
+        obj.scaleX = _scaleX
+        obj.scaleY = _scaleY
+        obj.rotation = _rotation
+        obj.index = index;
+        obj.motion = _motion
+        obj.path = _path
+        obj.number = _number;
+        return obj;
+    }
+
+    public function set all(obj:Object)
+    {
+        _x = obj.x;
+        _y = obj.y;
+        _scaleX = obj.scaleX;
+        _scaleY = obj.scaleY;
+        _rotation = obj.rotation;
+        _path = obj.path
+        motion = obj.motion;
+        _index = obj.index;
+        _number = obj.number;
+        _saved = true;
+
+    }
+
+    public function load():void
+    {
+        var loader:Loader = new Loader();
+        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+        loader.load(new URLRequest(_path));
+
+        function onComplete (event:Event):void
+        {
+            var bit:Bitmap = Bitmap(LoaderInfo(event.target).content);
+            bit.scaleX = .5;
+            bit.scaleY= .5;
+            bit.x = -bit.width/2;
+            bit.y = -bit.height/2;
+            bitmap = bit;
+            //trace('complete', _path);
+            dispatchEvent(new Event(Event.COMPLETE));
+        }
+    }
+
+    public function setIndex():void
+    {
+        index = _index;
+    }
+
+    public function save(path:String):void
+    {
+        var time:Number = getTimer();
+
+        var name:String = 'image_' + String(number);
+
+        var path2:String = path + '/images/' + name + '.jpg'
+        if(path2 == _path)
+        {
+            _newPath = _path;
+            dispatchEvent(new Event(Event.COMPLETE));
+            return;
+        }
+
+
+        var file:File = new File(_path);
+        var temp:File = File.createTempDirectory();
+        var des:File = new File(temp.nativePath + '/' + file.name);
+
+        if(_path.search(path +  '/images/') >= 0)
+        {
+            //trace('move:', file.nativePath , 'to', des.nativePath);
+            file.moveTo(des, true);
+            //trace('ok----------')
+        }
+        else
+        {
+            //trace('copy:', file.nativePath , 'to', des.nativePath);
+            file.copyTo(des, true);
+            //trace('ok----------')
+        }
+
+        var n:int = 0;
+        setTimeout(t,10);
+        function t()
+        {
+            if(des.exists)
+            {
+                //trace(true)
+                rename();
+            }
+            else
+            {
+                n++
+                //trace(false , n)
+                setTimeout(t,10);
+            }
+
+        }
+
+        function rename()
+        {
+            file = des;
+            des = new File(temp.nativePath + '/' + name + '.jpg');
+
+            //trace('rename:', file.nativePath , 'to', des.nativePath);
+            try
+            {
+                //trace('rename')
+                file.moveTo(des, true);
+            }
+            catch (e){}
+            //trace('ok----------')
+
+            n = 0;
+            setTimeout(tt,10);
+            function tt()
+            {
+                if(des.exists)
+                {
+                    //trace(true)
+                    //trace(getTimer() - time);
+                    _path = des.nativePath;
+                    _newPath = path + '/images/' + des.name;
+                    dispatchEvent(new Event(Event.COMPLETE));
+                }
+                else
+                {
+                    n++
+                    //trace(false , n)
+                    setTimeout(tt,10);
+                }
+
+            }
+        }
+    }
+
+    public function move()
+    {
+        var file:File = new File(_path);
+        if(!file.exists || _path == _newPath)
+        {
+            dispatchEvent(new Event(Event.COMPLETE));
+            return;
+        }
+
+        var file2:File = new File(_newPath);
+
+        //trace('move2:', file.nativePath , 'to', file2.nativePath);
+        file.moveTo(file2, true);
+        //trace('ok----------')
+
+        _path = _newPath;
+
+        setTimeout(t,10);
+        function t()
+        {
+            if(file2.exists)
+            {
+                _saved = true;
+                dispatchEvent(new Event(Event.COMPLETE));
+            }
+            else
+            {
+                setTimeout(t,10);
+            }
+
+        }
+    }
+
+    public function set bitmap(value:Bitmap):void
+    {
+        _bitmap = value;
+        addChild(value);
+    }
+
+    public function get number():int
+    {
+        return _number;
+    }
+
+    public function set number(number:int):void
+    {
+        _number = number;
     }
 }
 }

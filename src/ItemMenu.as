@@ -4,6 +4,8 @@
 package
 {
 import flash.display.NativeMenu;
+import flash.display.NativeMenu;
+import flash.display.NativeMenuItem;
 import flash.display.NativeMenuItem;
 import flash.events.ContextMenuEvent;
 import flash.events.Event;
@@ -15,6 +17,7 @@ public class ItemMenu
     public var menu:ContextMenu;
 
     public static var currentItem:Item;
+    private var _motion:ContextMenuItem;
 
     public function ItemMenu()
     {
@@ -28,34 +31,41 @@ public class ItemMenu
 
         var show = new ContextMenuItem("Show Now");
         show.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Show);
-        show.separatorBefore = true;
 
         var showTime = new ContextMenuItem("Show At New Time");
         showTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, ShowNew);
-
-
-
-
-        var motion = new ContextMenuItem("Motion");
         //
+        var motion = _motion = new ContextMenuItem("Motion");
         motion.submenu = new NativeMenu();
-        motion.submenu.addItem(subMenu('',setMotion, Consts.fade));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.upToDown));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.downToUp));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.leftToRight));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.rightToLeft));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.rightUp));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.leftUp));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.rightDown));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.leftDown));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.zoom));
-        motion.submenu.addItem(subMenu('',setMotion, Consts.rotate));
+        subMotion(motion, Consts.fade, true);
+        subMotion(motion, Consts.upToDown);
+        subMotion(motion, Consts.downToUp);
+        subMotion(motion, Consts.leftToRight);
+        subMotion(motion, Consts.rightToLeft);
+        subMotion(motion, Consts.rightUp);
+        subMotion(motion, Consts.leftUp);
+        subMotion(motion, Consts.rightDown);
+        subMotion(motion, Consts.leftDown);
+        subMotion(motion, Consts.zoom);
+        subMotion(motion, Consts.rotate);
+        //
+        var arrange:ContextMenuItem = new ContextMenuItem("Arrange");
+        arrange.submenu = new NativeMenu();
+        arrange.submenu.addItem(subMenu('پایین ترین', this.arrange, 'back'));
+        arrange.submenu.addItem(subMenu('بالاترین', this.arrange, 'front'));
+        arrange.submenu.addItem(new NativeMenuItem("", true));
+        arrange.submenu.addItem(subMenu('پایین تر', this.arrange, 'backLevel'));
+        arrange.submenu.addItem(subMenu('بالاتر', this.arrange, 'frontLevel'));
         //
         menu.customItems.push(hide);
         menu.customItems.push(hideTime);
+        show.separatorBefore = true;
         menu.customItems.push(show);
         menu.customItems.push(showTime);
+        motion.separatorBefore = true;
         menu.customItems.push(motion);
+        arrange
+        menu.customItems.push(arrange);
 
 
     }
@@ -70,12 +80,15 @@ public class ItemMenu
         Item(e.contextMenuOwner).Show();
     }
 
-    private function subMenu(label:String, Func:Function, data:Object = null):NativeMenuItem
+    private function subMotion(motion:ContextMenuItem, type:String, checked:Boolean = false)
     {
-        if(label == '')
-            label = data.toString();
+        motion.submenu.addItem(subMenu(type, setMotion, type,checked));
+    }
 
-        var item:NativeMenuItem = new NativeMenuItem(label)
+    private function subMenu(label:String, Func:Function, data:Object = null, checked:Boolean = false):NativeMenuItem
+    {
+        var item:NativeMenuItem = new NativeMenuItem(label);
+        item.checked = checked;
         item.data = data;
         item.addEventListener(Event.SELECT, Func);
         return item;
@@ -94,8 +107,41 @@ public class ItemMenu
 
     private function setMotion(e:Event):void
     {
-        if(currentItem)
-            currentItem.newMotion(e.target.data);
+        if(!currentItem)
+                return;
+
+        currentItem.newMotion(e.target.data);
+        for (var i:int = 0; i <_motion.submenu.numItems; i++)
+        {
+            _motion.submenu.getItemAt(i).checked = false;
+        }
+        NativeMenuItem(e.target).checked = true;
+    }
+
+    private function arrange(e:Event):void
+    {
+        if(!currentItem)
+                return;
+
+        switch(e.target.data)
+        {
+            case 'front':
+                currentItem.index = -100;
+                break;
+
+            case 'back':
+                currentItem.index = 0;
+                break;
+
+            case 'frontLevel':
+                currentItem.index++;
+                break;
+
+            case 'backLevel':
+                currentItem.index--;
+                break;
+        }
+
     }
 }
 }

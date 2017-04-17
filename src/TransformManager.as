@@ -45,12 +45,15 @@ public class TransformManager
         }
     }
 
-    public function add(object:Item):void
+    public function add(object:Item, loaded:Boolean=false):void
     {
         area.setChildIndex(_tool, area.numChildren-1);
         object.addEventListener(MouseEvent.MOUSE_DOWN, _tool.select);
-        object.setProps();
-        onStage();
+        if(loaded == false)
+        {
+            object.setProps();
+            onStage();
+        }
     }
 
     public function select(object:DisplayObject):void
@@ -103,6 +106,11 @@ public class TransformManager
             area.setChildIndex(target, area.numChildren-1);
             area.setChildIndex(_tool, area.numChildren-1);
         }
+    }
+
+    public function reset():void
+    {
+        trace('to do reset transform')
     }
 }
 }

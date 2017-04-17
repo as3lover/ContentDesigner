@@ -85,13 +85,14 @@ public class TimeLine extends Sprite
         totalSec = 20;
         currentSec = 0;
 
-        sound = 'http://dl1.pop-music.ir/m/Mohsen%20CHavoshi/Mohsen%20Chavoshi%20-%20Man%20Khode%20Aan%2013%20Am/01%20-%20Ghalat%20Kardam.mp3';
+        //sound = 'http://dl1.pop-music.ir/m/Mohsen%20CHavoshi/Mohsen%20Chavoshi%20-%20Man%20Khode%20Aan%2013%20Am/01%20-%20Ghalat%20Kardam.mp3';
     }
 
 
     //////////////////////
     public function set sound(path:String):void
     {
+        pause();
         _sound.addEventListener('duration', onLoad);
         _sound.load(path);
     }
@@ -133,7 +134,7 @@ public class TimeLine extends Sprite
         _paused = true;
         this.removeEventListener(Event.ENTER_FRAME, moveTime);
         stage.removeEventListener(MouseEvent.MOUSE_DOWN, onStage);
-        if(_sound)
+        if(_sound.loaded)
             _sound.pause();
     }
 
@@ -142,7 +143,7 @@ public class TimeLine extends Sprite
         _paused = false;
         this.addEventListener(Event.ENTER_FRAME, moveTime);
         
-        if(_sound)
+        if(_sound.loaded)
         {
             _sound.setTime(currentSec);
             _sound.Resume();
@@ -162,7 +163,7 @@ public class TimeLine extends Sprite
 
     private function moveTime(event:Event):void
     {
-        if(_sound)
+        if(_sound.loaded)
         {
             currentSec = _sound.getTime();
         }
@@ -294,6 +295,5 @@ public class TimeLine extends Sprite
                 stage.focus = null;
         }
     }
-
 }
 }

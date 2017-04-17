@@ -156,7 +156,8 @@ public class TitleBar extends Sprite
 
     private function close(e:MouseEvent = null):void
     {
-        stage.nativeWindow.close();
+        Main.close(stage.nativeWindow.close);
+        //stage.nativeWindow.close();
     }
 }
 }

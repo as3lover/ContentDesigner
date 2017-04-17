@@ -14,6 +14,15 @@
             <entry library-id="9caae429-1beb-4fed-92a3-29a604ec5e56">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="de3d46c3-1494-4ef3-96ca-a95253fcd618">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="a1477a34-d3d8-49d0-9db3-6bd2fbf033b8">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="935d79ae-a1d7-4a12-a414-15f588d07bf5">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -57,6 +66,36 @@
         <properties id="9caae429-1beb-4fed-92a3-29a604ec5e56" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/../TransformTool/src/as" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="de3d46c3-1494-4ef3-96ca-a95253fcd618" />
+        <CLASSES>
+          <root url="jar://C:/Program Files/Adobe/Adobe Animate CC 2017/Common/Configuration/ActionScript 3.0/libs/textLayout.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="a1477a34-d3d8-49d0-9db3-6bd2fbf033b8" />
+        <CLASSES>
+          <root url="jar://C:/Program Files/Adobe/Adobe Animate CC 2017/Common/Configuration/ActionScript 3.0/libs/tlfruntime.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="935d79ae-a1d7-4a12-a414-15f588d07bf5" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../jpegencoder_10092010.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

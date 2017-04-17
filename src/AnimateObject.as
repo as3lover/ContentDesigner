@@ -127,7 +127,7 @@ public class AnimateObject
     public function set stopTime(value:Number):void
     {
 
-        if(value < _startTime + _showDuration)
+        if(value < _startTime + _showDuration && value != -1)
             value = _startTime + _showDuration;
 
         _stopTime = value;
@@ -136,6 +136,22 @@ public class AnimateObject
     public function get object():Item
     {
         return _object;
+    }
+
+    public function duration(showDuration:Number, hideDuration:Number):void
+    {
+        _showDuration = showDuration;
+        _hideDuration = hideDuration;
+    }
+
+    public function get all():Object
+    {
+        var obj:Object = object.all;
+        obj.startTime = startTime;
+        obj.stopTime = stopTime;
+        obj.showDuration = _showDuration;
+        obj.hideDuration = _hideDuration;
+        return obj;
     }
 }
 }

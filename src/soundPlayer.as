@@ -19,6 +19,8 @@
 		
 		public var duration:Number;
 		public var playing:Boolean;
+
+		private var _loaded:Boolean = false;
 		
 		private const buffer:int = 10;
 		
@@ -36,6 +38,7 @@
 		/////////////// Play
 		public function load(file:String)
 		{
+            _loaded = false;
 			playing = false;
 			toSeek = 0;
 			mySound.removeEventListener(Event.COMPLETE,onLoadeded);
@@ -93,8 +96,9 @@
 					setTime(toSeek);
 			}
 			
-			played = true;	
-			
+			played = true;
+
+            _loaded = true;
 			dispatchEvent(new Event('duration'));
 		}
 		
@@ -226,6 +230,10 @@
 			}
 		}
 
-	}
+        public function get loaded():Boolean
+        {
+            return _loaded;
+        }
+    }
 
 }

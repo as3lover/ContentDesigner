@@ -15,7 +15,7 @@ public class Consts
     public static const leftDown: String = 'leftDown';
     public static const zoom: String = 'zoom';
     public static const rotate: String = 'rotate';
-    public static const fade:Object = 'fade';
+    public static const fade:String = 'fade';
     
     public function Consts()
     {

@@ -30,7 +30,7 @@ public class DragManager extends Sprite
     private var lastFile:String;
     private var _mask:Shape;
     private var _removeAnimation:Function;
-
+    private var _soundPath:String;
     private var numOfObject:int = 0;
 
     public function DragManager(x:int, y:int, width:int, height:int, onAddObject:Function, stage:Stage, removeAnimation:Function)
@@ -72,7 +72,13 @@ public class DragManager extends Sprite
         currentFile = files[0];
         var arrPath:Array = currentFile.name.split('.');
         var type:String = String(arrPath[arrPath.length-1]).toLowerCase();
-        if (!currentFile.isDirectory && (type == 'png' || type == 'jpg'))
+        if (!currentFile.isDirectory && (type == 'mp3'))
+        {
+            NativeDragManager.acceptDragDrop(_target);
+            _soundPath = String(currentFile.nativePath);
+            stage.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP, dropSound);
+        }
+        else if (!currentFile.isDirectory && (type == 'png' || type == 'jpg' || type == 'jpeg' || type == 'bmp'))
         {
             NativeDragManager.acceptDragDrop(_target);
             addListeners();
@@ -173,22 +179,23 @@ public class DragManager extends Sprite
                 return;
 
         _moveBitmap.alpha = 1;
-
-        var holder:Item = new Item(_removeAnimation);
+        trace(1)
+        var holder:Item = new Item(_removeAnimation,lastFile);
         holder.name = 'object_(' + String(++numOfObject) + ')';
         holder.x = _moveBitmap.x + _moveBitmap.width/2;
         holder.y = _moveBitmap.y + _moveBitmap.height/2;
         _target.addChild(holder);
-
+        trace(2)
         _moveBitmap.x = -_moveBitmap.width/2;
         _moveBitmap.y = -_moveBitmap.height/2;
-        holder.addChild(_moveBitmap);
-
+        holder.bitmap = _moveBitmap;
+        trace(3)
         onAddObject(holder);
-
+        trace(4)
         _moveBitmap = null;
 
     }
+
     private function dragExitHandler(e:NativeDragEvent):void
     {
         //trace('dragExitHandler');
@@ -230,6 +237,24 @@ public class DragManager extends Sprite
     public function get target():Sprite
     {
         return _target;
+    }
+
+    private function dropSound(event:NativeDragEvent):void
+    {
+        stage.removeEventListener(NativeDragEvent.NATIVE_DRAG_DROP, dropSound);
+        Main._timeLine.sound = _soundPath;
+    }
+
+    public function reset():void
+    {
+        var i:int = _target.numChildren - 1;
+        for(i; i>-1; i--)
+        {
+            if(_target.getChildAt(i) is Item)
+            {
+                _target.removeChildAt(i);
+            }
+        }
     }
 }
 }
