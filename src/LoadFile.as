@@ -49,6 +49,7 @@ public class LoadFile
         trace('afterLoad', time);
         var obj:Object;
         var number:int;
+        var sound:String;
         for(var i:String in object)
         {
             obj = object[i];
@@ -63,14 +64,18 @@ public class LoadFile
             if(i == 'time')
             {
                 time = obj as Number;
-                trace('from file', time)
                 continue;
             }
 
             if(i == 'number')
             {
-                trace('number', obj)
                 number = obj as int;
+                continue;
+            }
+
+            if(i == 'sound')
+            {
+                sound = obj as String;
                 continue;
             }
 
@@ -80,10 +85,12 @@ public class LoadFile
             Main._transformer.add(holder, true);
             Main._animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration);
         }
-        trace('loaded time', time);
+
         Main._animationControl.loadItems();
         Main._animationControl.number = number;
-        Main._timeLine.currentSec = time;
+        Main._timeLine.currentSec = time
+        if(sound)
+                Main._timeLine.sound = sound;
     }
 }
 }

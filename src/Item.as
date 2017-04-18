@@ -34,8 +34,6 @@ public class Item extends Sprite
     private const distance:Number = 100;
     private var _path:String;
 
-    private var _saved:Boolean = false;
-
     private var _number:int = -1;
 
     private var _index:int;
@@ -291,7 +289,6 @@ public class Item extends Sprite
         motion = obj.motion;
         _index = obj.index;
         _number = obj.number;
-        _saved = true;
 
     }
 
@@ -321,10 +318,6 @@ public class Item extends Sprite
 
     public function save(path:String):void
     {
-        var time:Number = getTimer();
-
-        var name:String = 'image_' + String(number);
-
         var path2:String = path + '/images/' + name + '.jpg'
         if(path2 == _path)
         {
@@ -333,6 +326,7 @@ public class Item extends Sprite
             return;
         }
 
+        var name:String = 'image_' + String(number);
 
         var file:File = new File(_path);
         var temp:File = File.createTempDirectory();
@@ -340,15 +334,11 @@ public class Item extends Sprite
 
         if(_path.search(path +  '/images/') >= 0)
         {
-            //trace('move:', file.nativePath , 'to', des.nativePath);
             file.moveTo(des, true);
-            //trace('ok----------')
         }
         else
         {
-            //trace('copy:', file.nativePath , 'to', des.nativePath);
             file.copyTo(des, true);
-            //trace('ok----------')
         }
 
         var n:int = 0;
@@ -357,13 +347,11 @@ public class Item extends Sprite
         {
             if(des.exists)
             {
-                //trace(true)
                 rename();
             }
             else
             {
                 n++
-                //trace(false , n)
                 setTimeout(t,10);
             }
 
@@ -374,14 +362,11 @@ public class Item extends Sprite
             file = des;
             des = new File(temp.nativePath + '/' + name + '.jpg');
 
-            //trace('rename:', file.nativePath , 'to', des.nativePath);
             try
             {
-                //trace('rename')
                 file.moveTo(des, true);
             }
             catch (e){}
-            //trace('ok----------')
 
             n = 0;
             setTimeout(tt,10);
@@ -389,8 +374,6 @@ public class Item extends Sprite
             {
                 if(des.exists)
                 {
-                    //trace(true)
-                    //trace(getTimer() - time);
                     _path = des.nativePath;
                     _newPath = path + '/images/' + des.name;
                     dispatchEvent(new Event(Event.COMPLETE));
@@ -398,10 +381,8 @@ public class Item extends Sprite
                 else
                 {
                     n++
-                    //trace(false , n)
                     setTimeout(tt,10);
                 }
-
             }
         }
     }
@@ -417,9 +398,7 @@ public class Item extends Sprite
 
         var file2:File = new File(_newPath);
 
-        //trace('move2:', file.nativePath , 'to', file2.nativePath);
         file.moveTo(file2, true);
-        //trace('ok----------')
 
         _path = _newPath;
 
@@ -428,14 +407,12 @@ public class Item extends Sprite
         {
             if(file2.exists)
             {
-                _saved = true;
                 dispatchEvent(new Event(Event.COMPLETE));
             }
             else
             {
                 setTimeout(t,10);
             }
-
         }
     }
 

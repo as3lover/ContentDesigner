@@ -179,19 +179,19 @@ public class DragManager extends Sprite
                 return;
 
         _moveBitmap.alpha = 1;
-        trace(1)
+
         var holder:Item = new Item(_removeAnimation,lastFile);
         holder.name = 'object_(' + String(++numOfObject) + ')';
         holder.x = _moveBitmap.x + _moveBitmap.width/2;
         holder.y = _moveBitmap.y + _moveBitmap.height/2;
         _target.addChild(holder);
-        trace(2)
+
         _moveBitmap.x = -_moveBitmap.width/2;
         _moveBitmap.y = -_moveBitmap.height/2;
         holder.bitmap = _moveBitmap;
-        trace(3)
+
         onAddObject(holder);
-        trace(4)
+
         _moveBitmap = null;
 
     }

@@ -36,6 +36,8 @@ public class TimeLine extends Sprite
     private var _elapsedTime:int;
     private var _paused:Boolean;
 
+    private var _path:String;
+
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
         _transformer = transformer;
@@ -93,6 +95,7 @@ public class TimeLine extends Sprite
     public function set sound(path:String):void
     {
         pause();
+        _path = path;
         _sound.addEventListener('duration', onLoad);
         _sound.load(path);
     }
@@ -294,6 +297,11 @@ public class TimeLine extends Sprite
             if(stage.focus == _currentBox);
                 stage.focus = null;
         }
+    }
+
+    public function get soundFile():String
+    {
+        return _path;
     }
 }
 }

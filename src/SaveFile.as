@@ -8,10 +8,10 @@ import flash.events.OutputProgressEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
+import flash.utils.getTimer;
 
 public class SaveFile
 {
-    private static var _streams:Array = [];
     public function SaveFile()
     {
     }
@@ -21,6 +21,8 @@ public class SaveFile
         var file:File;
         file = File.documentsDirectory.resolvePath("Content Designer/project.rian");
         obj.time = time;
+        if(Main._timeLine.soundFile)
+            obj.sound = Main._timeLine.soundFile;
 
 
         if(directory != '')
@@ -36,24 +38,11 @@ public class SaveFile
         }
 
         var myStream:FileStream = null;
-        for(var i :int = 0; i<_streams.length; i++)
-        {
-            if(_streams[i].path == String(file.nativePath))
-            {
-                myStream = _streams[i].stream;
-            }
-        }
-
-
-        if(myStream == null)
-        {
-            myStream = new FileStream();
-            myStream.openAsync(file, FileMode.WRITE);
-            _streams.push({stream:myStream, path:file.nativePath})
-        }
-
+        myStream = new FileStream();
+        myStream.openAsync(file, FileMode.WRITE);
         myStream.addEventListener(OutputProgressEvent.OUTPUT_PROGRESS, write);
         myStream.addEventListener(Event.CLOSE, ff);
+        var t:Number = getTimer();
         myStream.writeObject(obj);
         myStream.close();
 
@@ -62,14 +51,13 @@ public class SaveFile
             if(e.bytesPending == 0 && func != null)
             {
                 myStream.removeEventListener(OutputProgressEvent.OUTPUT_PROGRESS, write);
-                //myStream.close();
                 func();
             }
         }
 
         function ff(event:Event):void
         {
-            trace('ff')
+            trace('finish', getTimer()-t);
         }
     }
 
