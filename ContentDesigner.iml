@@ -23,6 +23,9 @@
             <entry library-id="935d79ae-a1d7-4a12-a414-15f588d07bf5">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="b49f7da7-913c-48b3-834e-8b9a44e5551b">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -96,6 +99,16 @@
         <properties id="935d79ae-a1d7-4a12-a414-15f588d07bf5" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../jpegencoder_10092010.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="b49f7da7-913c-48b3-834e-8b9a44e5551b" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../colorPicker.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

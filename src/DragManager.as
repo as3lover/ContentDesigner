@@ -242,7 +242,7 @@ public class DragManager extends Sprite
     private function dropSound(event:NativeDragEvent):void
     {
         stage.removeEventListener(NativeDragEvent.NATIVE_DRAG_DROP, dropSound);
-        Main._timeLine.sound = _soundPath;
+        Main.timeLine.sound = _soundPath;
     }
 
     public function reset():void

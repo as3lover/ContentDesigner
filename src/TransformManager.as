@@ -36,7 +36,7 @@ public class TransformManager
 
     private function onKeyDown(e:KeyboardEvent):void
     {
-        if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46))
+        if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46) && !Main.textEditor.visible)
         {
             var obj:Item = Item(_tool.target);
             _tool.target = null;

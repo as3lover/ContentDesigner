@@ -3,6 +3,11 @@
  */
 package
 {
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.geom.Matrix;
 
 public class Utils
 {
@@ -70,10 +75,10 @@ public class Utils
 
     public static function get time():Number
     {
-        return Main._animationControl.time;
+        return Main.animationControl.time;
     }
 
-    public static function removeObjectFromArray(list:Array, item:Object)
+    public static function removeObjectFromArray(list:Array, item:Object):Boolean
     {
         var length:int = list.length
         for (var i: int = 0; i < length; i++)
@@ -81,14 +86,63 @@ public class Utils
             if (list[i] == item)
             {
                 removeItemAtIndex(list, i)
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     public static function removeItemAtIndex(list:Array, index:int)
     {
         list.splice(index, 1);
+    }
+
+    public static function pushAtIndex(list:Array, index:int, item:Object):void
+    {
+        list.splice(index,0, item);
+    }
+
+    ///////////////////
+    public static function textBoxToBitmap(textBox):Bitmap
+    {
+        var x = textBox.x;
+        var y = textBox.y;
+        var border:Boolean = textBox.border;
+        var scale:Number = textBox.scaleX;
+        var parent;
+        var index:int;
+        if(textBox.parent)
+        {
+            parent = textBox.parent;
+            index = parent.getChildIndex(textBox);
+        }
+        textBox.scaleX = textBox.scaleY = scale * 3;
+        textBox.y = 0;
+        textBox.x = - (textBox.width - textBox.textWidth * 3);
+        textBox.border = false;
+
+        var padding:int = 50;
+        textBox.x += padding;
+
+        var sprite:Sprite = new Sprite();
+        sprite.addChild(textBox);
+
+        var snapshot:BitmapData = new BitmapData(padding + textBox.textWidth * 3, padding + textBox.textHeight * 3, true, 0x00000000);
+        snapshot.draw(sprite, new Matrix());
+
+        var bit:Bitmap = new Bitmap(snapshot);
+        bit.smoothing = true;
+
+        textBox.scaleX = textBox.scaleY = scale;
+        textBox.border = border;
+        textBox.x = x;
+        textBox.y = y;
+        if(parent)
+            parent.addChildAt(textBox, index);
+
+        bit.scaleX = bit.scaleY = 1/3;
+        return bit;
     }
 }
 }

@@ -1,60 +1,100 @@
 package {
 
 import flash.display.Sprite;
+import flash.events.ContextMenuEvent;
 import flash.filesystem.File;
+import flash.ui.ContextMenu;
+import flash.ui.ContextMenuItem;
 
 
 [SWF(width="800", height="450", frameRate=60, backgroundColor='0xabcde')]
 
 public class Main extends Sprite
 {
-    public static var _timeLine:TimeLine;
-    public static var _dragManager:DragManager;
-    public static var _transformer:TransformManager;
-    public static var _animationControl:AnimationControl;
+    public static var timeLine:TimeLine;
+    public static var dragManager:DragManager;
+    public static var transformer:TransformManager;
+    public static var animationControl:AnimationControl;
+    public static var topics:Topics;
+    public static var textEditor:TextEditor;
+    private static var _sprite:Sprite;
 
     public function Main()
     {
-
         //new FileReferenceExample2();
         //return;
-        _animationControl = new AnimationControl();
+        animationControl = new AnimationControl();
 
-        _dragManager = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
-        addChild(_dragManager);
+        topics = new Topics();
+        topics.x = 650
+        topics.y = 100;
+        addChild(topics);
 
-        _transformer = new TransformManager(stage, _dragManager.target);
+        dragManager = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
+        addChild(dragManager);
 
-        _timeLine = new TimeLine(_transformer, updateAnimation);
-        addChild(_timeLine);
+        transformer = new TransformManager(stage, dragManager.target);
+
+        timeLine = new TimeLine(transformer, updateAnimation);
+        addChild(timeLine);
 
         new TitleBar(stage, this);
 
-
-        LoadFile.load();
 
         var _buttons:Buttons = new Buttons(stage);
         addChild(_buttons);
         _buttons.x = 700;
         _buttons.y = 20;
+
+
+        ////////////
+        var menu = new ContextMenu();
+        var topic = new ContextMenuItem("Add Topic");
+        topic.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addTopic);
+        menu.customItems.push(topic);
+        var textbox = new ContextMenuItem("Add Text");
+        textbox.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addText);
+        menu.customItems.push(textbox);
+        function addTopic(e:ContextMenuEvent):void
+        {
+            Main.topics.add(Utils.time);
+        }
+        function addText(e:ContextMenuEvent):void
+        {
+            onAddObject(new TextItem(removeAnimation, true))
+        }
+        dragManager.target.contextMenu = menu;
+        ////////////////////
+        _sprite = new Sprite();
+        _sprite.alpha = 0;
+        _sprite.visible = false;
+        Utils.drawRect(_sprite, 0, 0, 800, 450);
+        addChild(_sprite);
+        ///////////
+        textEditor = new MainTextEditor();
+        addChild(textEditor);
+
+
+        LoadFile.load();
     }
 
     private function onAddObject(object:Item):void
     {
-        _transformer.add(object);
-        _animationControl.add(object, _timeLine.currentSec)
+        transformer.add(object);
+        animationControl.add(object, timeLine.currentSec)
     }
 
 
     private function updateAnimation(seconds:Number):void
     {
-        _transformer.deselect();
-        _animationControl.time = seconds;
+        transformer.deselect();
+        animationControl.time = seconds;
+        topics.time = seconds;
     }
 
     public static function removeAnimation(item:Item):void
     {
-       _animationControl.removeAnimation(item)
+       animationControl.removeAnimation(item)
     }
 
     public static function hightLight(Class = null):void
@@ -63,7 +103,7 @@ public class Main extends Sprite
         switch(Class)
         {
             case TimeLine:
-                obj = _timeLine;
+                obj = timeLine;
                 break;
         }
 
@@ -73,30 +113,36 @@ public class Main extends Sprite
 
     public static function close(closeFunc:Function):void
     {
-        _transformer.deselect();
-        SaveFile.save(_animationControl.saveObject, Utils.time, closeFunc, _animationControl.savedDirectory, true)
+        transformer.deselect();
+        SaveFile.save(animationControl.saveObject, Utils.time, closeFunc, animationControl.savedDirectory, true)
     }
 
     public static function save():void
     {
-        _transformer.deselect();
+        transformer.deselect();
     }
 
     public static function saveFiles(directory:File):void
     {
-        _animationControl.saveFiles(directory.nativePath);
+        animationControl.saveFiles(directory.nativePath);
     }
 
     public static function setDir(path:String):void
     {
-        _animationControl.savedDirectory = path;
+        animationControl.savedDirectory = path;
     }
 
     public static function reset():void
     {
-        _animationControl.reset();
-        _transformer.reset();
-        _dragManager.reset();
+        animationControl.reset();
+        transformer.reset();
+        dragManager.reset();
     }
+
+    public static function set active(value:Boolean):void
+    {
+        _sprite.visible = !value;
+    }
+
 }
 }

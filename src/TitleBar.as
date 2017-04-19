@@ -5,6 +5,10 @@ package
 {
 import com.greensock.TweenLite;
 
+import flash.display.Bitmap;
+
+import flash.display.DisplayObject;
+
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.Stage;
@@ -49,6 +53,29 @@ public class TitleBar extends Sprite
 
         var t:TextField;
 
+        var bit:Bitmap;
+
+        _minBt = new Sprite();
+        bit = new assets.Min();
+        bit.smoothing = true;
+        _minBt.addChild(bit)
+        addChild(_minBt);
+
+        _closeBt = new Sprite();
+        bit = new assets.Close();
+        bit.smoothing = true;
+        _closeBt.addChild(bit)
+        addChild(_closeBt);
+
+        _maxBt = new Sprite();
+        bit = new assets.Restore();
+        bit.smoothing = true;
+        _maxBt.addChild(bit)
+        addChild(_maxBt);
+
+        _minBt.width = _maxBt.width = _closeBt.width = 25;
+        _minBt.height = _maxBt.height = _closeBt.height = 25;
+/*
         _minBt = new Button('-');
         addChild(_minBt);
 
@@ -57,7 +84,7 @@ public class TitleBar extends Sprite
 
         _closeBt = new Button('x');
         addChild(_closeBt);
-
+*/
 
         _minBt.addEventListener(MouseEvent.CLICK, minimize);
         _maxBt.addEventListener(MouseEvent.CLICK, maximize_restore);

@@ -109,13 +109,6 @@ public class AnimationControl
 
     public function get saveObject():Object
     {
-        /*
-        if(_savedDirectory != '')
-        {
-            var obj:Object = {path:_savedDirectory};
-            return obj;
-        }
-        */
         var object:Object = {};
         var len:int =  _list.length;
 
@@ -126,6 +119,8 @@ public class AnimationControl
         }
 
         object.number = number;
+
+        object.topics = Main.topics.object;
 
         return object;
     }
@@ -172,7 +167,8 @@ public class AnimationControl
             {
                 trace('complete move');
                 trace('=========================');
-                SaveFile.save(saveObject, Utils.time, null, _savedDirectory);
+                Main.timeLine.addEventListener(Event.COMPLETE, onCompleteSound);
+                Main.timeLine.saveSound(path);
                 return;
             }
 
@@ -188,6 +184,14 @@ public class AnimationControl
             setTimeout(move, 10);
         }
 
+    }
+
+    private function onCompleteSound(event:Event):void
+    {
+        SaveFile.save(saveObject, Utils.time, null, _savedDirectory);
+        trace('==========================================')
+        trace('============ FINISH SAVING ===============');
+        trace('==========================================')
     }
 
     public function get savedDirectory():String

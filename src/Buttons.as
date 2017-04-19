@@ -20,13 +20,14 @@ public class Buttons extends Sprite
     {
         _stage = stage;
 
-        _save = new Button('save',0,0,60,20);
+        _save = new Button('ذخیره',0,0,60,20);
         _save.addEventListener(MouseEvent.CLICK, onSave)
+        _save.y = 20;
         addChild(_save);
 
-        _load = new Button('load',0,0,60,20);
+        _load = new Button('باز کردن',0,0,60,20);
         _load.addEventListener(MouseEvent.CLICK, onLoad);
-        _load.y = 50;
+        _load.y = 45;
         addChild(_load);
     }
 

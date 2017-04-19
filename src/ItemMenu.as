@@ -64,11 +64,9 @@ public class ItemMenu
         menu.customItems.push(showTime);
         motion.separatorBefore = true;
         menu.customItems.push(motion);
-        arrange
         menu.customItems.push(arrange);
-
-
     }
+
 
     private function ShowNew(e:ContextMenuEvent):void
     {

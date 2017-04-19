@@ -46,7 +46,8 @@ public class LoadFile
 
     private static function afterLoad(object:Object, time:Number = 0):void
     {
-        trace('afterLoad', time);
+        Main.topics.reset();
+
         var obj:Object;
         var number:int;
         var sound:String;
@@ -79,18 +80,30 @@ public class LoadFile
                 continue;
             }
 
-            var holder:Item = new Item(Main.removeAnimation, obj.path);
+            if(i == 'topics')
+            {
+                Main.topics.object = obj;
+                continue;
+            }
+
+            var holder:Item
+
+            if(obj.type == 'text')
+                holder = new TextItem(Main.removeAnimation);
+            else
+                holder = new Item(Main.removeAnimation, obj.path);
+
             holder.all = obj;
-            Main._dragManager.target.addChild(holder);
-            Main._transformer.add(holder, true);
-            Main._animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration);
+            Main.dragManager.target.addChild(holder);
+            Main.transformer.add(holder, true);
+            Main.animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration);
         }
 
-        Main._animationControl.loadItems();
-        Main._animationControl.number = number;
-        Main._timeLine.currentSec = time
+        Main.animationControl.loadItems();
+        Main.animationControl.number = number;
+        Main.timeLine.currentSec = time
         if(sound)
-                Main._timeLine.sound = sound;
+                Main.timeLine.sound = sound;
     }
 }
 }

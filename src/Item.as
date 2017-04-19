@@ -13,10 +13,7 @@ import flash.display.LoaderInfo;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.filesystem.File;
 import flash.net.URLRequest;
-import flash.utils.getTimer;
-import flash.utils.setTimeout;
 
 public class Item extends Sprite
 {
@@ -37,8 +34,9 @@ public class Item extends Sprite
     private var _number:int = -1;
 
     private var _index:int;
-    private var _bitmap:Bitmap;
-    private var _newPath:String;
+    protected var _bitmap:Bitmap;
+    private var _pathHolder:Object={};
+    private const _eventComplete:Event = new Event(Event.COMPLETE);
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
@@ -275,6 +273,7 @@ public class Item extends Sprite
         obj.motion = _motion
         obj.path = _path
         obj.number = _number;
+        obj.type = 'image'
         return obj;
     }
 
@@ -316,104 +315,32 @@ public class Item extends Sprite
         index = _index;
     }
 
-    public function save(path:String):void
+    public function save(dir:String):void
     {
-        var path2:String = path + '/images/' + name + '.jpg'
-        if(path2 == _path)
+        var newDir = dir + '/images';
+        var newName:String = 'image_' + String(number) + '.pic';
+
+        saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);
+        function after():void
         {
-            _newPath = _path;
-            dispatchEvent(new Event(Event.COMPLETE));
-            return;
-        }
-
-        var name:String = 'image_' + String(number);
-
-        var file:File = new File(_path);
-        var temp:File = File.createTempDirectory();
-        var des:File = new File(temp.nativePath + '/' + file.name);
-
-        if(_path.search(path +  '/images/') >= 0)
-        {
-            file.moveTo(des, true);
-        }
-        else
-        {
-            file.copyTo(des, true);
-        }
-
-        var n:int = 0;
-        setTimeout(t,10);
-        function t()
-        {
-            if(des.exists)
-            {
-                rename();
-            }
-            else
-            {
-                n++
-                setTimeout(t,10);
-            }
-
-        }
-
-        function rename()
-        {
-            file = des;
-            des = new File(temp.nativePath + '/' + name + '.jpg');
-
-            try
-            {
-                file.moveTo(des, true);
-            }
-            catch (e){}
-
-            n = 0;
-            setTimeout(tt,10);
-            function tt()
-            {
-                if(des.exists)
-                {
-                    _path = des.nativePath;
-                    _newPath = path + '/images/' + des.name;
-                    dispatchEvent(new Event(Event.COMPLETE));
-                }
-                else
-                {
-                    n++
-                    setTimeout(tt,10);
-                }
-            }
+            _path = _pathHolder.currentPath;
+            dispatchComplete();
         }
     }
 
-    public function move()
+    public function move():void
     {
-        var file:File = new File(_path);
-        if(!file.exists || _path == _newPath)
+        saveItem.move(_pathHolder.currentPath, _pathHolder.newPath, after);
+        function after():void
         {
-            dispatchEvent(new Event(Event.COMPLETE));
-            return;
+            _path = _pathHolder.newPath;
+            dispatchComplete();
         }
+    }
 
-        var file2:File = new File(_newPath);
-
-        file.moveTo(file2, true);
-
-        _path = _newPath;
-
-        setTimeout(t,10);
-        function t()
-        {
-            if(file2.exists)
-            {
-                dispatchEvent(new Event(Event.COMPLETE));
-            }
-            else
-            {
-                setTimeout(t,10);
-            }
-        }
+    protected function dispatchComplete():void
+    {
+        dispatchEvent(_eventComplete);
     }
 
     public function set bitmap(value:Bitmap):void

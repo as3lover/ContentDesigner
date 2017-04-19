@@ -3,6 +3,7 @@
  */
 package
 {
+import flash.display.Bitmap;
 import soundPlayer;
 
 import flash.display.Sprite;
@@ -27,7 +28,7 @@ public class TimeLine extends Sprite
 
     private var _updateFunc:Function;
 
-    private var _playBtn:Button
+    private var _playBtn:Sprite
 
     private var _transformer:TransformManager;
 
@@ -36,7 +37,8 @@ public class TimeLine extends Sprite
     private var _elapsedTime:int;
     private var _paused:Boolean;
 
-    private var _path:String;
+    private var _soundFile:String;
+    private var _pathHolder:Object={};
 
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
@@ -57,11 +59,24 @@ public class TimeLine extends Sprite
         addChild(_timeBar);
 
         //==========Button
+        /*
         _playBtn = new Button('>||',0,0,40,20);
         _playBtn.x = _timeBar.x - _playBtn.width - 5;
         _playBtn.y = _timeBar.y - 5;
         _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
         addChild(_playBtn);
+        */
+        _playBtn = new Sprite();
+        Utils.drawRect(_playBtn,0,0,20,20,0xffffff);
+        var bit:Bitmap = new assets.Play();
+        bit.smoothing = true;
+        bit.width = bit.height = 20
+        _playBtn.addChild(bit);
+        _playBtn.x = _timeBar.x - _playBtn.width - 5;
+        _playBtn.y = _timeBar.y - 5;
+        addChild(_playBtn);
+        _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
+
 
         //==========Text Fields
         _currentBox = new TextField();
@@ -95,7 +110,7 @@ public class TimeLine extends Sprite
     public function set sound(path:String):void
     {
         pause();
-        _path = path;
+        _soundFile = path;
         _sound.addEventListener('duration', onLoad);
         _sound.load(path);
     }
@@ -115,6 +130,11 @@ public class TimeLine extends Sprite
             _sound.setTime(percent * totalSec);
         else
             currentMSec = percent * totalMSec;
+    }
+
+    public function setTimeByTopic(seconds:Number):void
+    {
+        changePercent(seconds/totalSec);
     }
 
 
@@ -301,7 +321,33 @@ public class TimeLine extends Sprite
 
     public function get soundFile():String
     {
-        return _path;
+        return _soundFile;
+    }
+
+    ////////////////////////////
+    public function saveSound(dir:String):void
+    {
+        saveItem.copyAndRename(soundFile, dir, 'file.voice', _pathHolder, after);
+        function after():void
+        {
+            _soundFile = _pathHolder.currentPath;
+            moveSound();
+        }
+    }
+
+    public function moveSound():void
+    {
+        saveItem.move(_pathHolder.currentPath, _pathHolder.newPath, after);
+        function after():void
+        {
+            _soundFile = _pathHolder.newPath;
+            dispatchComplete();
+        }
+    }
+
+    private function dispatchComplete():void
+    {
+        dispatchEvent(new Event(Event.COMPLETE));
     }
 }
 }

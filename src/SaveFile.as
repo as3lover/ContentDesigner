@@ -21,8 +21,8 @@ public class SaveFile
         var file:File;
         file = File.documentsDirectory.resolvePath("Content Designer/project.rian");
         obj.time = time;
-        if(Main._timeLine.soundFile)
-            obj.sound = Main._timeLine.soundFile;
+        if(Main.timeLine.soundFile)
+            obj.sound = Main.timeLine.soundFile;
 
 
         if(directory != '')
