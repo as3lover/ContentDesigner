@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AirPackageProjectParameters">
-    <option name="desktopPackageType" value="native installer (*.exe)" />
+    <option name="desktopPackageType" value="captive runtime bundle" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ef98d20-093e-4332-984c-61a04f537c4f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/buttons/close.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/buttons/minimize.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/buttons/play.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/buttons/restore.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/fonts/B Yekan.TTF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Fonts.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MainTextEditor.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Text.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextBox.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextEditor.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextItem.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TopicItem.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TopicMenu.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Topics.as" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets.as" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ContentDesigner/Main.swf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cl.as" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ContentDesigner.iml" afterPath="$PROJECT_DIR$/ContentDesigner.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AnimationControl.as" afterPath="$PROJECT_DIR$/src/AnimationControl.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Button.as" afterPath="$PROJECT_DIR$/src/Button.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Buttons.as" afterPath="$PROJECT_DIR$/src/Buttons.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DragManager.as" afterPath="$PROJECT_DIR$/src/DragManager.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Item.as" afterPath="$PROJECT_DIR$/src/Item.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ItemMenu.as" afterPath="$PROJECT_DIR$/src/ItemMenu.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LoadFile.as" afterPath="$PROJECT_DIR$/src/LoadFile.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.as" afterPath="$PROJECT_DIR$/src/Main.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SaveFile.as" afterPath="$PROJECT_DIR$/src/SaveFile.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TimeLine.as" afterPath="$PROJECT_DIR$/src/TimeLine.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TitleBar.as" afterPath="$PROJECT_DIR$/src/TitleBar.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TransformManager.as" afterPath="$PROJECT_DIR$/src/TransformManager.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Utils.as" afterPath="$PROJECT_DIR$/src/Utils.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Text.as" afterPath="$PROJECT_DIR$/src/Text.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TextItem.as" afterPath="$PROJECT_DIR$/src/TextItem.as" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,11 +46,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextItem.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TextItem.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TextItem.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+            <state relative-caret-position="51">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding>
+                <element signature="e#54#91#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Text.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Text.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="35" column="27" lean-forward="false" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
               <folding>
                 <element signature="e#54#82#0" expanded="true" />
               </folding>
@@ -183,7 +165,6 @@
         <option value="$PROJECT_DIR$/src/Buttons.as" />
         <option value="$PROJECT_DIR$/src/ItemMenu.as" />
         <option value="$PROJECT_DIR$/src/TextEcditor.as" />
-        <option value="$PROJECT_DIR$/src/Text.as" />
         <option value="$PROJECT_DIR$/src/Fonts.as" />
         <option value="$PROJECT_DIR$/src/TopicMenu.as" />
         <option value="$PROJECT_DIR$/src/TopicItem.as" />
@@ -202,6 +183,7 @@
         <option value="$PROJECT_DIR$/src/TextEditor.as" />
         <option value="$PROJECT_DIR$/src/MainTextEditor.as" />
         <option value="$PROJECT_DIR$/src/TextItem.as" />
+        <option value="$PROJECT_DIR$/src/Text.as" />
       </list>
     </option>
   </component>
@@ -735,12 +717,12 @@
       <workItem from="1492421088896" duration="30028000" />
       <workItem from="1492533376943" duration="2660000" />
       <workItem from="1492537398210" duration="14646000" />
-      <workItem from="1492590945133" duration="13116000" />
+      <workItem from="1492590945133" duration="14171000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="216196000" />
+    <option name="totallyTimeSpent" value="217251000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -1126,16 +1108,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Text.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="24" column="40" lean-forward="false" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding>
-            <element signature="e#54#82#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/TimeLine.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -1186,8 +1158,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TextItem.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+        <state relative-caret-position="51">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#54#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Text.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="35" column="27" lean-forward="false" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
           <folding>
             <element signature="e#54#82#0" expanded="true" />
           </folding>

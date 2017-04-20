@@ -33,7 +33,7 @@ public class Text extends Sprite
         //fmt.color = 0x532108; // رنگ فونت
         fmt.font = font; // نوع فونت
         fmt.letterSpacing = -0;
-        fmt.size = size;
+        fmt.size = size * 3;
         //fmt.lineSpacing = 19;
         //fmt.leading = 0;  //فاصله بین خطوط
         fmt.leftMargin = 0;

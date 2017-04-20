@@ -3,8 +3,6 @@
  */
 package
 {
-import flash.display.Bitmap;
-import flash.display.Stage;
 import flash.events.ContextMenuEvent;
 import flash.text.TextFormat;
 import flash.ui.ContextMenu;
