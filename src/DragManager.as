@@ -1,5 +1,8 @@
 package {
 
+import fl.controls.ColorPicker;
+import fl.events.ColorPickerEvent;
+
 import flash.desktop.ClipboardFormats;
 import flash.desktop.NativeDragManager;
 import flash.display.Bitmap;
@@ -8,7 +11,6 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
-import flash.events.MouseEvent;
 import flash.events.NativeDragEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
@@ -16,10 +18,14 @@ import flash.filesystem.FileStream;
 import flash.geom.Point;
 import flash.utils.ByteArray;
 
+import items.Item;
+
 import org.log5f.air.extensions.mouse.INativeMouse;
 
 import org.log5f.air.extensions.mouse.NativeMouse;
 import org.log5f.air.extensions.mouse.events.NativeMouseEvent;
+
+import src2.Utils;
 
 public class DragManager extends Sprite
 {
@@ -32,20 +38,25 @@ public class DragManager extends Sprite
     private var _removeAnimation:Function;
     private var _soundPath:String;
     private var numOfObject:int = 0;
+    private var _width:int;
+    private var _height:int;
+    private var _color:uint;
 
     public function DragManager(x:int, y:int, width:int, height:int, onAddObject:Function, stage:Stage, removeAnimation:Function)
     {
         this.onAddObject = onAddObject;
         this._removeAnimation = removeAnimation;
 
+        _width = width;
+        _height = height;
+
         _target = new Sprite();
-        _target.graphics.lineStyle(1, 0x0, 1);
-        _target.graphics.beginFill(0xffffff, 1);
-        _target.graphics.drawRect(0, 0, width, height);
+        this.color = 0xffffff;
         _target.x = x;
         _target.y = y;
         _target.width = width;
         _target.height = height;
+        _target.name = 'target';
         this.addChild(_target);
 
         _mask = new Shape();
@@ -58,6 +69,32 @@ public class DragManager extends Sprite
         stage.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
 
         _nativeMouse = new NativeMouse();
+
+        var color:ColorPicker = new ColorPicker();
+        color.editable = true;
+        color.move(10, 10);
+        color.x = _target.x;
+        color.y = _target.y + _target.height + 10;
+        Main.topics.parent.addChild(color);
+        color.addEventListener(ColorPickerEvent.CHANGE, changeColor);
+    }
+
+    private function changeColor(e:ColorPickerEvent):void
+    {
+        color = uint("0x" + e.target.hexValue);
+    }
+
+    public function set color(color:uint):void
+    {
+        _color = color;
+        _target.graphics.lineStyle(1, 0x0, 1);
+        _target.graphics.beginFill(color, 1);
+        _target.graphics.drawRect(0, 0, _width, _height);
+    }
+
+    public function get color():uint
+    {
+        return _color;
     }
 
     private var currentFile:File;
@@ -256,5 +293,6 @@ public class DragManager extends Sprite
             }
         }
     }
+
 }
 }

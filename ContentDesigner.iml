@@ -23,7 +23,7 @@
             <entry library-id="935d79ae-a1d7-4a12-a414-15f588d07bf5">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="b49f7da7-913c-48b3-834e-8b9a44e5551b">
+            <entry library-id="adef9769-31a7-466f-ba8c-0ca381fa5ba6">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -106,9 +106,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="b49f7da7-913c-48b3-834e-8b9a44e5551b" />
+        <properties id="adef9769-31a7-466f-ba8c-0ca381fa5ba6" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../colorPicker.swc!/" />
+          <root url="jar://$MODULE_DIR$/../colorComboNumeric.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

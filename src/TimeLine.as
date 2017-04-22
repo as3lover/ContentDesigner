@@ -4,6 +4,8 @@
 package
 {
 import flash.display.Bitmap;
+
+import saveLoad.saveItem;
 import soundPlayer;
 
 import flash.display.Sprite;
@@ -13,6 +15,12 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.utils.getTimer;
+
+import src2.TimeBar;
+
+import src2.Utils;
+
+import src2.assets;
 
 public class TimeLine extends Sprite
 {
@@ -139,7 +147,7 @@ public class TimeLine extends Sprite
 
 
     ////////////////////////////////
-    private function onPausePlayBtn(event:MouseEvent):void
+    public function onPausePlayBtn(event:MouseEvent = null):void
     {
         _transformer.deselect();
         if(_paused)
@@ -348,6 +356,26 @@ public class TimeLine extends Sprite
     private function dispatchComplete():void
     {
         dispatchEvent(new Event(Event.COMPLETE));
+    }
+
+    public function stepForward(ctrlKey:Boolean, shift:Boolean):void
+    {
+        if(ctrlKey)
+            setTimeByTopic(currentSec + .1);
+        else if(shift)
+            setTimeByTopic(currentSec + 10);
+        else
+            setTimeByTopic(currentSec + 1);
+    }
+
+    public function stepBackward(ctrlKey:Boolean, shift:Boolean):void
+    {
+        if(ctrlKey)
+            setTimeByTopic(currentSec - .1);
+        else if(shift)
+            setTimeByTopic(currentSec - 10);
+        else
+            setTimeByTopic(currentSec - 1);
     }
 }
 }

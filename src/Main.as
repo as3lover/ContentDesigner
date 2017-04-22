@@ -6,8 +6,24 @@ import flash.filesystem.File;
 import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
 
+import items.Item;
+import items.TextItem;
 
-[SWF(width="800", height="450", frameRate=60, backgroundColor='0xabcde')]
+import saveLoad.LoadFile;
+
+import saveLoad.SaveFile;
+
+import src2.Buttons;
+import src2.HightLigher;
+import src2.Topics;
+import src2.Utils;
+
+import texts.MainTextEditor;
+
+import texts.TextEditor;
+
+
+[SWF(width="800", height="450", frameRate=60, backgroundColor='0x444444')]
 
 public class Main extends Sprite
 {
@@ -18,9 +34,11 @@ public class Main extends Sprite
     public static var topics:Topics;
     public static var textEditor:TextEditor;
     private static var _sprite:Sprite;
+    public static var panel:Panel;
 
     public function Main()
     {
+        new Keyboard(stage);
         //new FileReferenceExample2();
         //return;
         animationControl = new AnimationControl();
@@ -47,23 +65,27 @@ public class Main extends Sprite
         _buttons.y = 20;
 
 
-        ////////////
+        //////////// MENU //////////
         var menu = new ContextMenu();
-        var topic = new ContextMenuItem("Add Topic");
-        topic.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addTopic);
-        menu.customItems.push(topic);
+
         var textbox = new ContextMenuItem("Add Text");
         textbox.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addText);
         menu.customItems.push(textbox);
-        function addTopic(e:ContextMenuEvent):void
-        {
-            Main.topics.add(Utils.time);
-        }
         function addText(e:ContextMenuEvent):void
         {
             onAddObject(new TextItem(removeAnimation, true))
         }
+
+        var topic = new ContextMenuItem("Add Topic");
+        topic.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addTopic);
+        menu.customItems.push(topic);
+        function addTopic(e:ContextMenuEvent):void
+        {
+            Main.topics.add(Utils.time);
+        }
+
         dragManager.target.contextMenu = menu;
+
         ////////////////////
         _sprite = new Sprite();
         _sprite.alpha = 0;
@@ -73,6 +95,12 @@ public class Main extends Sprite
         ///////////
         textEditor = new MainTextEditor();
         addChild(textEditor);
+
+        //////////////
+        panel = new Panel();
+        panel.x = dragManager.target.x + dragManager.target.width;
+        panel.y = dragManager.target.y;
+        addChild(panel);
 
 
         LoadFile.load();

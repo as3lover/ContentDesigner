@@ -6,6 +6,13 @@ package
 import flash.events.Event;
 import flash.utils.setTimeout;
 
+import items.Item;
+
+import saveLoad.SaveFile;
+
+import src2.AnimateObject;
+import src2.Utils;
+
 public class AnimationControl
 {
     private var _list:Array;
