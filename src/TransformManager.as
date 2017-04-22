@@ -24,6 +24,7 @@ public class TransformManager
     public var area:Sprite;
     private var _tool:TransformTool;
     public var _target:Item;
+    private var _clipBoardItem:Item;
 
     public function TransformManager(stage:Stage, area:Sprite)
     {
@@ -44,12 +45,10 @@ public class TransformManager
     {
         if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46) && !Main.textEditor.visible)
         {
-            var obj:Item = Item(_tool.target);
-            _tool.target = null;
-            obj.remove();
-            onStage();
+            deleteObject();
         }
     }
+
 
     public function add(object:Item, loaded:Boolean=false):void
     {
@@ -145,11 +144,33 @@ public class TransformManager
     public function Paste():void
     {
         trace('paste');
+        if(_clipBoardItem)
+        {
+            select(null);
+            Main.dragManager.target.addChild(_clipBoardItem);
+            Main.addObject(_clipBoardItem);
+            select(_clipBoardItem);
+            _clipBoardItem = null;
+        }
     }
 
     public function Cut():void
     {
         trace('cut');
+        if(_target)
+        {
+            _clipBoardItem = _target;
+            deleteObject();
+        }
+    }
+
+
+    private function deleteObject():void
+    {
+        var obj:Item = Item(_tool.target);
+        _tool.target = null;
+        obj.remove();
+        onStage();
     }
 
     public function moveLeft(ctrlKey:Boolean, shift:Boolean):void

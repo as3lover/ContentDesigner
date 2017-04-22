@@ -48,7 +48,7 @@ public class Main extends Sprite
         topics.y = 100;
         addChild(topics);
 
-        dragManager = new DragManager(20,40,600, 337, onAddObject, stage, removeAnimation);
+        dragManager = new DragManager(20,40,600, 337, addObject, stage, removeAnimation);
         addChild(dragManager);
 
         transformer = new TransformManager(stage, dragManager.target);
@@ -73,7 +73,7 @@ public class Main extends Sprite
         menu.customItems.push(textbox);
         function addText(e:ContextMenuEvent):void
         {
-            onAddObject(new TextItem(removeAnimation, true))
+            addObject(new TextItem(removeAnimation, true))
         }
 
         var topic = new ContextMenuItem("Add Topic");
@@ -106,7 +106,7 @@ public class Main extends Sprite
         LoadFile.load();
     }
 
-    private function onAddObject(object:Item):void
+    public static function addObject(object:Item):void
     {
         transformer.add(object);
         animationControl.add(object, timeLine.currentSec)
