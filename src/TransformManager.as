@@ -11,6 +11,7 @@ import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
+import flash.utils.setTimeout;
 
 import items.Item;
 
@@ -139,6 +140,21 @@ public class TransformManager
     public function Copy():void
     {
         trace('copy');
+        if(_target)
+        {
+            if(_target is TextItem)
+                _clipBoardItem = new TextItem(Main.removeAnimation);
+            else
+                _clipBoardItem = new Item(Main.removeAnimation, _target.path);
+
+            _target.changed;
+            var props:Object = _target.all;
+            props.x += 10;
+            props.y += 10;
+            _clipBoardItem.all = props;
+            _clipBoardItem.setState();
+            _clipBoardItem.load();
+        }
     }
 
     public function Paste():void
@@ -148,7 +164,8 @@ public class TransformManager
         {
             select(null);
             Main.dragManager.target.addChild(_clipBoardItem);
-            Main.addObject(_clipBoardItem);
+            Main.transformer.add(_clipBoardItem, true);
+            Main.animationControl.add(_clipBoardItem, Utils.time)
             select(_clipBoardItem);
             _clipBoardItem = null;
         }

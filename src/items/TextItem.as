@@ -96,7 +96,6 @@ public class TextItem extends Item
 
     private function double(e:MouseEvent):void
     {
-        trace('double')
         editable = true;
     }
 
@@ -140,13 +139,20 @@ public class TextItem extends Item
         for(var i:int=0; i<length; i++)
         {
             f2 = _box.getTextFormat(i, i+1);
+
             if(formatCompare(f1,f2))
             {
                 formats[formats.length-1].index2 = i+1;
             }
             else
             {
-                formats.push({format:f2, index1:i, index2:i})
+                var obj:Object = new Object();
+                obj.size = f2.size;
+                obj.font = f2.font;
+                obj.color = f2.color;
+                obj.leading = f2.leading;
+                obj.letterSpacing = f2.letterSpacing;
+                formats.push({format:obj, index1:i, index2:i})
             }
             f1 = f2
         }
@@ -165,6 +171,7 @@ public class TextItem extends Item
             {
                 format[p] =  list[i].format[p];
             }
+
             _box.setTextFormat(format, list[i].index1, list[i].index2);
         }
     }
@@ -191,7 +198,6 @@ public class TextItem extends Item
 
     private function setFormat()
     {
-        trace('setFormat')
         _box.defaultTextFormat = _fmt;
         _box.setTextFormat(_fmt);
         correctFormat();
@@ -244,8 +250,6 @@ public class TextItem extends Item
         if(value == editable)
                 return;
 
-        trace('editable', value)
-
         if(value)
         {
             updateTransform();
@@ -285,7 +289,6 @@ public class TextItem extends Item
 
     private function onStage(e:MouseEvent):void
     {
-        //trace('onStage');
         //Utils.traceParents(e.target as DisplayObject);
         if(
                 e.target == this
@@ -448,7 +451,6 @@ public class TextItem extends Item
         var obj:Object = super.all;
         obj.text = text;
         obj.formats = formats;
-        trace('length',obj.formats,length)
         obj.type = 'text';
         obj.textWidth = _box.textWidth;
         obj.textHeight = _box.textHeight;
@@ -483,7 +485,6 @@ public class TextItem extends Item
     ///////////////// load //////////////////////////
     public override function load():void
     {
-        trace('load formats')
         formats = _formats;
         dispatchComplete();
     }
