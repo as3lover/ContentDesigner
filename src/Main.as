@@ -179,7 +179,7 @@ public class Main extends Sprite
         _progress = new progressBar();
         addChild(_progress);
 
-        LoadFile.load();
+        //LoadFile.load();
     }
 
 

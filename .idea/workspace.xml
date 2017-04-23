@@ -67,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Utils.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src2/Utils.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="63" column="45" lean-forward="true" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
+            <state relative-caret-position="-102">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#58#86#0" expanded="true" />
               </folding>
@@ -79,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.as" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="140" column="24" lean-forward="false" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
+            <state relative-caret-position="50">
+              <caret line="181" column="10" lean-forward="false" selection-start-line="181" selection-start-column="10" selection-end-line="181" selection-end-column="10" />
               <folding>
                 <element signature="e#11#39#0" expanded="true" />
               </folding>
@@ -245,11 +245,11 @@
         <option value="$PROJECT_DIR$/src/items/TextItem.as" />
         <option value="$PROJECT_DIR$/src/ImageUploader.as" />
         <option value="$PROJECT_DIR$/src/bitmapLoader.as" />
-        <option value="$PROJECT_DIR$/src/Main.as" />
         <option value="$PROJECT_DIR$/src/DragManager.as" />
         <option value="$PROJECT_DIR$/src/bitmapBrowser.as" />
         <option value="$PROJECT_DIR$/src/TimeLine.as" />
         <option value="$PROJECT_DIR$/src/src2/Utils.as" />
+        <option value="$PROJECT_DIR$/src/Main.as" />
       </list>
     </option>
   </component>
@@ -862,12 +862,12 @@
       <workItem from="1492691020395" duration="624000" />
       <workItem from="1492730260446" duration="6709000" />
       <workItem from="1492772115959" duration="6925000" />
-      <workItem from="1492787239449" duration="68585000" />
+      <workItem from="1492787239449" duration="68838000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="300094000" />
+    <option name="totallyTimeSpent" value="300347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1343,16 +1343,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="140" column="24" lean-forward="false" selection-start-line="140" selection-start-column="24" selection-end-line="140" selection-end-column="24" />
-          <folding>
-            <element signature="e#11#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bitmapBrowser.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -1375,10 +1365,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/src2/Utils.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="63" column="45" lean-forward="true" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
+        <state relative-caret-position="-102">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#58#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="181" column="10" lean-forward="false" selection-start-line="181" selection-start-column="10" selection-end-line="181" selection-end-column="10" />
+          <folding>
+            <element signature="e#11#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
