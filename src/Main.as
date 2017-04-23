@@ -1,5 +1,6 @@
 package {
 
+import flash.display.Bitmap;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.ContextMenuEvent;
@@ -129,6 +130,33 @@ public class Main extends Sprite
             }
         }
 
+        var back = new ContextMenuItem("Background Image ...");
+        back.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Back);
+        menu.customItems.push(back);
+
+        var bit:bitmapBrowser = new bitmapBrowser();
+        function Back(event:ContextMenuEvent):void
+        {
+            bit.addEventListener(bitmapBrowser.LOADED, loadedBack);
+            bit.chooseFile();
+        }
+        function loadedBack(e):void
+        {
+            bit.removeEventListener(bitmapBrowser.LOADED, loadedBack);
+            dragManager.setBack(bit.image);
+        }
+
+        back = new ContextMenuItem("Remove Background");
+        back.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Back1);
+        menu.customItems.push(back);
+
+        function Back1(e):void
+        {
+            dragManager.setBack(null);
+        }
+
+
+
         dragManager.target.contextMenu = menu;
 
         ////////////////////
@@ -153,6 +181,7 @@ public class Main extends Sprite
 
         LoadFile.load();
     }
+
 
     public static function addObject(object:Item):void
     {

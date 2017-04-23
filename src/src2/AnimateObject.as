@@ -6,6 +6,7 @@ package src2
 import flash.events.Event;
 
 import items.Item;
+import items.TextItem;
 
 public class AnimateObject
 {
@@ -96,6 +97,8 @@ public class AnimateObject
     {
         _object.setState();
         _object.alpha = percent;
+        if(_object is TextItem)
+                TextItem(_object).showTypeEffect();
         if(percent == 1)
                 return;
 

@@ -303,7 +303,7 @@ public class TimeLine extends Sprite
     //Show Time
     private function showTime():void
     {
-        _currentBox.text = currentTime;
+        _currentBox.text = currentTime + ' : ' + String(Utils.addZero(int((currentSec - int(currentSec))*100)));
         _currentBox.setTextFormat(_t)
     }
 

@@ -9,12 +9,14 @@ import fl.text.TLFTextField;
 
 import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.events.ContextMenuEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextFieldType;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 import flash.text.engine.TextLine;
+import flash.ui.ContextMenuItem;
 import flash.utils.setTimeout;
 
 import flashx.textLayout.formats.Direction;
@@ -38,11 +40,43 @@ public class TextItem extends Item
     private const _defaultText:String = 'متن پیش فرض' ;
     private var _formats:Array;
     private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading'];
+    private var _typeEffect:ContextMenuItem;
+    private var _stopType:Number = -1;
+    private var _startType:Number = -1;
 
     public function TextItem(removeAnimation:Function, edit:Boolean = false)
     {
         super(removeAnimation, null);
+        /*
+        //Menu
+        var menu:ContextMenu = new ItemMenu().menu;
 
+        _typeEffect = new ContextMenuItem("Type Effect");
+        _typeEffect.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, typeEfect);
+        menu.customItems.push(_typeEffect);
+
+        var startType = new ContextMenuItem("Start Type");
+        startType.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, StartType);
+        menu.customItems.push(startType);
+
+        var stopType = new ContextMenuItem("Stop Type");
+        stopType.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, StopType);
+        menu.customItems.push(stopType);
+
+        this.contextMenu = menu;
+
+        function typeEfect(event:ContextMenuEvent):void
+        {
+            if(_typeEffect.checked)
+            {
+                removeTypeEffect();
+            }
+            else
+            {
+                addTypeEffect();
+            }
+        }
+        */
         _fmt = new TextFormat();
         _box = new TLFTextField ;
 
@@ -80,6 +114,29 @@ public class TextItem extends Item
 
         changeText();
     }
+
+    private function StopType(event:ContextMenuEvent):void
+    {
+        _stopType = Utils.time;
+    }
+
+    private function StartType(event:ContextMenuEvent):void
+    {
+        _startType = Utils.time;
+    }
+
+    private function addTypeEffect():void
+    {
+        _typeEffect.checked = true;
+        trace('addTypeEffect');
+    }
+
+    private function removeTypeEffect():void
+    {
+        _typeEffect.checked = false;
+        trace('removeTypeEffect');
+    }
+
 
     private function init():void
     {
@@ -514,5 +571,9 @@ public class TextItem extends Item
     }
 
 
+    public function showTypeEffect():void
+    {
+
+    }
 }
 }

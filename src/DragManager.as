@@ -17,10 +17,9 @@ import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
 import flash.geom.Point;
 import flash.utils.ByteArray;
+import com.greensock.layout.*;
 
 import items.Item;
-
-import org.log5f.air.extensions.mouse.INativeMouse;
 
 import org.log5f.air.extensions.mouse.NativeMouse;
 import org.log5f.air.extensions.mouse.events.NativeMouseEvent;
@@ -100,6 +99,7 @@ public class DragManager extends Sprite
     private var currentFile:File;
     private var _nativeMouse:NativeMouse;
     private var _inTarget:Boolean;
+    private var _image:Bitmap;
 
     private function dragEnterHandler(event:NativeDragEvent):void
     {
@@ -294,5 +294,22 @@ public class DragManager extends Sprite
         }
     }
 
+    public function setBack(image:Bitmap):void
+    {
+        trace('setBack', image)
+        if(_image)
+                _target.removeChild(_image);
+
+        _image = image;
+
+        if(!_image)
+            return;
+
+
+        _target.addChildAt(_image, 0);
+
+        var area:AutoFitArea = new AutoFitArea(_target, 0, 0, _width, _height);
+        area.attach(_image, {scaleMode:ScaleMode.PROPORTIONAL_OUTSIDE, crop:true});
+    }
 }
 }
