@@ -35,6 +35,7 @@ public class Main extends Sprite
     public static var textEditor:TextEditor;
     private static var _sprite:Sprite;
     public static var panel:Panel;
+    public static var _progress:progressBar;
 
     public function Main()
     {
@@ -102,6 +103,9 @@ public class Main extends Sprite
         panel.y = dragManager.target.y;
         addChild(panel);
 
+
+        _progress = new progressBar();
+        addChild(_progress);
 
         LoadFile.load();
     }

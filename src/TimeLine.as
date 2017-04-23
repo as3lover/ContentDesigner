@@ -117,8 +117,6 @@ public class TimeLine extends Sprite
         //================ init
         totalSec = 20;
         currentSec = 0;
-
-        //sound = 'http://dl1.pop-music.ir/m/Mohsen%20CHavoshi/Mohsen%20Chavoshi%20-%20Man%20Khode%20Aan%2013%20Am/01%20-%20Ghalat%20Kardam.mp3';
     }
 
 

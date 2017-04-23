@@ -108,6 +108,8 @@ public class AnimationControl
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onComplete);
             i++;
             trace('load', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+            Main._progress.percent = i/len;
+            Main._progress.text = 'Loading Files ' + i + ' / ' + len;
             setTimeout(load, 10);
         }
 
@@ -165,6 +167,9 @@ public class AnimationControl
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onComplete);
             i++;
             trace('save', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+            Main._progress.percent = i/len;
+            Main._progress.text = 'Saving Files ' + i + ' / ' + len;
+
             setTimeout(save, 10);
         }
 
@@ -188,6 +193,9 @@ public class AnimationControl
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onCompleteMove);
             i++;
             trace('move', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+            Main._progress.percent = i/len;
+            Main._progress.text = 'Saving Settings ' + i + ' / ' + len;
+
             setTimeout(move, 10);
         }
 
@@ -196,6 +204,7 @@ public class AnimationControl
     private function onCompleteSound(event:Event):void
     {
         SaveFile.save(saveObject, Utils.time, null, _savedDirectory);
+
         trace('==========================================')
         trace('============ FINISH SAVING ===============');
         trace('==========================================')
