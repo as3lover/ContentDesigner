@@ -1,7 +1,9 @@
 package {
 
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.ContextMenuEvent;
+import flash.events.MouseEvent;
 import flash.filesystem.File;
 import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
@@ -12,6 +14,8 @@ import items.TextItem;
 import saveLoad.LoadFile;
 
 import saveLoad.SaveFile;
+
+import src2.AnimateObject;
 
 import src2.Buttons;
 import src2.HightLigher;
@@ -83,6 +87,46 @@ public class Main extends Sprite
         function addTopic(e:ContextMenuEvent):void
         {
             Main.topics.add(Utils.time);
+        }
+
+        var hideAll = new ContextMenuItem("Hide All");
+        hideAll.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, HideAll);
+        menu.customItems.push(hideAll);
+        function HideAll(e:ContextMenuEvent):void
+        {
+            animationControl.hideAll();
+        }
+
+        var hideSome = new ContextMenuItem("Hide Items by Click");
+        hideSome.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, HideSome);
+        menu.customItems.push(hideSome);
+        function HideSome(e:ContextMenuEvent):void
+        {
+            HightLigher.add(dragManager, .1)
+            stage.addEventListener(MouseEvent.MOUSE_DOWN, onDown, true);
+            function onDown(e:MouseEvent):void
+            {
+                var item;
+
+                if(e.target is Item)
+                        item = e.target;
+                else
+                    item = Utils.isParentOf(stage, Item, e.target as DisplayObject);
+
+                if(item)
+                {
+                    item.Hide();
+                    item.alpha = 0;
+                }
+                else
+                {
+                    trace(e.target, e.target.parent, e.target.parent.parent);
+                    HightLigher.add(null);
+                    stage.removeEventListener(MouseEvent.MOUSE_DOWN, onDown, true);
+                    timeLine.setTimeByTopic(Utils.time+.1);
+                }
+                e.stopImmediatePropagation();
+            }
         }
 
         dragManager.target.contextMenu = menu;

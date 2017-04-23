@@ -11,6 +11,8 @@ import items.Item;
 import saveLoad.SaveFile;
 
 import src2.AnimateObject;
+
+import src2.AnimateObject;
 import src2.Utils;
 
 public class AnimationControl
@@ -20,6 +22,7 @@ public class AnimationControl
     private var _duration:Number = 0;
     private var _savedDirectory:String = '';
     private var _number:int = 0;
+    private var _length:uint;
 
     public function AnimationControl()
     {
@@ -41,7 +44,8 @@ public class AnimationControl
 
         _time = value;
 
-        for(var i:int = 0 ; i < _list.length; i++)
+        _length =  _list.length;
+        for(var i:int = 0 ; i < _length; i++)
         {
             AnimateObject(_list[i]).time = _time;
         }
@@ -55,8 +59,8 @@ public class AnimationControl
 
     public function removeAnimation(item:Item):void
     {
-
-        for (var i:int = 0; i<_list.length; i++)
+        _length = _list.length;
+        for (var i:int = 0; i<_length; i++)
         {
             if(AnimateObject(_list[i]).object == item)
             {
@@ -234,6 +238,16 @@ public class AnimationControl
     {
         _number = 0;
         _list = [];
+    }
+
+    public function hideAll():void
+    {
+        _length = _list.length;
+        for(var i:int = 0; i<_length; i++)
+        {
+            if(AnimateObject(_list[i]).object.visible)
+                AnimateObject(_list[i]).object.Hide();
+        }
     }
 }
 }

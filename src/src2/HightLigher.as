@@ -10,7 +10,7 @@ public class HightLigher
 
     private static var _obj;
 
-    public static function add(obj):void
+    public static function add(obj, tintAmount:Number = .5):void
     {
         TweenPlugin.activate([TintPlugin, ColorTransformPlugin]);
 
@@ -21,7 +21,7 @@ public class HightLigher
                 return;
 
         _obj = obj;
-        TweenMax.to(_obj, .3, {colorTransform:{tint:0xff0000, tintAmount:.5}});
+        TweenMax.to(_obj, .3, {colorTransform:{tint:0xff0000, tintAmount:tintAmount}});
     }
 }
 }
