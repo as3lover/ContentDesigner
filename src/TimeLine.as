@@ -4,6 +4,8 @@
 package
 {
 import flash.display.Bitmap;
+import flash.text.TextFormat;
+import flash.text.TextFormatAlign;
 
 import saveLoad.saveItem;
 import soundPlayer;
@@ -47,6 +49,7 @@ public class TimeLine extends Sprite
 
     private var _soundFile:String;
     private var _pathHolder:Object={};
+    private var _t:TextFormat;
 
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
@@ -75,13 +78,15 @@ public class TimeLine extends Sprite
         addChild(_playBtn);
         */
         _playBtn = new Sprite();
-        Utils.drawRect(_playBtn,0,0,20,20,0xffffff);
+        Utils.drawRect(_playBtn,0,0,24,24,0xffffff);
         var bit:Bitmap = new assets.Play();
         bit.smoothing = true;
-        bit.width = bit.height = 20
+        bit.width = bit.height = 24
         _playBtn.addChild(bit);
         _playBtn.x = _timeBar.x - _playBtn.width - 5;
         _playBtn.y = _timeBar.y - 5;
+        _playBtn.x -=2;
+        _playBtn.y -=2;
         addChild(_playBtn);
         _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
 
@@ -93,11 +98,14 @@ public class TimeLine extends Sprite
         _currentBox.width = _totalBox.width = 60;
         _currentBox.height = _totalBox.height = 20;
 
-        _currentBox.x = _playBtn.x - _currentBox.width - 10;
+        _currentBox.x = _playBtn.x - _currentBox.width - 4;
         _totalBox.x = _timeBar.x + _timeBar.width + 10;
 
         _currentBox.y = _timeBar.y + (_timeBar.height - _currentBox.height) / 2;
         _totalBox.y = _currentBox.y;
+
+        _t = new TextFormat();
+        _t.align = TextFormatAlign.RIGHT;
 
         _currentBox.type = 'input';
         _currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
@@ -298,6 +306,7 @@ public class TimeLine extends Sprite
     private function showTime():void
     {
         _currentBox.text = currentTime;
+        _currentBox.setTextFormat(_t)
     }
 
     ///////////////// Insert Current Time By User
