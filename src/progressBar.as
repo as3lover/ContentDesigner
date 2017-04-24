@@ -5,6 +5,8 @@ package
 {
 import fl.text.TLFTextField;
 
+import flash.display.DisplayObject;
+
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.KeyboardEvent;
@@ -101,6 +103,9 @@ public class progressBar extends Sprite
 
     private function onMouse(e:MouseEvent):void
     {
+        if(Utils.isParentOf(stage, AlertBox, e.target as DisplayObject))
+            return;
+
         e.stopImmediatePropagation();
     }
 

@@ -102,6 +102,7 @@ public class Item extends Sprite
     {
         if(_x != x || _y != y || _scaleX != scaleX || _scaleY != scaleY || _rotation != rotation)
         {
+            Main.changed = true;
             setProps();
             return true;
         }
@@ -321,7 +322,7 @@ public class Item extends Sprite
 
     public function save(dir:String):void
     {
-        var newDir = dir + '/images';
+        var newDir = dir;
         var newName:String = 'image_' + String(number) + '.pic';
 
         saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);

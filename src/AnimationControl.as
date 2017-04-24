@@ -140,12 +140,12 @@ public class AnimationControl
 
     public function reSave()
     {
-        saveFiles(_savedDirectory);
+        saveFiles();
     }
 
-    public function saveFiles(path:String):void
+    public function saveFiles():void
     {
-        _savedDirectory = path;
+        _savedDirectory = FileManager.folder.nativePath + '/' +  FileManager.file.name.split('.')[0] + '_files';
 
         var i:int = 0;
         var len:int = _list.length;
@@ -163,7 +163,7 @@ public class AnimationControl
             }
 
             AnimateObject(_list[i]).object.addEventListener(Event.COMPLETE, onComplete);
-            AnimateObject(_list[i]).object.save(path);
+            AnimateObject(_list[i]).object.save(_savedDirectory);
         }
 
         function onComplete(event:Event):void
@@ -184,7 +184,7 @@ public class AnimationControl
                 trace('complete move');
                 trace('=========================');
                 Main.timeLine.addEventListener(Event.COMPLETE, onCompleteSound);
-                Main.timeLine.saveSound(path);
+                Main.timeLine.saveSound(_savedDirectory);
                 return;
             }
 
@@ -207,7 +207,7 @@ public class AnimationControl
 
     private function onCompleteSound(event:Event):void
     {
-        SaveFile.save(saveObject, Utils.time, null, _savedDirectory);
+        SaveFile.save(saveObject, Utils.time);
 
         trace('==========================================')
         trace('============ FINISH SAVING ===============');

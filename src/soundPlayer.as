@@ -234,6 +234,12 @@
         {
             return _loaded;
         }
+
+        public function reset():void
+        {
+            Stop();
+			_loaded = false;
+        }
     }
 
 }

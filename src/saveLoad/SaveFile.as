@@ -16,28 +16,15 @@ public class SaveFile
     {
     }
 
-    public static function save(obj:Object, time:Number, func:Function = null, directory:String = '', saved:Boolean = false):void
+    public static function save(obj:Object, time:Number, func:Function = null):void
     {
-        var file:File;
-        file = File.documentsDirectory.resolvePath("Content Designer/project.rian");
+        var file:File = FileManager.file;
         obj.time = time;
         if(Main.timeLine.soundFile)
             obj.sound = Main.timeLine.soundFile;
 
         obj.color = Main.dragManager.color;
 
-
-        if(directory != '')
-        {
-            if(saved)
-            {
-                obj = {path:directory, time:time}
-            }
-            else
-            {
-                file = new File(directory + "/project.rian");
-            }
-        }
 
         var myStream:FileStream = null;
         myStream = new FileStream();
@@ -47,6 +34,7 @@ public class SaveFile
         var t:Number = getTimer();
         myStream.writeObject(obj);
         myStream.close();
+
 
         function write(e:OutputProgressEvent):void
         {

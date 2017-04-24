@@ -26,8 +26,11 @@
             <entry library-id="adef9769-31a7-466f-ba8c-0ca381fa5ba6">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="42633fde-7565-43f2-9c5c-e785dd9fb1fc">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
-          <sdk name="AIRSDK_Compiler" />
+          <sdk name="AIRSDK" />
         </dependencies>
         <compiler-options />
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Main-descriptor.xml" package-file-name="ContentDesigner" />
@@ -42,7 +45,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK_Compiler" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIRSDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
@@ -109,6 +112,16 @@
         <properties id="adef9769-31a7-466f-ba8c-0ca381fa5ba6" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../colorComboNumeric.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="42633fde-7565-43f2-9c5c-e785dd9fb1fc" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/assets/dialog.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

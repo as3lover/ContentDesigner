@@ -17,21 +17,10 @@ public class LoadFile
     {
     }
 
-    public static function load(path:String = '', time:Number = 0):void
+    public static function load():void
     {
         Main.reset();
-        var file:File
-        if(path == '')
-        {
-            file = File.documentsDirectory.resolvePath("Content Designer/project.rian");
-        }
-        else
-        {
-            file = new File(path);
-        }
-
-        if(file.exists)
-            loadObject(file, time);
+        loadObject(FileManager.file);
     }
 
     private static function loadObject(file:File, time:Number = 0):void
@@ -57,13 +46,6 @@ public class LoadFile
         for(var i:String in object)
         {
             obj = object[i];
-
-            if(i == 'path')
-            {
-                load(String(obj) + '/project.rian', object.time);
-                Main.setDir(obj as String);
-                return;
-            }
 
             if(i == 'time')
             {
@@ -110,7 +92,8 @@ public class LoadFile
 
         Main.animationControl.loadItems();
         Main.animationControl.number = number;
-        Main.timeLine.currentSec = time
+        Main.timeLine.currentSec = time;
+        Main.changed = false;
         if(sound)
                 Main.timeLine.sound = sound;
     }

@@ -315,7 +315,7 @@ public class TextItem extends Item
             _sprite.visible = false;
             stage.focus = _box;
             //addEventListener(Event.ENTER_FRAME, ef);
-            //_box.addEventListener(Event.CHANGE, changeText);
+            _box.addEventListener(Event.CHANGE, changeTextt);
             Main.transformer.select(null);
             stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
             Main.panel.show(this);
@@ -324,12 +324,17 @@ public class TextItem extends Item
         {
             //_box.border = false;
             //removeEventListener(Event.ENTER_FRAME, ef);
-            //_box.removeEventListener(Event.CHANGE, changeText);
+            _box.removeEventListener(Event.CHANGE, changeTextt);
             _box.type = TextFieldType.DYNAMIC;
             selectable = false;
             _sprite.visible = true;
             Main.panel.hide();
         }
+    }
+
+    private function changeTextt(event:Event):void
+    {
+        Main.changed = true;
     }
 
     private function ef(event:Event):void
@@ -431,6 +436,8 @@ public class TextItem extends Item
 
     private function setTextFormat(prop:String, value:Object):void
     {
+        Main.changed = true;
+
         var i1:int = _box.selectionBeginIndex;
         var i2:int = _box.selectionEndIndex;
 

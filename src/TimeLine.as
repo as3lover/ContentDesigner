@@ -124,6 +124,7 @@ public class TimeLine extends Sprite
     public function set sound(path:String):void
     {
         pause();
+        Main.changed = true;
         _soundFile = path;
         _sound.addEventListener('duration', onLoad);
         _sound.load(path);
@@ -140,7 +141,7 @@ public class TimeLine extends Sprite
     private function changePercent(percent:Number):void
     {
         _transformer.deselect();
-        if(!_paused && _sound)
+        if(!_paused && _soundFile)
             _sound.setTime(percent * totalSec);
         else
             currentMSec = percent * totalMSec;
@@ -342,6 +343,11 @@ public class TimeLine extends Sprite
     ////////////////////////////
     public function saveSound(dir:String):void
     {
+        if(!soundFile)
+        {
+            dispatchComplete();
+            return;
+        }
         saveItem.copyAndRename(soundFile, dir, 'file.voice', _pathHolder, after);
         function after():void
         {
@@ -383,6 +389,16 @@ public class TimeLine extends Sprite
             setTimeByTopic(currentSec - 10);
         else
             setTimeByTopic(currentSec - 1);
+    }
+
+    public function reset():void
+    {
+        if(!_paused)
+                pause();
+        _sound.reset();
+        _soundFile = null;
+        currentSec = 0;
+        totalSec = 20;
     }
 }
 }

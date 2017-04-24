@@ -1,32 +1,18 @@
 package {
 
-import flash.display.Bitmap;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.ContextMenuEvent;
 import flash.events.MouseEvent;
-import flash.filesystem.File;
 import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
-
 import items.Item;
 import items.TextItem;
-
-import saveLoad.LoadFile;
-
-import saveLoad.SaveFile;
-
-import src2.AnimateObject;
-
-import src2.Buttons;
 import src2.HightLigher;
 import src2.Topics;
 import src2.Utils;
-
 import texts.MainTextEditor;
-
 import texts.TextEditor;
-
 
 [SWF(width="800", height="450", frameRate=60, backgroundColor='0x444444')]
 
@@ -41,9 +27,14 @@ public class Main extends Sprite
     private static var _sprite:Sprite;
     public static var panel:Panel;
     public static var _progress:progressBar;
+    private static var _changed:Boolean;
+    private static var _alert:AlertBox;
 
     public function Main()
     {
+        _alert = new AlertBox();
+        addChild(_alert);
+
         new Keyboard(stage);
         //new FileReferenceExample2();
         //return;
@@ -65,12 +56,6 @@ public class Main extends Sprite
         new TitleBar(stage, this);
 
 
-        var _buttons:Buttons = new Buttons(stage);
-        addChild(_buttons);
-        _buttons.x = 700;
-        _buttons.y = 20;
-
-
         //////////// MENU //////////
         var menu = new ContextMenu();
 
@@ -79,6 +64,7 @@ public class Main extends Sprite
         menu.customItems.push(textbox);
         function addText(e:ContextMenuEvent):void
         {
+            Main.changed = true;
             addObject(new TextItem(removeAnimation, true))
         }
 
@@ -87,6 +73,7 @@ public class Main extends Sprite
         menu.customItems.push(topic);
         function addTopic(e:ContextMenuEvent):void
         {
+            Main.changed = true;
             Main.topics.add(Utils.time);
         }
 
@@ -95,6 +82,7 @@ public class Main extends Sprite
         menu.customItems.push(hideAll);
         function HideAll(e:ContextMenuEvent):void
         {
+            Main.changed = true;
             animationControl.hideAll();
         }
 
@@ -185,6 +173,7 @@ public class Main extends Sprite
 
     public static function addObject(object:Item):void
     {
+        Main.changed = true;
         transformer.add(object);
         animationControl.add(object, timeLine.currentSec)
     }
@@ -199,6 +188,7 @@ public class Main extends Sprite
 
     public static function removeAnimation(item:Item):void
     {
+        Main.changed = true;
        animationControl.removeAnimation(item)
     }
 
@@ -219,7 +209,7 @@ public class Main extends Sprite
     public static function close(closeFunc:Function):void
     {
         transformer.deselect();
-        SaveFile.save(animationControl.saveObject, Utils.time, closeFunc, animationControl.savedDirectory, true)
+        closeFunc();
     }
 
     public static function save():void
@@ -227,9 +217,9 @@ public class Main extends Sprite
         transformer.deselect();
     }
 
-    public static function saveFiles(directory:File):void
+    public static function saveFiles():void
     {
-        animationControl.saveFiles(directory.nativePath);
+        animationControl.saveFiles();
     }
 
     public static function setDir(path:String):void
@@ -239,6 +229,8 @@ public class Main extends Sprite
 
     public static function reset():void
     {
+        Main.changed = false;
+        timeLine.reset();
         animationControl.reset();
         transformer.reset();
         dragManager.reset();
@@ -249,5 +241,32 @@ public class Main extends Sprite
         _sprite.visible = !value;
     }
 
+    public static function set changed(value:Boolean):void
+    {
+        trace('changed', value)
+        _changed = value;
+    }
+
+    public static function get changed():Boolean
+    {
+        return _changed;
+    }
+
+
+    public static function alert():void
+    {
+        _alert.alert();
+
+    }
+
+    public static function disable():void
+    {
+        _progress.disableApp();
+    }
+
+    public static function enable():void
+    {
+        _progress.enableApp();
+    }
 }
 }

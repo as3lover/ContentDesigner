@@ -1,0 +1,102 @@
+/**
+ * Created by SalmanPC3 on 4/24/2017.
+ */
+package
+{
+import flash.events.Event;
+import flash.filesystem.File;
+import flash.net.FileFilter;
+
+import saveLoad.LoadFile;
+
+public class FileManager
+{
+    private static var _fileForSave:FileForSave = new FileForSave();
+
+    public static var file:File;
+    public static var folder:File = File.documentsDirectory;
+    private static var retryFunction:Function;
+
+    public function FileManager()
+    {
+    }
+
+    public static function newFile():void
+    {
+        Main.transformer.deselect();
+
+        if(Main.changed)
+        {
+            retryFunction = newFile;
+            Main.alert();
+            return;
+        }
+
+        Main.reset();
+    }
+
+    public static function openFile():void
+    {
+        Main.transformer.deselect();
+
+        Main.transformer.deselect();
+
+        if(Main.changed)
+        {
+            retryFunction = openFile;
+            Main.alert();
+            return
+        }
+
+        var newFile:File
+
+        if(file)
+            newFile = FileManager.file.clone();
+        else
+            newFile = FileManager.folder.clone();
+
+        newFile.browseForOpen("Select Rian file", [ new FileFilter("RIAN Files", "*.rian")])
+        newFile.addEventListener(Event.SELECT, selected);
+
+        function selected(e:Event):void
+        {
+            Main.changed = false;
+            file = e.target as File;
+            LoadFile.load();
+        }
+    }
+
+    public static function saveFile():void
+    {
+        Main.transformer.deselect();
+
+        if(file)
+            Main.saveFiles();
+        else
+            saveAsFile();
+    }
+
+    public static function saveAsFile():void
+    {
+        Main.transformer.deselect();
+
+        _fileForSave.addEventListener(Event.COMPLETE, save);
+        _fileForSave.Select();
+    }
+
+    private static function save(e:Event):void
+    {
+        _fileForSave.removeEventListener(Event.COMPLETE, save);
+        file = _fileForSave.file;
+        folder = _fileForSave.folder;
+        Main.changed = false;
+        Main.saveFiles();
+    }
+
+    public static function retry():void
+    {
+        Main.changed = false;
+        retryFunction();
+    }
+}
+}

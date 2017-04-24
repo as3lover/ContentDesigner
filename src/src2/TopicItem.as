@@ -54,11 +54,15 @@ public class TopicItem extends Sprite
 
     public function changeText():void
     {
+        Main.changed = true;
+
         Main.textEditor.show(text, setText)
     }
 
     public function changeTime():void
     {
+        Main.changed = true;
+
         Main.textEditor.show(Utils.timeFormat(time*1000), setTime, true)
     }
 

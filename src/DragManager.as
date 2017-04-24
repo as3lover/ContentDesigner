@@ -80,6 +80,7 @@ public class DragManager extends Sprite
 
     private function changeColor(e:ColorPickerEvent):void
     {
+        Main.changed = true;
         color = uint("0x" + e.target.hexValue);
     }
 

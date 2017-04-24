@@ -92,6 +92,11 @@ public class TitleBar extends Sprite
         _minBt.width = _maxBt.width = _closeBt.width = 25;
         _minBt.height = _maxBt.height = _closeBt.height = 25;
 
+
+        var file:Button = new Button('File', 2,2,20,20, 0xffffff);
+        new FileMenu(stage, file);
+        addChild(file);
+
         _sizeBt = new Button('.');
         addChild(_sizeBt);
         _sizeBt.addEventListener(MouseEvent.MOUSE_DOWN, onSizeBt);

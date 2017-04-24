@@ -130,6 +130,7 @@ public class TransformManager
     public function reset():void
     {
         trace('to do reset transform')
+        select(null);
     }
 
     public function get tool():Object
