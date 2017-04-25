@@ -18,19 +18,22 @@ public class AnimateObject
     private var _time:Number = -1;
 
 
-    public function AnimateObject(object:Item, startTime:Number):void
+    public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
     {
         _object = object;
         _object.addEventListener(Event.CLEAR, onClear);
-        _object.addEventListener(Event.ADDED, onAdd);
+        if(!loadedObject)
+            _object.addEventListener(Event.ADDED, onAdd);
 
         this.startTime = startTime;
     }
 
     private function onAdd(event:Event):void
     {
-        startTime = Utils.time;
-        show();
+        //startTime = Utils.time;
+
+        if(Main.changed)
+            show();
     }
 
     private function onClear(event:Event):void
@@ -121,7 +124,6 @@ public class AnimateObject
     public function set startTime(value:Number):void
     {
         _startTime = value;
-
     }
 
     public function get stopTime():Number

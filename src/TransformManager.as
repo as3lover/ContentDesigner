@@ -64,6 +64,7 @@ public class TransformManager
 
     private function toolSelect(e:MouseEvent):void
     {
+        Main.timeLine.toPause();
         var a = Utils.isParentOf(stage, TextItem, e.target as DisplayObject);
         if(e.target is TextItem || a)
         {

@@ -14,6 +14,7 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.text.TextFormat;
+import flash.utils.setTimeout;
 
 import items.TextItem;
 
@@ -32,15 +33,27 @@ public class Panel extends Sprite
     private var _leading:NumericStepper;
     private var _space:NumericStepper;
     private var _fontList:ComboBox;
+    private var color:ColorPicker;
 
     public function Panel()
     {
+        addEventListener(Event.ADDED_TO_STAGE, init);
+    }
+
+    private function init(e:Event):void
+    {
         hide();
 
-        var color:ColorPicker = new ColorPicker();
+        color = new ColorPicker();
+        addChild(color);
+        setTimeout(init2,1000);
+    }
+
+    private function init2():void
+    {
+
         color.editable = true;
         color.move(10, 10);
-        addChild(color);
         color.addEventListener(ColorPickerEvent.CHANGE, changeHandler);
         color.addEventListener(Event.OPEN, open);
         color.addEventListener(Event.CLOSE, close);
@@ -76,7 +89,6 @@ public class Panel extends Sprite
         for(var i:String in Fonts.FONTS)
         {
             fonts.push({label:i, data:Fonts.FONTS[i]})
-            trace('font', i, Fonts[i]);
         }
 
         _fontList = new ComboBox();
@@ -158,6 +170,7 @@ public class Panel extends Sprite
         _size.value = textI.getSize();
         _space.value = (textI.getSpace() + 2)*10;
         _leading.value = textI.getLeading();
+        color.enabled = true;
         visible = true;
     }
 
@@ -169,7 +182,18 @@ public class Panel extends Sprite
 
     public function hide():void
     {
+        setTimeout(a,1)
+
         visible = false;
+    }
+
+    private function a():void
+    {
+        if(color && !visible)
+        {
+            color.close();
+            color.enabled = false;
+        }
     }
 }
 }

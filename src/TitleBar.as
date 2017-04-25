@@ -19,6 +19,8 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import com.greensock.layout.*;
 
+import flash.text.TextFormat;
+
 import flash.utils.setTimeout;
 
 import org.log5f.air.extensions.mouse.NativeMouse;
@@ -51,6 +53,11 @@ public class TitleBar extends Sprite
     private var _newHeight:Number;
     private var _oldWidth:Number;
     private var _oldHeight:Number;
+    private static var _file:String;
+    private static var _title:TextField;
+    private static var _format:TextFormat;
+    private static var _activatedTitle:Boolean;
+    private static const appName:String = 'Content Designer - ';
 
     public function TitleBar(stage:Stage, main:Sprite)
     {
@@ -93,9 +100,28 @@ public class TitleBar extends Sprite
         _minBt.height = _maxBt.height = _closeBt.height = 25;
 
 
-        var file:Button = new Button('File', 2,2,20,20, 0xffffff);
+        var file:Sprite = new Sprite();
+        bit = new assets.File();
+        bit.smoothing = true;
+        file.addChild(bit)
+        bit.height = 24;
+        bit.scaleX = bit.scaleY;
         new FileMenu(stage, file);
         addChild(file);
+
+        _title = new TextField();
+        _title.x = file.width + 10;
+        _title.y = 3;
+        _title.height = 20;
+        _title.width = stage.fullScreenWidth;
+        _title.selectable = false;
+        addChildAt(_title,1);
+
+        _format = new TextFormat();
+        _format.font = "Tahoma";
+        _format.size = 12;
+        _format.color = 0x898989;
+
 
         _sizeBt = new Button('.');
         addChild(_sizeBt);
@@ -113,6 +139,16 @@ public class TitleBar extends Sprite
         stage.align = StageAlign.TOP_LEFT;
 
         maximized = false;
+
+        TitleBar.file = 'New Project';
+
+        addEventListener(Event.ACTIVATE, initWindowName);
+    }
+
+    protected function initWindowName(event:Event):void
+    {
+        _activatedTitle = true;
+        changed = Main.changed;
     }
 
     private function onSizeBt(e:MouseEvent = null):void
@@ -246,6 +282,34 @@ public class TitleBar extends Sprite
     {
         Main.close(stage.nativeWindow.close);
         //stage.nativeWindow.close();
+    }
+
+    public static function set file(file:String):void
+    {
+        _file = file;
+        changed = Main.changed;
+    }
+
+    public static function set changed(changed:Boolean):void
+    {
+        if(changed)
+                title = appName +_file + '*';
+        else
+            title = appName +_file;
+    }
+
+    private static function set title(text:String):void
+    {
+        if(_title)
+        {
+            _title.text = text;
+            _title.setTextFormat(_format);
+        }
+        else
+                trace('No')
+
+        if(_activatedTitle && Main.STAGE)
+            Main.STAGE.nativeWindow.title = text;
     }
 }
 }

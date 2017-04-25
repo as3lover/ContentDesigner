@@ -168,9 +168,8 @@
 		/////////////// setTimeSecond
 		public function setTime(second:Number)
 		{
-			if(!playing || second+buffer > mySound.length/1000)
+			if(!playing || second+buffer > mySound.length)
 			{
-				playing = false;
 				toSeek = second;
 				return;
 			}

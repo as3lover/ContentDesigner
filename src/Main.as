@@ -2,7 +2,9 @@ package {
 
 import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.display.Stage;
 import flash.events.ContextMenuEvent;
+import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
@@ -27,11 +29,22 @@ public class Main extends Sprite
     private static var _sprite:Sprite;
     public static var panel:Panel;
     public static var _progress:progressBar;
-    private static var _changed:Boolean;
+    private static var _changed:Boolean = false;
     private static var _alert:AlertBox;
+    public static const child:Sprite = new Sprite();
+    public static var STAGE:Stage;
+    public static var MAIN:Main;
 
     public function Main()
     {
+        this.addEventListener(Event.ADDED_TO_STAGE, init);
+    }
+
+    private function init(event:Event):void
+    {
+        STAGE = stage;
+        MAIN = this;
+
         _alert = new AlertBox();
         addChild(_alert);
 
@@ -40,13 +53,14 @@ public class Main extends Sprite
         //return;
         animationControl = new AnimationControl();
 
-        topics = new Topics();
-        topics.x = 650
-        topics.y = 100;
-        addChild(topics);
 
         dragManager = new DragManager(20,40,600, 337, addObject, stage, removeAnimation);
         addChild(dragManager);
+
+        topics = new Topics();
+        topics.x = 640
+        topics.y = dragManager.target.y;
+        addChild(topics);
 
         transformer = new TransformManager(stage, dragManager.target);
 
@@ -208,8 +222,7 @@ public class Main extends Sprite
 
     public static function close(closeFunc:Function):void
     {
-        transformer.deselect();
-        closeFunc();
+        FileManager.closeFile();
     }
 
     public static function save():void
@@ -219,6 +232,7 @@ public class Main extends Sprite
 
     public static function saveFiles():void
     {
+        Main.changed = false;
         animationControl.saveFiles();
     }
 
@@ -229,11 +243,12 @@ public class Main extends Sprite
 
     public static function reset():void
     {
-        Main.changed = false;
         timeLine.reset();
         animationControl.reset();
         transformer.reset();
         dragManager.reset();
+        topics.reset();
+        Main.changed = false;
     }
 
     public static function set active(value:Boolean):void
@@ -245,6 +260,7 @@ public class Main extends Sprite
     {
         trace('changed', value)
         _changed = value;
+        TitleBar.changed = value;
     }
 
     public static function get changed():Boolean

@@ -13,7 +13,7 @@ public class FileManager
 {
     private static var _fileForSave:FileForSave = new FileForSave();
 
-    public static var file:File;
+    private static var _file:File;
     public static var folder:File = File.documentsDirectory;
     private static var retryFunction:Function;
 
@@ -32,13 +32,12 @@ public class FileManager
             return;
         }
 
+        file = null;
         Main.reset();
     }
 
     public static function openFile():void
     {
-        Main.transformer.deselect();
-
         Main.transformer.deselect();
 
         if(Main.changed)
@@ -93,10 +92,42 @@ public class FileManager
         Main.saveFiles();
     }
 
+    public static function closeFile():void
+    {
+        Main.transformer.deselect();
+
+        if (Main.changed)
+        {
+            retryFunction = closeFile;
+            Main.alert();
+            return
+        }
+
+        Main.STAGE.nativeWindow.close();
+    }
+
     public static function retry():void
     {
         Main.changed = false;
         retryFunction();
+    }
+
+    public static function get file():File
+    {
+        return _file;
+    }
+
+    public static function set file(value:File):void
+    {
+        _file = value;
+        if(_file)
+        {
+            TitleBar.file = _file.nativePath;
+        }
+        else
+        {
+            TitleBar.file = 'New Project';
+        }
     }
 }
 }

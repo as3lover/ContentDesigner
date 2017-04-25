@@ -12,7 +12,7 @@ import flash.events.Event;
 	{
 		private var _contextMenu:NativeMenu;
         private const NEW:String = 'New';
-        private const OPEN:String = 'Open';
+        private const OPEN:String = 'Open ...';
         private const SAVE:String = 'Save';
         private const SAVE_AS:String = 'Save As ...';
         private var _stage:Stage;
@@ -43,7 +43,7 @@ import flash.events.Event;
 
         private function openMenu(event:MouseEvent):void
         {
-            _contextMenu.display(_stage, 0, 0);
+            _contextMenu.display(_stage, 0, 24);
         }
 
         function selectItem(menuEvent:Event):void

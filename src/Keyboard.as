@@ -18,6 +18,9 @@ public class Keyboard
         if(Main.panel.visible && !Main.transformer._target)
                 return;
 
+        if(Main.textEditor.visible)
+                return;
+
         switch (e.keyCode)
         {
             case 37://Left Arrow

@@ -4,6 +4,7 @@
 package
 {
 import flash.display.Bitmap;
+import flash.display.DisplayObject;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
@@ -50,6 +51,8 @@ public class TimeLine extends Sprite
     private var _soundFile:String;
     private var _pathHolder:Object={};
     private var _t:TextFormat;
+    private var _t2:TextFormat;
+    private var _t3:TextFormat;
 
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
@@ -60,63 +63,74 @@ public class TimeLine extends Sprite
 
         _sound = new soundPlayer();
 
-        //==========Seek Bar
-        _timeBar = new TimeBar();
-        _timeBar.x = 150;
-        _timeBar.y = 400;
-        _timeBar.width = 500;
-        _timeBar.onChange = changePercent;
-        _timeBar.start();
-        addChild(_timeBar);
+
+
+        var X:int = 20;
+        var X2:int = 620;
+        var Y = 387;
+        var dis:int = 10;
+        var textWidth:int = 90;
+        var textHeigth:int = 30;
+
 
         //==========Button
-        /*
-        _playBtn = new Button('>||',0,0,40,20);
-        _playBtn.x = _timeBar.x - _playBtn.width - 5;
-        _playBtn.y = _timeBar.y - 5;
-        _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
-        addChild(_playBtn);
-        */
         _playBtn = new Sprite();
         Utils.drawRect(_playBtn,0,0,24,24,0xffffff);
         var bit:Bitmap = new assets.Play();
         bit.smoothing = true;
-        bit.width = bit.height = 24
+        bit.width = bit.height = 24;
         _playBtn.addChild(bit);
-        _playBtn.x = _timeBar.x - _playBtn.width - 5;
-        _playBtn.y = _timeBar.y - 5;
-        _playBtn.x -=2;
-        _playBtn.y -=2;
+        _playBtn.x = X + 40;
+        _playBtn.y = Y;
         addChild(_playBtn);
         _playBtn.addEventListener(MouseEvent.CLICK, onPausePlayBtn);
 
+
+        //==========Seek Bar
+        _timeBar = new TimeBar();
+        _timeBar.x = _playBtn.width + _playBtn.x + dis;
+        _timeBar.y = (_playBtn.y + _playBtn.height/2) - _timeBar.height/2;
+        _timeBar.width = X2 - _timeBar.x;
+        _timeBar.onChange = changePercent;
+        _timeBar.start();
+        addChild(_timeBar);
 
         //==========Text Fields
         _currentBox = new TextField();
         _totalBox = new TextField();
 
-        _currentBox.width = _totalBox.width = 60;
-        _currentBox.height = _totalBox.height = 20;
+        _currentBox.width = _totalBox.width = textWidth;
+        _currentBox.height = _totalBox.height = textHeigth;
 
-        _currentBox.x = _playBtn.x - _currentBox.width - 4;
-        _totalBox.x = _timeBar.x + _timeBar.width + 10;
+        _currentBox.x = _timeBar.x;
+        _totalBox.x = X2 - _totalBox.width;
 
-        _currentBox.y = _timeBar.y + (_timeBar.height - _currentBox.height) / 2;
+        _currentBox.y = _timeBar.y + _timeBar.height;
         _totalBox.y = _currentBox.y;
 
         _t = new TextFormat();
-        _t.align = TextFormatAlign.RIGHT;
+        _t2 = new TextFormat();
+        _t3 = new TextFormat();
+        _t3.font = _t2.font = _t.font = "B Yekan"
+        _t3.size = _t.size = 15;
+        _t2.size = 12;
+        _t3.color = _t.color = 0xffffff;
+        _t2.color = 0x222222;
+        _t2.align = _t.align = TextFormatAlign.LEFT;
+        _t3.align = TextFormatAlign.RIGHT;
 
-        _currentBox.type = 'input';
-        _currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
-        _currentBox.addEventListener(FocusEvent.FOCUS_OUT, focusOutCurrentBox);
+        //_currentBox.type = 'input';
+        //_currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
+        //_currentBox.addEventListener(FocusEvent.FOCUS_OUT, focusOutCurrentBox);
 
         addChild(_currentBox);
         addChild(_totalBox);
 
+
         //================ init
         totalSec = 20;
         currentSec = 0;
+
     }
 
 
@@ -242,6 +256,7 @@ public class TimeLine extends Sprite
         _totalMSec = value;
         _totalSec = value / 1000;
         _totalBox.text = totalTime;
+        _totalBox.setTextFormat(_t3);
         //update timeBar
         _timeBar.percent = currentMSec / totalMSec;
     }
@@ -304,8 +319,9 @@ public class TimeLine extends Sprite
     //Show Time
     private function showTime():void
     {
-        _currentBox.text = currentTime + ' : ' + String(Utils.addZero(int((currentSec - int(currentSec))*100)));
+        _currentBox.text = currentTime + '.' + String(Utils.addZero(int((currentSec - int(currentSec))*100)));
         _currentBox.setTextFormat(_t)
+        _currentBox.setTextFormat(_t2, _currentBox.length-3, _currentBox.length);
     }
 
     ///////////////// Insert Current Time By User
@@ -317,11 +333,24 @@ public class TimeLine extends Sprite
     private function focusInCurrentBox(event:FocusEvent):void
     {
         stage.addEventListener(KeyboardEvent.KEY_DOWN, key);
+        stage.addEventListener(MouseEvent.MOUSE_DOWN, down);
+    }
+
+    private function down(e:MouseEvent):void
+    {
+        if(!Utils.isParentOf(stage, this, e.target as DisplayObject))
+        {
+            changeTime();
+            if(stage.focus == _currentBox);
+                stage.focus = null;
+        }
     }
 
     private function focusOutCurrentBox(event:FocusEvent):void
     {
         stage.removeEventListener(KeyboardEvent.KEY_DOWN, key);
+        stage.removeEventListener(MouseEvent.MOUSE_DOWN, down);
+
         changeTime();
     }
 
@@ -399,6 +428,20 @@ public class TimeLine extends Sprite
         _soundFile = null;
         currentSec = 0;
         totalSec = 20;
+    }
+
+    public function get typing():Boolean
+    {
+        if(stage.focus == _currentBox)
+                return true;
+        else
+                return false;
+    }
+
+    public function toPause():void
+    {
+        if(!_paused)
+                pause()
     }
 }
 }

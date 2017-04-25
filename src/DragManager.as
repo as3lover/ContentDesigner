@@ -11,6 +11,7 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
+import flash.events.MouseEvent;
 import flash.events.NativeDragEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
@@ -18,6 +19,8 @@ import flash.filesystem.FileStream;
 import flash.geom.Point;
 import flash.utils.ByteArray;
 import com.greensock.layout.*;
+
+import flash.utils.setTimeout;
 
 import items.Item;
 
@@ -40,6 +43,7 @@ public class DragManager extends Sprite
     private var _width:int;
     private var _height:int;
     private var _color:uint;
+    private var colorPicker:ColorPicker;
 
     public function DragManager(x:int, y:int, width:int, height:int, onAddObject:Function, stage:Stage, removeAnimation:Function)
     {
@@ -50,7 +54,7 @@ public class DragManager extends Sprite
         _height = height;
 
         _target = new Sprite();
-        this.color = 0xffffff;
+        this.color = 0x3399cc;
         _target.x = x;
         _target.y = y;
         _target.width = width;
@@ -69,13 +73,37 @@ public class DragManager extends Sprite
 
         _nativeMouse = new NativeMouse();
 
-        var color:ColorPicker = new ColorPicker();
-        color.editable = true;
-        color.move(10, 10);
-        color.x = _target.x;
-        color.y = _target.y + _target.height + 10;
-        Main.topics.parent.addChild(color);
-        color.addEventListener(ColorPickerEvent.CHANGE, changeColor);
+        addEventListener(Event.ADDED_TO_STAGE, init);
+    }
+
+    private function init(event:Event):void
+    {
+        colorPicker = new ColorPicker();
+        Main.MAIN.addChild(colorPicker);
+        setTimeout(init2,1000);
+    }
+
+    private function init2():void
+    {
+        colorPicker.editable = true;
+        colorPicker.move(10, 10);
+        colorPicker.x = _target.x;
+        colorPicker.y = _target.y + _target.height + 10;
+        colorPicker.addEventListener(ColorPickerEvent.CHANGE, changeColor);
+        colorPicker.addEventListener(Event.CLOSE, onClose);
+        colorPicker.enabled = false;
+        colorPicker.addEventListener(MouseEvent.MOUSE_DOWN, down);
+        function onClose(e)
+        {
+            colorPicker.enabled = false;
+            if(stage.focus = colorPicker)
+                stage.focus = null;
+        }
+        function down(e)
+        {
+            colorPicker.enabled = true;
+            colorPicker.open();
+        }
     }
 
     private function changeColor(e:ColorPickerEvent):void
@@ -285,6 +313,7 @@ public class DragManager extends Sprite
 
     public function reset():void
     {
+        color = 0x3399cc;
         var i:int = _target.numChildren - 1;
         for(i; i>-1; i--)
         {

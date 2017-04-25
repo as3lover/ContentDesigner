@@ -77,10 +77,11 @@ public class AnimationControl
 
     public function addLoaded(holder:Item, startTime:Number, stopTime:Number, showDuration:Number, hideDuration:Number):void
     {
-        var anim:AnimateObject = new AnimateObject(holder, startTime);
+        var anim:AnimateObject = new AnimateObject(holder, startTime, true);
         anim.stopTime = stopTime
         anim.duration(showDuration, hideDuration);
         anim.time = 0;
+
         _list.push(anim);
     }
 
@@ -100,6 +101,8 @@ public class AnimationControl
                 {
                     AnimateObject(_list[j]).object.setIndex();
                 }
+                Main.changed = false;
+                time = Utils.time;
                 return;
             }
 
@@ -111,7 +114,7 @@ public class AnimationControl
         {
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onComplete);
             i++;
-            trace('load', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+
             Main._progress.percent = i/len;
             Main._progress.text = 'Loading Files ' + i + ' / ' + len;
             setTimeout(load, 10);
@@ -129,6 +132,7 @@ public class AnimationControl
         {
             var obj:Object = AnimateObject(_list[i]).all;
             object['obj_' + String(i)] = obj;
+
         }
 
         object.number = number;
@@ -170,7 +174,7 @@ public class AnimationControl
         {
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onComplete);
             i++;
-            trace('save', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+
             Main._progress.percent = i/len;
             Main._progress.text = 'Saving Files ' + i + ' / ' + len;
 
@@ -196,7 +200,7 @@ public class AnimationControl
         {
             AnimateObject(_list[i]).object.removeEventListener(Event.COMPLETE, onCompleteMove);
             i++;
-            trace('move', i, '/', len, '=', int((100 * i / len)*100)/100, '%');
+
             Main._progress.percent = i/len;
             Main._progress.text = 'Saving Settings ' + i + ' / ' + len;
 
@@ -209,9 +213,9 @@ public class AnimationControl
     {
         SaveFile.save(saveObject, Utils.time);
 
-        trace('==========================================')
+
         trace('============ FINISH SAVING ===============');
-        trace('==========================================')
+
     }
 
     public function get savedDirectory():String

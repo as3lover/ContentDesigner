@@ -83,7 +83,7 @@ public class TopicItem extends Sprite
 
         _text = value;
         removeChildren();
-        addChild(new Button(_text, 0, 0, 100));
+        addChild(new Button(_text, 0, 0, 135));
 
     }
 

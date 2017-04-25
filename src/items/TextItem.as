@@ -105,7 +105,7 @@ public class TextItem extends Item
 
         _sprite = new Sprite();
         Utils.drawRect(_sprite,0,0,_box.width,_box.height);
-        _sprite.alpha = 0.05;
+        _sprite.alpha = 0;
         addChild(_sprite);
 
         editable = false;
