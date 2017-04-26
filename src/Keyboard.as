@@ -15,7 +15,6 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
-        trace(e.keyCode, e.charCode)
         if(Main.panel.visible && !Main.transformer._target)
                 return;
 
