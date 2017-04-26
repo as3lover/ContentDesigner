@@ -149,7 +149,7 @@ public class AnimationControl
 
     public function saveFiles():void
     {
-        _savedDirectory = FileManager.folder.nativePath + '/' +  FileManager.file.name.split('.')[0] + '_files';
+        _savedDirectory = FileManager.itemsFolder;
 
         var i:int = 0;
         var len:int = _list.length;

@@ -18,6 +18,7 @@ public class saveItem extends EventDispatcher
 
     public static function copyAndRename(currentPath:String, newDir:String, newName:String, pathHolder:Object, afterCopy:Function):void
     {
+        trace('copy', currentPath);
         var newPath:String = newDir + newName;
         if(newPath == currentPath)
         {
@@ -54,6 +55,8 @@ public class saveItem extends EventDispatcher
             try
             {
                 file.moveTo(des, true);
+                trace('rename from', file.nativePath);
+                trace('rename to', des.nativePath);
             }
             catch (e){}
 

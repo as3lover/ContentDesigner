@@ -95,7 +95,18 @@ public class LoadFile
         Main.timeLine.currentSec = time;
         Main.changed = false;
         if(sound)
+        {
+            if (sound)
+            {
+                if(sound == 'file.voice')
+                {
+                    trace('new Sound:', FileManager.itemsFolder + '/' + sound);
+                    sound = FileManager.itemsFolder + '/' + sound;
+                }
+
                 Main.timeLine.sound = sound;
+            }
+        }
     }
 }
 }

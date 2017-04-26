@@ -6,6 +6,7 @@ package items
 
 
 import fl.text.TLFTextField;
+import flashx.textLayout.edit.EditManager;
 
 import flash.display.DisplayObject;
 import flash.display.Sprite;
@@ -20,6 +21,7 @@ import flash.ui.ContextMenuItem;
 import flash.utils.setTimeout;
 
 import flashx.textLayout.formats.Direction;
+import flashx.undo.UndoManager;
 
 import src2.Fonts;
 
@@ -37,7 +39,7 @@ public class TextItem extends Item
     private const margin:int = 25;
     private var _w:Number;
     private var _h:Number;
-    private const _defaultText:String = 'متن پیش فرض' ;
+    public static const DEFAULT_TEXT:String = 'متن پیش فرض' ;
     private var _formats:Array;
     private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading'];
     private var _typeEffect:ContextMenuItem;
@@ -79,6 +81,7 @@ public class TextItem extends Item
         */
         _fmt = new TextFormat();
         _box = new TLFTextField ;
+        //_box.textFlow.interactionManager = new EditManager(new UndoManager());
 
         _fmt.letterSpacing = 0;
         _fmt.leading = 1;  //فاصله بین خطوط
@@ -97,7 +100,7 @@ public class TextItem extends Item
 
         if(edit)
         {
-            text = _defaultText;
+            text = DEFAULT_TEXT;
             x = Main.dragManager.target.mouseX;
             y = Main.dragManager.target.mouseY;
             Main.dragManager.target.addChild(this);
@@ -313,12 +316,12 @@ public class TextItem extends Item
             //_box.border = true;
             _box.type = TextFieldType.INPUT;
             _sprite.visible = false;
-            stage.focus = _box;
             //addEventListener(Event.ENTER_FRAME, ef);
             _box.addEventListener(Event.CHANGE, changeTextt);
             Main.transformer.select(null);
             stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
             Main.panel.show(this);
+            setFocus();
         }
         else
         {
@@ -330,6 +333,18 @@ public class TextItem extends Item
             _sprite.visible = true;
             Main.panel.hide();
         }
+    }
+
+    public function setFocus():void
+    {
+        _box.textFlow.interactionManager = new EditManager();
+
+        if(_box.text == DEFAULT_TEXT)
+            _box.textFlow.interactionManager.selectRange(0, _box.text.length);
+        else
+            _box.textFlow.interactionManager.selectRange(_box.text.length, _box.text.length);
+
+        _box.textFlow.interactionManager.setFocus();
     }
 
     private function changeTextt(event:Event):void
@@ -488,6 +503,11 @@ public class TextItem extends Item
     public function getSpace():Number
     {
         return getProp('letterSpacing') as Number;
+    }
+
+    public function getColor():uint
+    {
+        return getProp('color') as uint;
     }
 
     public function getProp(prop:String):Object

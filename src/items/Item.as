@@ -13,6 +13,7 @@ import flash.display.LoaderInfo;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.filesystem.File;
 import flash.net.URLRequest;
 
 import saveLoad.saveItem;
@@ -41,6 +42,7 @@ public class Item extends Sprite
     protected var _bitmap:Bitmap;
     private var _pathHolder:Object={};
     private const _eventComplete:Event = new Event(Event.COMPLETE);
+    private var _fileName:String;
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
@@ -269,16 +271,17 @@ public class Item extends Sprite
     public function get all():Object
     {
         var obj = new Object();
-        obj.x = _x
-        obj.y = _y
-        obj.scaleX = _scaleX
-        obj.scaleY = _scaleY
-        obj.rotation = _rotation
+        obj.x = _x;
+        obj.y = _y;
+        obj.scaleX = _scaleX;
+        obj.scaleY = _scaleY;
+        obj.rotation = _rotation;
         obj.index = index;
-        obj.motion = _motion
-        obj.path = _path
+        obj.motion = _motion;
+        //obj.path = _path;
         obj.number = _number;
-        obj.type = 'image'
+        obj.type = 'image';
+        obj.fileName = _fileName;
         return obj;
     }
 
@@ -289,10 +292,11 @@ public class Item extends Sprite
         _scaleX = obj.scaleX;
         _scaleY = obj.scaleY;
         _rotation = obj.rotation;
-        _path = obj.path
+        //_path = obj.path;
         motion = obj.motion;
         _index = obj.index;
         _number = obj.number;
+        _fileName = obj.fileName;
 
     }
 
@@ -300,6 +304,14 @@ public class Item extends Sprite
     {
         var loader:Loader = new Loader();
         loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+
+        if(_fileName && FileManager.itemsFolder)
+        {
+            trace('path', _path)
+            _path = FileManager.itemsFolder + '/' + _fileName;
+            trace('new path:',_path)
+        }
+
         loader.load(new URLRequest(_path));
 
         function onComplete (event:Event):void
@@ -328,6 +340,9 @@ public class Item extends Sprite
         saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);
         function after():void
         {
+            trace('renamed:')
+            trace(_pathHolder.currentPath);
+            trace(_pathHolder.newPath);
             _path = _pathHolder.currentPath;
             dispatchComplete();
         }
@@ -339,6 +354,9 @@ public class Item extends Sprite
         function after():void
         {
             _path = _pathHolder.newPath;
+            trace('saved path', _path)
+            var f:File = new File(_path);
+            _fileName = f.name;
             dispatchComplete();
         }
     }

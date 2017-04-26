@@ -15,6 +15,7 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
+        trace(e.keyCode, e.charCode)
         if(Main.panel.visible && !Main.transformer._target)
                 return;
 
@@ -62,6 +63,26 @@ public class Keyboard
             case 88:// ctrl + X
                 if(e.ctrlKey)
                     Main.transformer.Cut();
+                break;
+
+            case 13:// Enter
+                Main.transformer.EnterKey();
+                break;
+
+            case 187:// Plus: +/=
+                Main.timeLine.zoom(+.1);
+                break;
+
+            case 189:// Mines: -/_
+                Main.timeLine.zoom(-.1);
+                break;
+
+            case 107:// Plus: +
+                Main.timeLine.zoom(+.1);
+                break;
+
+            case 109:// Mines: -
+                Main.timeLine.zoom(-.1);
                 break;
         }
     }

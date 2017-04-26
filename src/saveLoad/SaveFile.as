@@ -21,7 +21,14 @@ public class SaveFile
         var file:File = FileManager.file;
         obj.time = time;
         if(Main.timeLine.soundFile)
-            obj.sound = Main.timeLine.soundFile;
+        {
+            if(Main.timeLine.fileName)
+                obj.sound = Main.timeLine.fileName;
+            else
+                obj.sound = Main.timeLine.soundFile;
+
+            trace('save sound',obj.sound)
+        }
 
         obj.color = Main.dragManager.color;
 

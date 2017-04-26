@@ -56,8 +56,17 @@
 			
 			mySound = null;
 			mySound = new Sound();
-			mySound.load(new URLRequest(file), new SoundLoaderContext(buffer * 1000));
-			mySound.addEventListener(Event.COMPLETE,onLoadeded);
+            mySound.addEventListener(Event.COMPLETE,onLoadeded);
+			try{
+                mySound.load(new URLRequest(file), new SoundLoaderContext(buffer * 1000));
+			}
+			catch (e)
+			{
+				trace('can not load sound !!!!!!!!!!!!!!')
+				return;
+			}
+
+
 			this.addEventListener(Event.EXIT_FRAME,ef);
 		}
 		

@@ -1,6 +1,7 @@
 package {
 
-import fl.controls.ColorPicker;
+import components.ColorPicker;
+
 import fl.events.ColorPickerEvent;
 
 import flash.desktop.ClipboardFormats;
@@ -16,6 +17,7 @@ import flash.events.NativeDragEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
+import flash.geom.ColorTransform;
 import flash.geom.Point;
 import flash.utils.ByteArray;
 import com.greensock.layout.*;
@@ -26,6 +28,8 @@ import items.Item;
 
 import org.log5f.air.extensions.mouse.NativeMouse;
 import org.log5f.air.extensions.mouse.events.NativeMouseEvent;
+
+import src2.ColorSelector;
 
 import src2.Utils;
 
@@ -43,7 +47,6 @@ public class DragManager extends Sprite
     private var _width:int;
     private var _height:int;
     private var _color:uint;
-    private var colorPicker:ColorPicker;
 
     public function DragManager(x:int, y:int, width:int, height:int, onAddObject:Function, stage:Stage, removeAnimation:Function)
     {
@@ -78,46 +81,27 @@ public class DragManager extends Sprite
 
     private function init(event:Event):void
     {
-        colorPicker = new ColorPicker();
-        Main.MAIN.addChild(colorPicker);
-        setTimeout(init2,1000);
+        var selector:ColorSelector = new ColorSelector(Main.colorPicker, changeColor);
+        selector.color = color;
+        selector.x = _target.x;
+        selector.y = _target.y + _target.height + 10;
+        Main.MAIN.addChild(selector);
     }
 
-    private function init2():void
-    {
-        colorPicker.editable = true;
-        colorPicker.move(10, 10);
-        colorPicker.x = _target.x;
-        colorPicker.y = _target.y + _target.height + 10;
-        colorPicker.addEventListener(ColorPickerEvent.CHANGE, changeColor);
-        colorPicker.addEventListener(Event.CLOSE, onClose);
-        colorPicker.enabled = false;
-        colorPicker.addEventListener(MouseEvent.MOUSE_DOWN, down);
-        function onClose(e)
-        {
-            colorPicker.enabled = false;
-            if(stage.focus = colorPicker)
-                stage.focus = null;
-        }
-        function down(e)
-        {
-            colorPicker.enabled = true;
-            colorPicker.open();
-        }
-    }
-
-    private function changeColor(e:ColorPickerEvent):void
+    private function changeColor(newColor:uint):void
     {
         Main.changed = true;
-        color = uint("0x" + e.target.hexValue);
+        color = newColor;
     }
 
     public function set color(color:uint):void
     {
         _color = color;
+        _target.graphics.clear();
         _target.graphics.lineStyle(1, 0x0, 1);
         _target.graphics.beginFill(color, 1);
         _target.graphics.drawRect(0, 0, _width, _height);
+        _target.graphics.endFill();
     }
 
     public function get color():uint

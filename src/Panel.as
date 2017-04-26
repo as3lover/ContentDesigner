@@ -6,34 +6,23 @@ package
 import fl.controls.ComboBox;
 import fl.controls.NumericStepper;
 import fl.data.DataProvider;
-
-import flash.display.Bitmap;
-
 import flash.display.Shape;
-
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.text.TextFormat;
-import flash.utils.setTimeout;
-
 import items.TextItem;
-
+import src2.ColorSelector;
 import src2.Fonts;
-
 import src2.Utils;
 
 public class Panel extends Sprite
 {
-    import fl.controls.ColorPicker;
-    import fl.events.ColorPickerEvent;
-
     private  var selectedText:TextItem;
     private var _opened:Boolean;
     private var _size:NumericStepper;
     private var _leading:NumericStepper;
     private var _space:NumericStepper;
     private var _fontList:ComboBox;
-    private var color:ColorPicker;
+    private var _selector:ColorSelector;
 
     public function Panel()
     {
@@ -44,22 +33,12 @@ public class Panel extends Sprite
     {
         hide();
 
-        color = new ColorPicker();
-        addChild(color);
-        setTimeout(init2,1000);
-    }
+        _selector = new ColorSelector(Main.colorPicker, changeColor);
+        _selector.x = 10;
+        _selector.y = 10;
+        addChild(_selector);
 
-    private function init2():void
-    {
-
-        color.editable = true;
-        color.move(10, 10);
-        color.addEventListener(ColorPickerEvent.CHANGE, changeHandler);
-        color.addEventListener(Event.OPEN, open);
-        color.addEventListener(Event.CLOSE, close);
-
-
-        _size = addNumber(1,100,1, color.x, color.y + color.height + 10);
+        _size = addNumber(1,100,1, _selector.x, _selector.y + _selector.height + 10);
         _leading = addNumber(0,100,1, _size.x, _size.y + _size.height + 10);
         _space = addNumber(1,40,1, _leading.x, _leading.y + _leading.height + 10);
 
@@ -170,30 +149,19 @@ public class Panel extends Sprite
         _size.value = textI.getSize();
         _space.value = (textI.getSpace() + 2)*10;
         _leading.value = textI.getLeading();
-        color.enabled = true;
+        _selector.color = textI.getColor();
         visible = true;
     }
 
-    private function changeHandler (event:ColorPickerEvent):void
+    private function changeColor (color:uint):void
     {
-        var newuint = uint("0x"+event.target.hexValue);
-        selectedText.setColor(newuint);
+        selectedText.setColor(color);
     }
 
     public function hide():void
     {
-        setTimeout(a,1)
-
         visible = false;
     }
 
-    private function a():void
-    {
-        if(color && !visible)
-        {
-            color.close();
-            color.enabled = false;
-        }
-    }
 }
 }

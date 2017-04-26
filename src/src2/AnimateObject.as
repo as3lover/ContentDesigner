@@ -20,17 +20,17 @@ public class AnimateObject
 
     public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
     {
+
         _object = object;
         _object.addEventListener(Event.CLEAR, onClear);
-        if(!loadedObject)
-            _object.addEventListener(Event.ADDED, onAdd);
+        _object.addEventListener(Event.ADDED, onAdd);
 
         this.startTime = startTime;
     }
 
     private function onAdd(event:Event):void
     {
-        //startTime = Utils.time;
+        startTime = Utils.time;
 
         if(Main.changed)
             show();

@@ -3,8 +3,11 @@
  */
 package
 {
+import cmodule.aircall._imalloc;
+
 import flash.display.Bitmap;
 import flash.display.DisplayObject;
+import flash.filesystem.File;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
@@ -53,6 +56,8 @@ public class TimeLine extends Sprite
     private var _t:TextFormat;
     private var _t2:TextFormat;
     private var _t3:TextFormat;
+    public var fileName:String;
+    private const DEFAULT_TIME:int = 120;
 
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
@@ -87,13 +92,66 @@ public class TimeLine extends Sprite
 
 
         //==========Seek Bar
-        _timeBar = new TimeBar();
+        var dif:int = 8;
+        _timeBar = new TimeBar(0,0xffffff,10000,_playBtn.height-dif);
         _timeBar.x = _playBtn.width + _playBtn.x + dis;
-        _timeBar.y = (_playBtn.y + _playBtn.height/2) - _timeBar.height/2;
+        _timeBar.y = _playBtn.y + dif;
         _timeBar.width = X2 - _timeBar.x;
         _timeBar.onChange = changePercent;
         _timeBar.start();
         addChild(_timeBar);
+
+        var handle:Handle = new Handle(_timeBar.height);
+        //handle.height = _timeBar.height;
+        _timeBar.handle = handle;
+        addChild(handle)
+
+        var mask:Sprite = new Sprite();
+        Utils.drawRect(mask, 0, 0, _timeBar.width, _timeBar.height);
+        mask.x = _timeBar.x;
+        mask.y = _timeBar.y;
+        addChild(mask);
+        _timeBar.mask = mask;
+
+
+        var lineBack:Sprite = new Sprite();
+        Utils.drawRect(lineBack, 0,0,mask.width, dif-3, 0x000000);
+        lineBack.x = mask.x;
+        lineBack.y = mask.y - dif;
+        addChild(lineBack);
+
+        var line:Sprite = new Sprite();
+        Utils.drawRect(line, 0,0,mask.width, dif-3, 0x777777);
+        lineBack.addChild(line);
+        lineBack.addEventListener(Event.ENTER_FRAME, ef);
+        lineBack.addEventListener(MouseEvent.MOUSE_DOWN, onLine);
+        var handle2:Sprite = new Sprite();
+        Utils.drawRect(handle2,-1,lineBack.y,2,lineBack.height,0xff0000)
+        addChild(handle2);
+        var down:Boolean = false;
+        function ef(event:Event):void
+        {
+            line.scaleX = mask.width/_timeBar.width;
+            line.x = ((mask.x-_timeBar.x) / _timeBar.width) * mask.width;
+            handle2.x = lineBack.x + _timeBar.percent*lineBack.width;
+
+            if(down)
+            {
+                changePercent(lineBack.mouseX/lineBack.width)
+                _timeBar.x = mask.x - ((lineBack.mouseX - line.width/2)/lineBack.width)*_timeBar.width;
+            }
+        }
+        function onLine(e:MouseEvent):void
+        {
+            down = true;
+            stage.addEventListener(MouseEvent.MOUSE_UP, upLine)
+        }
+        function upLine(event:MouseEvent):void
+        {
+            down = false;
+            stage.removeEventListener(MouseEvent.MOUSE_UP, upLine)
+
+        }
 
         //==========Text Fields
         _currentBox = new TextField();
@@ -128,10 +186,12 @@ public class TimeLine extends Sprite
 
 
         //================ init
-        totalSec = 20;
+        totalSec = DEFAULT_TIME;
         currentSec = 0;
 
     }
+
+
 
 
     //////////////////////
@@ -253,12 +313,14 @@ public class TimeLine extends Sprite
         if(value < 0)
             value = 0;
 
+        _timeBar.reset();
         _totalMSec = value;
         _totalSec = value / 1000;
         _totalBox.text = totalTime;
         _totalBox.setTextFormat(_t3);
         //update timeBar
         _timeBar.percent = currentMSec / totalMSec;
+        _timeBar.totalTime = totalSec;
     }
 
     /////////////// Current Time (String)
@@ -391,6 +453,8 @@ public class TimeLine extends Sprite
         function after():void
         {
             _soundFile = _pathHolder.newPath;
+            var f:File = new File(_pathHolder.newPath);
+            fileName = f.name;
             dispatchComplete();
         }
     }
@@ -424,10 +488,12 @@ public class TimeLine extends Sprite
     {
         if(!_paused)
                 pause();
+        _timeBar.reset();
         _sound.reset();
         _soundFile = null;
         currentSec = 0;
-        totalSec = 20;
+        totalSec = DEFAULT_TIME;
+        fileName = null;
     }
 
     public function get typing():Boolean
@@ -442,6 +508,11 @@ public class TimeLine extends Sprite
     {
         if(!_paused)
                 pause()
+    }
+
+    public function zoom(value:Number):void
+    {
+        _timeBar.setZoom(value);
     }
 }
 }

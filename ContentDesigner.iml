@@ -29,6 +29,9 @@
             <entry library-id="42633fde-7565-43f2-9c5c-e785dd9fb1fc">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -122,6 +125,16 @@
         <properties id="42633fde-7565-43f2-9c5c-e785dd9fb1fc" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/assets/dialog.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../newColorPicker.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

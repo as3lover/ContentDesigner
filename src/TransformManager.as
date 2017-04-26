@@ -251,5 +251,15 @@ public class TransformManager
             _target.updateTransform();
         }
     }
+
+    public function EnterKey():void
+    {
+        if(_target is TextItem)
+        {
+            var t:TextItem = TextItem(_target);
+            deselect();
+            t.editable = true;
+        }
+    }
 }
 }

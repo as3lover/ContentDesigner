@@ -16,6 +16,7 @@ public class FileManager
     private static var _file:File;
     public static var folder:File = File.documentsDirectory;
     private static var retryFunction:Function;
+    private static var _itemsFolder:String;
 
     public function FileManager()
     {
@@ -123,11 +124,20 @@ public class FileManager
         if(_file)
         {
             TitleBar.file = _file.nativePath;
+            _itemsFolder = FileManager.file.nativePath.slice(0, FileManager.file.nativePath.length - FileManager.file.name.length)
+            + FileManager.file.name.split('.')[0] + '_files';
+            trace('item folder:', _itemsFolder)
         }
         else
         {
             TitleBar.file = 'New Project';
+            _itemsFolder = null;
         }
+    }
+
+    public static function get itemsFolder():String
+    {
+        return _itemsFolder;
     }
 }
 }

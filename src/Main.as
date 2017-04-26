@@ -1,5 +1,6 @@
 package {
 
+import components.ColorPicker;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.display.Stage;
@@ -31,12 +32,17 @@ public class Main extends Sprite
     public static var _progress:progressBar;
     private static var _changed:Boolean = false;
     private static var _alert:AlertBox;
-    public static const child:Sprite = new Sprite();
     public static var STAGE:Stage;
     public static var MAIN:Main;
+    public static var colorPicker:ColorPicker;
 
     public function Main()
     {
+        colorPicker = new ColorPicker();
+        addChild(colorPicker);
+        colorPicker.x = 800/2;
+        colorPicker.y = 450/2;
+
         this.addEventListener(Event.ADDED_TO_STAGE, init);
     }
 
