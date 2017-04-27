@@ -4,11 +4,12 @@
 package src2
 {
 import flash.events.Event;
+import flash.events.EventDispatcher;
 
 import items.Item;
 import items.TextItem;
 
-public class AnimateObject
+public class AnimateObject extends EventDispatcher
 {
     private var _object:Item;
     private var _startTime:Number;
@@ -16,24 +17,38 @@ public class AnimateObject
     private var _stopTime:Number = -1;
     private var _hideDuration:Number = 1;
     private var _time:Number = -1;
+    private var _changeEvent:Event;
 
 
     public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
     {
+        _changeEvent = new Event(Event.CHANGE);
 
         _object = object;
         _object.addEventListener(Event.CLEAR, onClear);
         _object.addEventListener(Event.ADDED, onAdd);
-
+        _object.addEventListener('startTime', changeStartTime);
+        trace('AnimateObject');
         this.startTime = startTime;
+    }
+
+    private function changeStartTime(event:Event):void
+    {
+        startTime = Utils.time;
+        dispatchChangeEvent();
     }
 
     private function onAdd(event:Event):void
     {
-        startTime = Utils.time;
+        //trace('onAdd');
+
+        //startTime = Utils.time;
 
         if(Main.changed)
             show();
+
+        //dispatchChangeEvent();
+
     }
 
     private function onClear(event:Event):void
@@ -42,6 +57,13 @@ public class AnimateObject
             show();
 
         stopTime =  Utils.time;
+
+        dispatchChangeEvent();
+    }
+
+    private function dispatchChangeEvent():void
+    {
+        dispatchEvent(_changeEvent);
     }
 
     public function get time():Number
@@ -76,6 +98,9 @@ public class AnimateObject
         {
             hide();
         }
+
+        dispatchChangeEvent();
+
     }
 
     private function show(percent:Number = 1):void
@@ -124,6 +149,11 @@ public class AnimateObject
     public function set startTime(value:Number):void
     {
         _startTime = value;
+        trace('start', value);
+        if(Utils.time < _startTime)
+            Main.timeLine.setTimeByTopic(_startTime);
+
+            dispatchChangeEvent();
     }
 
     public function get stopTime():Number
@@ -133,11 +163,18 @@ public class AnimateObject
 
     public function set stopTime(value:Number):void
     {
-
         if(value < _startTime + _showDuration && value != -1)
             value = _startTime + _showDuration;
 
+
         _stopTime = value;
+        trace('stop', value);
+
+        if(Utils.time > _stopTime)
+            Main.timeLine.setTimeByTopic(_stopTime);
+
+        dispatchChangeEvent();
+
     }
 
     public function get object():Item

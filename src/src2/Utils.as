@@ -3,14 +3,18 @@
  */
 package src2
 {
+import fl.controls.NumericStepper;
 import fl.text.TLFTextField;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.DisplayObject;
+import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.display.Stage;
+import flash.events.Event;
 import flash.geom.Matrix;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
@@ -215,6 +219,34 @@ public class Utils
         trace(tab , obj, obj.name);
         if(obj.parent)
                 traceParents(obj.parent, tab + '\t')
+    }
+
+    public static function numericStepper(parent:DisplayObjectContainer, min:int, max:int, step:Number, x:int, y:int, width:int, numberChange:Function):NumericStepper
+    {
+        var number:NumericStepper = new NumericStepper();
+        number.x = x;
+        number.y = y;
+        number.width = width;
+        number.minimum = min;
+        number.maximum = max;
+        number.stepSize = step;
+        number.addEventListener(Event.CHANGE, numberChange);
+        parent.addChild(number);
+        return number;
+    }
+
+    public static function getObjectIndex(list:Array, item:Object):int
+    {
+        var length:int = list.length;
+        for (var i: int = 0; i < length; i++)
+        {
+            if (list[i] == item)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
 }

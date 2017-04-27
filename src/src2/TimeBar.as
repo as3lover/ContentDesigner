@@ -23,12 +23,15 @@ public class TimeBar extends Sprite
     private var _x:Number;
     private var _handleX:Number;
     private var _distance:Number;
+    private var _line:Sprite;
 
 
     public function TimeBar(backColor:uint = 0, frontColor:uint = 0xffffff, width:uint = 1000, height:uint = 25)
     {
         _back = new Sprite();
         _bar = new Sprite();
+        _line = new Sprite();
+
 
         _lines = new Sprite();
         _back.addChild(_lines);
@@ -36,12 +39,18 @@ public class TimeBar extends Sprite
         _bar.alpha = .75;
         _bar.visible = false;
 
+        _line.visible = false;
+        _line.y = height - 2;
+
+
         Utils.drawRect(_back, 0, 0, width, height, backColor);
         Utils.drawRect(_bar, 0, 0, width, height, frontColor);
+        Utils.drawRect(_line,0,0,width,2,0xff9900);
 
 
         addChild(_back);
         addChild(_bar);
+        addChild(_line);
 
         _originalWidth = width;
 
@@ -244,7 +253,7 @@ public class TimeBar extends Sprite
         for(i; i<_originalWidth; i+=_step)
         {
             _lines.graphics.moveTo(i, 0);
-            _lines.graphics.lineTo(i, height);
+            _lines.graphics.lineTo(i, height/3);
             step++;
             if (step > 20)
             {
@@ -264,6 +273,23 @@ public class TimeBar extends Sprite
         percent = 0;
 
 
+    }
+
+    public function deselect():void
+    {
+        _line.visible = false;
+    }
+
+    public function select(start:Number, width:Number):void
+    {
+        _line.x = start * _back.width;
+        _line.width = width * _back.width;
+        _line.visible = true;
+    }
+
+    public function get handle():Handle
+    {
+        return _handle;
     }
 }
 }

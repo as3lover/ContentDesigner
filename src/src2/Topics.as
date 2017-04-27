@@ -68,6 +68,7 @@ public class Topics extends Sprite
         topic.time = seconds;
         topic.addEventListener(Event.ACTIVATE, clickOnTopic);
         sort(addTopic(topic));
+        ToolTip.add(topic, Utils.timeFormat(topic.time*1000));
         addChild(topic);
     }
 
@@ -91,6 +92,9 @@ public class Topics extends Sprite
         _len--;
         topic.time = seconds;
         addTopic(topic);
+        ToolTip.remove(topic);
+        ToolTip.add(topic, Utils.timeFormat(topic.time*1000));
+
         sort();
     }
 

@@ -5,6 +5,7 @@ package
 {
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
+import flash.text.TextField;
 
 public class Keyboard
 {
@@ -15,7 +16,10 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
-        if(Main.panel.visible && !Main.transformer._target)
+        if('onKeyDown', Main.STAGE.focus);
+        if(Main.STAGE.focus is TextField)
+                return;
+        if(Main.panel.visible && !Main.transformer.target)
                 return;
 
         if(Main.textEditor.visible)
@@ -24,14 +28,14 @@ public class Keyboard
         switch (e.keyCode)
         {
             case 37://Left Arrow
-                    if(Main.transformer._target)
+                    if(Main.transformer.target)
                         Main.transformer.moveLeft(e.ctrlKey, e.shiftKey);
                     else
                         Main.timeLine.stepBackward(e.ctrlKey, e.shiftKey);
                 break;
 
             case 39://Right Arrow
-                if(Main.transformer._target)
+                if(Main.transformer.target)
                     Main.transformer.moveRight(e.ctrlKey, e.shiftKey);
                 else
                 Main.timeLine.stepForward(e.ctrlKey, e.shiftKey);
@@ -82,6 +86,22 @@ public class Keyboard
 
             case 109:// Mines: -
                 Main.timeLine.zoom(-.1);
+                break;
+
+            case 35:// End
+                Main.timeLine.changePercent(1);
+                break;
+
+            case 36:// Home
+                Main.timeLine.changePercent(0);
+                break;
+
+            case 33:// Page up
+                Main.timeLine.stepUp();
+                break;
+
+            case 34:// Page Down
+                Main.timeLine.stepDown();
                 break;
         }
     }

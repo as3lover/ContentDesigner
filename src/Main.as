@@ -11,7 +11,11 @@ import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
 import items.Item;
 import items.TextItem;
+import items.TimeBox;
+import items.TimePanel;
+
 import src2.HightLigher;
+import src2.ToolTip;
 import src2.Topics;
 import src2.Utils;
 import texts.MainTextEditor;
@@ -35,6 +39,7 @@ public class Main extends Sprite
     public static var STAGE:Stage;
     public static var MAIN:Main;
     public static var colorPicker:ColorPicker;
+    public static var timePanel:TimePanel;
 
     public function Main()
     {
@@ -50,6 +55,8 @@ public class Main extends Sprite
     {
         STAGE = stage;
         MAIN = this;
+
+        ToolTip.start(stage);
 
         _alert = new AlertBox();
         addChild(_alert);
@@ -178,9 +185,15 @@ public class Main extends Sprite
         addChild(textEditor);
 
         //////////////
+
+        timePanel = new TimePanel();
+        timePanel.x = dragManager.target.x + dragManager.target.width;
+        timePanel.y = dragManager.target.y;
+        addChild(timePanel);
+
         panel = new Panel();
-        panel.x = dragManager.target.x + dragManager.target.width;
-        panel.y = dragManager.target.y;
+        panel.x = timePanel.x
+        panel.y = timePanel.y + timePanel.height - 10;
         addChild(panel);
 
 

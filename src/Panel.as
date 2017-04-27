@@ -38,9 +38,9 @@ public class Panel extends Sprite
         _selector.y = 10;
         addChild(_selector);
 
-        _size = addNumber(1,100,1, _selector.x, _selector.y + _selector.height + 10);
-        _leading = addNumber(0,100,1, _size.x, _size.y + _size.height + 10);
-        _space = addNumber(1,40,1, _leading.x, _leading.y + _leading.height + 10);
+        _size = Utils.numericStepper(this, 1,100,1, _selector.x, _selector.y + _selector.height + 10, 60, numberChange);
+        _leading = Utils.numericStepper(this, 0,100,1, _size.x, _size.y + _size.height + 10, 60, numberChange);
+        _space = Utils.numericStepper(this,1,40,1, _leading.x, _leading.y + _leading.height + 10, 60, numberChange);
 
         var text:Sprite;
 
@@ -85,27 +85,15 @@ public class Panel extends Sprite
 
 
         var back:Shape = new Shape();
-        Utils.drawRect(back, 0, 0, width + 20, height - 20);
+        Utils.drawRect(back, 0, 0, width + 20, height - 58);
         addChildAt(back, 0);
+
+        trace(width)
     }
 
     private function selectFont(event:Event):void
     {
         selectedText.setFont(_fontList.selectedItem.data as String);
-    }
-
-    private function addNumber(min:int, max:int, step:Number, x:int, y:int):NumericStepper
-    {
-        var number:NumericStepper = new NumericStepper();
-        number.x = x;
-        number.y = y;
-        number.width = 60;
-        number.minimum = min;
-        number.maximum = max;
-        number.stepSize = step;
-        number.addEventListener(Event.CHANGE, numberChange)
-        addChild(number);
-        return number;
     }
 
     private function numberChange(e:Event):void

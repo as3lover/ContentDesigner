@@ -11,6 +11,8 @@ import flash.filesystem.File;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
+import items.Item;
+
 import saveLoad.saveItem;
 import soundPlayer;
 
@@ -21,6 +23,8 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.utils.getTimer;
+
+import src2.AnimateObject;
 
 import src2.TimeBar;
 
@@ -58,6 +62,7 @@ public class TimeLine extends Sprite
     private var _t3:TextFormat;
     public var fileName:String;
     private const DEFAULT_TIME:int = 120;
+    private var _animation:AnimateObject;
 
     public function TimeLine(transformer:TransformManager, updateFunction)
     {
@@ -93,7 +98,7 @@ public class TimeLine extends Sprite
 
         //==========Seek Bar
         var dif:int = 8;
-        _timeBar = new TimeBar(0,0xffffff,10000,_playBtn.height-dif);
+        _timeBar = new TimeBar(0,0xffffff,20000,_playBtn.height-dif);
         _timeBar.x = _playBtn.width + _playBtn.x + dis;
         _timeBar.y = _playBtn.y + dif;
         _timeBar.width = X2 - _timeBar.x;
@@ -212,7 +217,7 @@ public class TimeLine extends Sprite
     }
 
     //////////////////////Change percent by user click on timeBar
-    private function changePercent(percent:Number):void
+    public function changePercent(percent:Number):void
     {
         _transformer.deselect();
         if(!_paused && _soundFile)
@@ -513,6 +518,49 @@ public class TimeLine extends Sprite
     public function zoom(value:Number):void
     {
         _timeBar.setZoom(value);
+    }
+
+    public function select(obj:Item):void
+    {
+        _timeBar.deselect();
+
+        if(_animation)
+            _animation.removeEventListener(Event.CHANGE, changeAnim);
+
+        if(obj)
+        {
+            _animation = obj.animation;
+            _animation.addEventListener(Event.CHANGE, changeAnim);
+            changeAnim();
+        }
+    }
+
+    private function changeAnim(e:Event = null):void
+    {
+        if(!_animation)
+                return;
+
+        var stop:Number = _animation.stopTime;
+        if(stop == -1)
+                stop = totalSec;
+        var duration:Number = stop - _animation.startTime;
+
+        _timeBar.select(_animation.startTime/totalSec, duration/totalSec)
+    }
+
+    public function stepUp():void
+    {
+        var x:int = _timeBar.handle.x;
+        setTimeByTopic(currentSec + (_timeBar.mask.width/_timeBar.width)*totalSec);
+        _timeBar.x -= (_timeBar.handle.x - x)
+    }
+    public function stepDown():void
+    {
+        var x:int = _timeBar.handle.x;
+
+        setTimeByTopic(currentSec - (_timeBar.mask.width/_timeBar.width)*totalSec);
+        _timeBar.x -= (_timeBar.handle.x - x)
+
     }
 }
 }

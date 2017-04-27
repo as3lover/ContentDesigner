@@ -321,6 +321,7 @@ public class TextItem extends Item
             Main.transformer.select(null);
             stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
             Main.panel.show(this);
+            Main.timePanel.show(this);
             setFocus();
         }
         else
@@ -332,6 +333,7 @@ public class TextItem extends Item
             selectable = false;
             _sprite.visible = true;
             Main.panel.hide();
+            Main.timePanel.hide();
         }
     }
 

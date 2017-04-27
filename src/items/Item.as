@@ -18,6 +18,8 @@ import flash.net.URLRequest;
 
 import saveLoad.saveItem;
 
+import src2.AnimateObject;
+
 import src2.Consts;
 
 public class Item extends Sprite
@@ -43,6 +45,7 @@ public class Item extends Sprite
     private var _pathHolder:Object={};
     private const _eventComplete:Event = new Event(Event.COMPLETE);
     private var _fileName:String;
+    public var animation:AnimateObject;
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
@@ -204,7 +207,7 @@ public class Item extends Sprite
 
     public function Show():void
     {
-        dispatchEvent(new Event(Event.ADDED));
+        dispatchEvent(new Event('startTime'));
         //preview();
     }
 
@@ -384,7 +387,7 @@ public class Item extends Sprite
 
     public function updateTransform():void
     {
-        if(Main.transformer._target == this)
+        if(Main.transformer.target == this)
         {
             Main.transformer.select(null);
             Main.transformer.select(this);

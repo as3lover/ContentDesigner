@@ -11,11 +11,14 @@ import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
+import flash.text.TextField;
 import flash.utils.setTimeout;
 
 import items.Item;
 
 import items.TextItem;
+
+import src2.AnimateObject;
 
 import src2.Utils;
 
@@ -24,7 +27,8 @@ public class TransformManager
     public var stage:Stage;
     public var area:Sprite;
     private var _tool:TransformTool;
-    public var _target:Item;
+    private var _target:Item;
+    public var taaarget:Item;
     private var _clipBoardItem:Item;
 
     public function TransformManager(stage:Stage, area:Sprite)
@@ -44,7 +48,7 @@ public class TransformManager
 
     private function onKeyDown(e:KeyboardEvent):void
     {
-        if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46) && !Main.textEditor.visible)
+        if(_tool.target != null && (e.charCode == 127 || e.keyCode == 46) && !Main.textEditor.visible && !(stage.focus is TextField))
         {
             deleteObject();
         }
@@ -72,6 +76,7 @@ public class TransformManager
                     return;
         }
         _tool.select(e);
+
     }
 
     public function select(object:DisplayObject):void
@@ -90,41 +95,43 @@ public class TransformManager
     {
         if(_tool.target == null)
         {
-            if(_target != null)
+            if(target != null)
             {
-                deselectObject(_target);
-                _target = null;
+                deselectObject(target);
+                target = null;
             }
         }
         else
         {
-            if(_target == null)
+            if(target == null)
             {
-                _target = _tool.target as Item;
-                selectObject(_target);
+                target = _tool.target as Item;
+                selectObject(target);
             }
-            else if(_target != _tool.target)
+            else if(target != _tool.target)
             {
-                deselectObject(_target);
-                _target = _tool.target as Item;
-                selectObject(_target)
+                deselectObject(target);
+                target = _tool.target as Item;
+                selectObject(target)
             }
         }
     }
 
-    private function deselectObject(target:Item):void
+    private function deselectObject(item:Item):void
     {
-        target.changed
+        item.changed
         Main.panel.hide();
+        Main.timePanel.hide();
     }
 
-    private function selectObject(target:Item):void
+    private function selectObject(item:Item):void
     {
-        if(target && target.parent && target.parent == area)
+        if(item && item.parent && item.parent == area)
         {
             //area.setChildIndex(target, area.numChildren-1);
             area.setChildIndex(_tool, area.numChildren-1);
-            if(target is TextItem)Main.panel.show(target as TextItem);
+            Main.timePanel.show(item);
+            if(item is TextItem)Main.panel.show(item as TextItem);
         }
     }
 
@@ -142,15 +149,15 @@ public class TransformManager
     public function Copy():void
     {
         trace('copy');
-        if(_target)
+        if(target)
         {
-            if(_target is TextItem)
+            if(target is TextItem)
                 _clipBoardItem = new TextItem(Main.removeAnimation);
             else
-                _clipBoardItem = new Item(Main.removeAnimation, _target.path);
+                _clipBoardItem = new Item(Main.removeAnimation, target.path);
 
-            _target.changed;
-            var props:Object = _target.all;
+            target.changed;
+            var props:Object = target.all;
             props.x += 10;
             props.y += 10;
             _clipBoardItem.all = props;
@@ -176,9 +183,9 @@ public class TransformManager
     public function Cut():void
     {
         trace('cut');
-        if(_target)
+        if(target)
         {
-            _clipBoardItem = _target;
+            _clipBoardItem = target;
             deleteObject();
         }
     }
@@ -194,7 +201,7 @@ public class TransformManager
 
     public function moveLeft(ctrlKey:Boolean, shift:Boolean):void
     {
-        if(_target)
+        if(target)
         {
             var d:int = 5;
             if(ctrlKey)
@@ -202,14 +209,14 @@ public class TransformManager
             else if(shift)
                     d = 20;
 
-            _target.x -= d;
-            _target.updateTransform();
+            target.x -= d;
+            target.updateTransform();
         }
     }
 
     public function moveUp(ctrlKey:Boolean, shift:Boolean):void
     {
-        if(_target)
+        if(target)
         {
             var d:int = 5;
             if(ctrlKey)
@@ -217,14 +224,14 @@ public class TransformManager
             else if(shift)
                 d = 20;
 
-            _target.y -= d;
-            _target.updateTransform();
+            target.y -= d;
+            target.updateTransform();
         }
     }
 
     public function moveDown(ctrlKey:Boolean, shift:Boolean):void
     {
-        if(_target)
+        if(target)
         {
             var d:int = 5;
             if(ctrlKey)
@@ -232,14 +239,14 @@ public class TransformManager
             else if(shift)
                 d = 20;
 
-            _target.y += d;
-            _target.updateTransform();
+            target.y += d;
+            target.updateTransform();
         }
     }
 
     public function moveRight(ctrlKey:Boolean, shift:Boolean):void
     {
-        if(_target)
+        if(target)
         {
             var d:int = 5;
             if(ctrlKey)
@@ -247,19 +254,31 @@ public class TransformManager
             else if(shift)
                 d = 20;
 
-            _target.x += d;
-            _target.updateTransform();
+            target.x += d;
+            target.updateTransform();
         }
     }
 
     public function EnterKey():void
     {
-        if(_target is TextItem)
+        if(target is TextItem)
         {
-            var t:TextItem = TextItem(_target);
+            var t:TextItem = TextItem(target);
             deselect();
             t.editable = true;
+            //Main.timePanel.show(t);
         }
+    }
+
+    public function get target():Item
+    {
+        return _target;
+    }
+
+    public function set target(value:Item):void
+    {
+        _target = value;
+        Main.timeLine.select(_target);
     }
 }
 }

@@ -54,7 +54,9 @@ public class AnimationControl
     public function add(object:Item, time:Number):void
     {
         object.number = ++_number;
-        _list.push(new AnimateObject(object, time))
+        var anim:AnimateObject = new AnimateObject(object, time);
+        _list.push(anim);
+        object.animation = anim;
     }
 
     public function removeAnimation(item:Item):void
@@ -83,6 +85,7 @@ public class AnimationControl
         anim.time = 0;
 
         _list.push(anim);
+        holder.animation = anim;
     }
 
     public function loadItems():void
