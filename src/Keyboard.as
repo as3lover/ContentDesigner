@@ -16,6 +16,9 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
+        if(Main._progress.visible)
+                return;
+
         if('onKeyDown', Main.STAGE.focus);
         if(Main.STAGE.focus is TextField)
                 return;
@@ -66,6 +69,11 @@ public class Keyboard
             case 88:// ctrl + X
                 if(e.ctrlKey)
                     Main.transformer.Cut();
+                break;
+
+            case 83:// ctrl + S
+                if(e.ctrlKey)
+                    FileManager.saveFile();
                 break;
 
             case 13:// Enter
