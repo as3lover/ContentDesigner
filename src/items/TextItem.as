@@ -6,6 +6,10 @@ package items
 
 
 import fl.text.TLFTextField;
+
+import flash.geom.ColorTransform;
+import flash.text.TextField;
+
 import flashx.textLayout.edit.EditManager;
 
 import flash.display.DisplayObject;
@@ -32,8 +36,8 @@ public class TextItem extends Item
     private var _box:TLFTextField;
     private var _fmt:TextFormat;
     private var _sprite:Sprite;
-    private const W:int = 114;
-    private const H:int = 47;
+    //private const W:int = 114;
+    //private const H:int = 47;
     private const minWidth:int = 50;
     private const minHeight:int = 50;
     private const margin:int = 25;
@@ -94,6 +98,7 @@ public class TextItem extends Item
         _box.multiline = true;
         _box.embedFonts = true;
         _box.cacheAsBitmap = true;
+        _box.type = TextFieldType.INPUT;
         addChild(_box);
 
         setFormat();
@@ -108,7 +113,7 @@ public class TextItem extends Item
 
         _sprite = new Sprite();
         Utils.drawRect(_sprite,0,0,_box.width,_box.height);
-        _sprite.alpha = 0;
+        _sprite.alpha = .0;
         addChild(_sprite);
 
         editable = false;
@@ -116,7 +121,64 @@ public class TextItem extends Item
         init();
 
         changeText();
+
+        //_sprite.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDwon);
+        setTimeout(focus,100);
+
+        this.addEventListener(MouseEvent.MOUSE_OVER, onOver);
+        this.addEventListener(MouseEvent.MOUSE_OUT, onOut);
     }
+
+    private function onOut(event:MouseEvent=null):void
+    {
+        Utils.tint(this,0);
+        _sprite.alpha = 0;
+    }
+
+    private function onOver(event:MouseEvent):void
+    {
+        if(!editable)
+        {
+            Utils.tint(this,1);
+            _sprite.alpha = .05;
+        }
+    }
+
+    private function focus():void
+    {
+        editable = true;
+    }
+    /*
+    private function onMouseDwon(event:MouseEvent):void
+    {
+        trace(y, _y, _box.y);
+        Main.STAGE.addEventListener(MouseEvent.MOUSE_UP, onMouseUp)
+        startDrag();
+    }
+
+    private function onMouseUp(event:MouseEvent):void
+    {
+        Main.STAGE.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+        stopDrag();
+        changed;
+    }
+*/
+    private function SETFOCUS(event:Event = null):void
+    {
+        if(stage)
+        {
+            editable = true;
+            editable = false;
+            removeEventListener(Event.ADDED_TO_STAGE, SETFOCUS)
+        }
+        else
+        {
+            addEventListener(Event.ADDED_TO_STAGE, SETFOCUS)
+        }
+    }
+
+
+
 
     private function StopType(event:ContextMenuEvent):void
     {
@@ -172,7 +234,7 @@ public class TextItem extends Item
             correctFormat()
             _box.width = _w;
             _sprite.width = _w;
-            _box.x = -_box.width/2;
+            _box.x = -_box.width;
             _sprite.x = _box.x;
             correctFormat()
         }
@@ -182,8 +244,8 @@ public class TextItem extends Item
             correctFormat()
             _box.height = _h;
             _sprite.height = _h;
-            _box.y = -_box.height/2;
-            _sprite.y = _box.y;
+            //_box.y = -_box.height/2;
+            //_sprite.y = _box.y;
             correctFormat()
         }
 
@@ -310,41 +372,52 @@ public class TextItem extends Item
         if(value == editable)
                 return;
 
+
+
         if(value)
         {
             updateTransform();
-            //_box.border = true;
-            _box.type = TextFieldType.INPUT;
+            _box.border = true;
+            //_box.type = TextFieldType.INPUT;
             _sprite.visible = false;
             //addEventListener(Event.ENTER_FRAME, ef);
             _box.addEventListener(Event.CHANGE, changeTextt);
             Main.transformer.select(null);
-            stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
+            Main.STAGE.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
             Main.panel.show(this);
             Main.timePanel.show(this);
             setFocus();
         }
         else
         {
-            //_box.border = false;
+            _box.border = false;
             //removeEventListener(Event.ENTER_FRAME, ef);
             _box.removeEventListener(Event.CHANGE, changeTextt);
-            _box.type = TextFieldType.DYNAMIC;
+            //_box.type = TextFieldType.DYNAMIC;
             selectable = false;
             _sprite.visible = true;
             Main.panel.hide();
             Main.timePanel.hide();
+            setFocusOut();
         }
+
+        onOut();
+
+    }
+
+    private function setFocusOut():void
+    {
+        stage.focus = null
     }
 
     public function setFocus():void
     {
         _box.textFlow.interactionManager = new EditManager();
+        _box.textFlow.interactionManager.selectRange(_box.text.length, _box.text.length);
+
 
         if(_box.text == DEFAULT_TEXT)
             _box.textFlow.interactionManager.selectRange(0, _box.text.length);
-        else
-            _box.textFlow.interactionManager.selectRange(_box.text.length, _box.text.length);
 
         _box.textFlow.interactionManager.setFocus();
     }
@@ -540,8 +613,8 @@ public class TextItem extends Item
         obj.type = 'text';
         obj.textWidth = _box.textWidth;
         obj.textHeight = _box.textHeight;
-        obj.textX = _box.x;
-        obj.textY = _box.y;
+        //obj.textX = _box.x;
+        //obj.textY = _box.y;
         obj.defaultTextFormat = _fmt;
         return obj;
     }
@@ -551,10 +624,10 @@ public class TextItem extends Item
         _box.text = obj.text;
         _box.width = obj.textWidth;
         _box.height = obj.textHeight;
-        _box.x = obj.textX;
-        _box.y = obj.textY;
-        _sprite.x = _box.x;
-        _sprite.y = _box.y;
+        //_box.x = obj.textX;
+        //_box.y = obj.textY;
+        //_sprite.x = _box.x;
+        //_sprite.y = _box.y;
         _sprite.width = _box.width;
         _sprite.height = _box.height;
         _formats = obj.formats;
@@ -567,6 +640,8 @@ public class TextItem extends Item
         setFormat();
 
         super.all = obj;
+
+        setTimeout(SETFOCUS,1000);
     }
     ///////////////// load //////////////////////////
     public override function load():void

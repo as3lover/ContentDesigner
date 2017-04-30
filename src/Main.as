@@ -11,10 +11,12 @@ import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
 import items.Item;
 import items.TextItem;
-import items.TimeBox;
 import items.TimePanel;
 
+import quizz.Quiz;
+
 import src2.HightLigher;
+import src2.SnapList;
 import src2.ToolTip;
 import src2.Topics;
 import src2.Utils;
@@ -40,6 +42,9 @@ public class Main extends Sprite
     public static var MAIN:Main;
     public static var colorPicker:ColorPicker;
     public static var timePanel:TimePanel;
+    public static var snapList:SnapList;
+    public static var quiz:Quiz;
+    public static const target:Object = {x:20, y:40, w:600, h:337};
 
     public function Main()
     {
@@ -56,6 +61,8 @@ public class Main extends Sprite
         STAGE = stage;
         MAIN = this;
 
+        quiz = new Quiz();
+
         ToolTip.start(stage);
 
         _alert = new AlertBox();
@@ -71,9 +78,15 @@ public class Main extends Sprite
         addChild(dragManager);
 
         topics = new Topics();
-        topics.x = 640
+        topics.x = 680
         topics.y = dragManager.target.y;
         addChild(topics);
+
+        snapList = new SnapList();
+        snapList.x = 640;
+        snapList.y = dragManager.target.y;
+        addChild(snapList);
+
 
         transformer = new TransformManager(stage, dragManager.target);
 
@@ -102,6 +115,24 @@ public class Main extends Sprite
         {
             Main.changed = true;
             Main.topics.add(Utils.time);
+        }
+        /*
+        var quize = new ContextMenuItem("Add Quiz");
+        quize.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addQuiz);
+        menu.customItems.push(quize);
+        function addQuiz(e:ContextMenuEvent):void
+        {
+            Main.changed = true;
+            Main.topics.addQuiz(Utils.time);
+        }
+        */
+        var timeSnap = new ContextMenuItem("Snapshot");
+        timeSnap.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, TimeSnap);
+        menu.customItems.push(timeSnap);
+        function TimeSnap(e:ContextMenuEvent):void
+        {
+            Main.changed = true;
+            snapList.add();
         }
 
         var hideAll = new ContextMenuItem("Hide All");
@@ -267,6 +298,7 @@ public class Main extends Sprite
         transformer.reset();
         dragManager.reset();
         topics.reset();
+        snapList.reset();
         Main.changed = false;
     }
 
@@ -277,7 +309,7 @@ public class Main extends Sprite
 
     public static function set changed(value:Boolean):void
     {
-        trace('changed', value)
+        //trace('changed', value)
         _changed = value;
         TitleBar.changed = value;
     }

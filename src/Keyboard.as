@@ -5,13 +5,33 @@ package
 {
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
+import flash.events.MouseEvent;
 import flash.text.TextField;
 
 public class Keyboard
 {
+    private var _lastTextField:Object;
+    private var stage:Stage;
+
     public function Keyboard(stage:Stage)
     {
-        stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
+        this.stage = stage;
+        stage.addEventListener(MouseEvent.MOUSE_DOWN, onClick, true)
+
+        stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+    }
+
+    private function onClick(e:MouseEvent):void
+    {
+        if(e.target is TextField)
+        {
+            _lastTextField = e.target
+        }
+        else if(stage.focus == _lastTextField)
+        {
+            _lastTextField = null
+            stage.focus = null
+        }
     }
 
     private function onKeyDown(e:KeyboardEvent):void
@@ -19,11 +39,19 @@ public class Keyboard
         if(Main._progress.visible)
                 return;
 
-        if('onKeyDown', Main.STAGE.focus);
-        if(Main.STAGE.focus is TextField)
+        trace('onKeyDown', Main.STAGE.focus);
+
+        if(Main.STAGE.focus is TextField && !(Main.STAGE.focus.parent is TitleBar))
                 return;
+
+
         if(Main.panel.visible && !Main.transformer.target)
-                return;
+            return;
+
+        /*
+        if(Main.panel.visible && Main.STAGE.focus is TextField&& !(Main.STAGE.focus.parent is TitleBar))
+            return;
+            */
 
         if(Main.textEditor.visible)
                 return;

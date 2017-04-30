@@ -13,16 +13,33 @@ public class TopicItem extends Sprite
     private var _evt:Event;
     private var _text:String;
     private var _remove:Function;
+    private var _width:int;
+    private var _type:String;
+    public var snapLine:SnapLine;
+    private var _color:uint;
+    private var _id:String;
 
-    public function TopicItem(remove:Function, txt:String = 'عنوان جدید')
+    public function TopicItem(remove:Function, txt:String, type:String, seconds:Number, color:uint)
     {
+        _color = color;
+        _type = type;
+        if(type == 'topic')
+        {
+            _width = 135-30;
+        }
+        else
+        {
+            _width = 20;
+            snapLine = Main.timeLine.addSnap(seconds);
+        }
+
         _remove = remove;
-        var menu:TopicMenu = new TopicMenu();
+        var menu:TopicMenu = new TopicMenu(type);
         this.contextMenu = menu.menu;
 
         text = txt;
         deActive();
-        _evt = new Event(Event.ACTIVATE);
+        _evt = new Event('clicked');
         this.addEventListener(MouseEvent.CLICK, onClick)
     }
 
@@ -68,6 +85,9 @@ public class TopicItem extends Sprite
 
     public function remove():void
     {
+        if(snapLine)
+            snapLine.remove();
+
         _remove(this)
     }
 
@@ -83,8 +103,7 @@ public class TopicItem extends Sprite
 
         _text = value;
         removeChildren();
-        addChild(new Button(_text, 0, 0, 135));
-
+        addChild(new Button(_text, 0, 0, _width, 20, 0xeeeeee, _color));
     }
 
     private function setText(txt:String):void
@@ -95,7 +114,10 @@ public class TopicItem extends Sprite
     public function setTime(txt:Object):void
     {
         if(parent)
-                Topics(parent).changeTime(this, Utils.timeToSec(txt))
+                Topics(parent).changeTime(this, Utils.timeToSec(txt));
+
+        if(snapLine)
+            snapLine.time = Utils.timeToSec(txt);
     }
 
     public function get object():Object
@@ -103,7 +125,23 @@ public class TopicItem extends Sprite
         var obj:Object = {};
         obj.time = time;
         obj.text = text;
+        obj.type = type;
         return obj;
+    }
+
+    public function get type():String
+    {
+        return _type;
+    }
+
+    public function get id():String
+    {
+        return _id;
+    }
+
+    public function set id(value:String):void
+    {
+        _id = value;
     }
 }
 }

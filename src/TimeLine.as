@@ -25,6 +25,7 @@ import flash.text.TextField;
 import flash.utils.getTimer;
 
 import src2.AnimateObject;
+import src2.SnapLine;
 
 import src2.TimeBar;
 
@@ -171,6 +172,8 @@ public class TimeLine extends Sprite
         _currentBox.y = _timeBar.y + _timeBar.height;
         _totalBox.y = _currentBox.y;
 
+        _totalBox.selectable = _currentBox.selectable = false;
+
         _t = new TextFormat();
         _t2 = new TextFormat();
         _t3 = new TextFormat();
@@ -193,6 +196,17 @@ public class TimeLine extends Sprite
         //================ init
         totalSec = DEFAULT_TIME;
         currentSec = 0;
+
+
+        var cover:Sprite = new Sprite();
+        Utils.drawRect(cover,_currentBox.x,_currentBox.y,_currentBox.width,_currentBox.height);
+        cover.alpha = 0;
+        addChild(cover);
+
+        cover = new Sprite();
+        Utils.drawRect(cover,_totalBox.x,_totalBox.y,_totalBox.width,_totalBox.height);
+        cover.alpha = 0;
+        addChild(cover);
 
     }
 
@@ -561,6 +575,11 @@ public class TimeLine extends Sprite
         setTimeByTopic(currentSec - (_timeBar.mask.width/_timeBar.width)*totalSec);
         _timeBar.x -= (_timeBar.handle.x - x)
 
+    }
+
+    public function addSnap(time:Number):SnapLine
+    {
+       return(_timeBar.addSnap(time/totalSec));
     }
 }
 }

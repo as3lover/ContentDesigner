@@ -54,7 +54,7 @@ public class TitleBar extends Sprite
     private var _oldWidth:Number;
     private var _oldHeight:Number;
     private static var _file:String;
-    private static var _title:TextField;
+    public static var _title:TextField;
     private static var _format:TextFormat;
     private static var _activatedTitle:Boolean;
     private static const appName:String = 'Content Designer - ';
@@ -147,6 +147,8 @@ public class TitleBar extends Sprite
 
     protected function initWindowName(event:Event):void
     {
+
+
         _activatedTitle = true;
         changed = Main.changed;
     }

@@ -28,7 +28,7 @@ public class Item extends Sprite
     private var _onChange:Function;
 
     private var _x:Number;
-    private var _y:Number;
+    protected var _y:Number;
     private var _scaleX:Number;
     private var _scaleY:Number;
     private var _rotation:Number;

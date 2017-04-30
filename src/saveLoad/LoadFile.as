@@ -38,6 +38,7 @@ public class LoadFile
 
     private static function afterLoad(object:Object, time:Number = 0):void
     {
+        trace('afterLoad on LoadFile')
         Main.topics.reset();
 
         var obj:Object;
@@ -68,6 +69,12 @@ public class LoadFile
             if(i == 'topics')
             {
                 Main.topics.object = obj;
+                continue;
+            }
+
+            if(i == 'snapList')
+            {
+                Main.snapList.object = obj;
                 continue;
             }
 

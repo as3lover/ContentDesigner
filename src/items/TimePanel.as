@@ -72,6 +72,7 @@ public class TimePanel extends Sprite
 
         visible = true;
         Main.topics.visible = false;
+        Main.snapList.visible = false;
     }
 
     public function hide()
@@ -82,6 +83,7 @@ public class TimePanel extends Sprite
 
         visible = false;
         Main.topics.visible = true;
+        Main.snapList.visible = true;
     }
 }
 }

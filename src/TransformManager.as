@@ -38,7 +38,7 @@ public class TransformManager
 
         _tool = new TransformTool(new ControlSetStandard());
         area.addChild(_tool)
-        stage.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
+        stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageDown);
         stage.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
         area.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
         stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
@@ -75,6 +75,7 @@ public class TransformManager
             if(TextItem(a).editable)
                     return;
         }
+        stage.focus = null;
         _tool.select(e);
 
     }
@@ -91,8 +92,14 @@ public class TransformManager
         onStage();
     }
 
-    private function onStage(e:MouseEvent = null):void
+    private function onStageDown(e:MouseEvent = null):void
     {
+        onStage()
+    }
+
+        private function onStage(e:MouseEvent = null):void
+    {
+
         if(_tool.target == null)
         {
             if(target != null)

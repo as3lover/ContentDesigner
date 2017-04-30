@@ -21,7 +21,7 @@ public class TopicMenu
     public static var currentItem:Item;
     private var _motion:ContextMenuItem;
 
-    public function TopicMenu()
+    public function TopicMenu(type:String)
     {
         menu = new ContextMenu();
 
@@ -29,9 +29,12 @@ public class TopicMenu
         setTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, setCurTime);
         menu.customItems.push(setTime);
 
-        var Text = new ContextMenuItem("Change Text");
-        Text.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, text);
-        menu.customItems.push(Text);
+        if(type == 'topic')
+        {
+            var Text = new ContextMenuItem("Change Text");
+            Text.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, text);
+            menu.customItems.push(Text);
+        }
 
         var Time = new ContextMenuItem("Change Time");
         Time.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, time);

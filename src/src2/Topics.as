@@ -12,6 +12,7 @@ public class Topics extends Sprite
     private var _activeItem:TopicItem;
     private var _list:Array;
     private var _len:int;
+    private const COLOR:uint = 0x333333;
 
     public function Topics()
     {
@@ -29,7 +30,7 @@ public class Topics extends Sprite
 
         for(var i:int=len-1; i>-1; i--)
         {
-            if(TopicItem(_list[i]).time <= time)
+            if(TopicItem(_list[i]).time <= time+1)
             {
                 active(_list[i]);
                 return;
@@ -58,18 +59,53 @@ public class Topics extends Sprite
             _activeItem = null
         }
     }
+    public function addQuiz(time:Number):void
+    {
+        add(time, 'آزمون', 'quiz')
+    }
 
-    public function add(seconds:Number=-1, text:String = 'عنوان جدید'):void
+    public function add(seconds:Number=-1, text:String = 'عنوان جدید', type:String = 'topic'):void
     {
         if(seconds == -1)
                 seconds = Utils.time;
 
-        var topic:TopicItem = new TopicItem(remove, text);
+        var color:uint = COLOR;
+        if(type == 'quiz')
+                color = 0x0066cc;
+
+        var newType:String = type;
+        if(type == 'quiz')
+                newType = 'topic';
+
+
+        var topic:TopicItem = new TopicItem(remove, text, newType, seconds, color);
         topic.time = seconds;
-        topic.addEventListener(Event.ACTIVATE, clickOnTopic);
+
+        if(type == 'quiz')
+        {
+            topic.addEventListener('clicked', clickOnQuiz);
+            topic.id = 'quiz_' + Math.random().toString() + Math.random().toString();
+            Main.quiz.add(topic.id);
+        }
+        else
+            topic.addEventListener('clicked', clickOnTopic);
+
+
+
         sort(addTopic(topic));
         ToolTip.add(topic, Utils.timeFormat(topic.time*1000));
         addChild(topic);
+        time = _time;
+    }
+
+    private function clickOnQuiz(e:Event):void
+    {
+        Main.quiz.show(TopicItem(e.target).id);
+        Main.timeLine.setTimeByTopic(TopicItem(e.target).time);
+    }
+    private function clickOnTopic(e:Event):void
+    {
+        Main.timeLine.setTimeByTopic(TopicItem(e.target).time);
     }
 
     private function addTopic(topic:TopicItem):int
@@ -103,18 +139,15 @@ public class Topics extends Sprite
         for(i; i<len; i++)
         {
             _list[i].y = i*28
+            if(TopicItem(_list[i]).type == 'snap')
+                TopicItem(_list[i]).text = String(i+1)
         }
     }
 
-    private function clickOnTopic(e:Event):void
-    {
-        Main.timeLine.setTimeByTopic(TopicItem(e.target).time);
-    }
-
-
     public function remove(topic:TopicItem)
     {
-        topic.removeEventListener(Event.ACTIVATE, clickOnTopic);
+        topic.removeEventListener('clicked', clickOnTopic);
+        topic.removeEventListener('clicked', clickOnQuiz);
 
         if(Utils.removeObjectFromArray(_list, topic))
             _len--;
@@ -122,7 +155,11 @@ public class Topics extends Sprite
         if(topic.parent)
                 topic.parent.removeChild(topic);
 
+        if(topic.type == 'snap')
+                topic.snapLine.remove();
+
         sort();
+        time = _time;
     }
 
     private function get len():int
@@ -147,7 +184,7 @@ public class Topics extends Sprite
         for(var i:String in obj)
         {
             trace(i, obj[i].time, obj[i].text);
-            add(obj[i].time, obj[i].text);
+            add(obj[i].time, obj[i].text, obj[i].type);
         }
     }
 
@@ -159,5 +196,7 @@ public class Topics extends Sprite
             remove(_list[i]);
         }
     }
+
+
 }
 }

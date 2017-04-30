@@ -3,6 +3,11 @@
  */
 package src2
 {
+import com.greensock.TweenMax;
+import com.greensock.plugins.ColorTransformPlugin;
+import com.greensock.plugins.TintPlugin;
+import com.greensock.plugins.TweenPlugin;
+
 import fl.controls.NumericStepper;
 import fl.text.TLFTextField;
 
@@ -247,6 +252,12 @@ public class Utils
         }
 
         return -1;
+    }
+
+    public static function tint(item:Object, alpha:Number =.5, color:uint = 0xff0000, duration:Number = 0):void
+    {
+        TweenPlugin.activate([TintPlugin, ColorTransformPlugin]);
+        TweenMax.to(item, duration, {colorTransform:{tint:color, tintAmount:alpha}});
     }
 }
 }

@@ -24,13 +24,15 @@ public class TimeBar extends Sprite
     private var _handleX:Number;
     private var _distance:Number;
     private var _line:Sprite;
+    private var _snaps: Sprite;
 
 
     public function TimeBar(backColor:uint = 0, frontColor:uint = 0xffffff, width:uint = 1000, height:uint = 25)
     {
-        _back = new Sprite();
+         _back = new Sprite();
         _bar = new Sprite();
         _line = new Sprite();
+        _snaps = new Sprite();
 
 
         _lines = new Sprite();
@@ -51,6 +53,7 @@ public class TimeBar extends Sprite
         addChild(_back);
         addChild(_bar);
         addChild(_line);
+        addChild(_snaps);
 
         _originalWidth = width;
 
@@ -215,6 +218,7 @@ public class TimeBar extends Sprite
 
 
         moveHandle();
+        setSnapSize();
     }
 
     public override function set scaleX(value:Number):void
@@ -224,7 +228,9 @@ public class TimeBar extends Sprite
 
         super.scaleX = value;
         moveHandle();
+        setSnapSize();
     }
+
 
     public override function set x(x:Number):void
     {
@@ -245,6 +251,7 @@ public class TimeBar extends Sprite
         _lines.graphics.lineStyle(.1, 0x777777);
         _step = _originalWidth/(seconds/20);
         drawLine(_step)
+        setSnapSize(true);
     }
 
     function drawLine(i:Number)
@@ -291,5 +298,36 @@ public class TimeBar extends Sprite
     {
         return _handle;
     }
+
+    public function addSnap(percent:Number):SnapLine
+    {
+        var snap:SnapLine = new SnapLine(_back.height);
+        snap.percent = percent;
+        snap.y = _back.y;
+        snap.x = percent * _back.width;
+        snap.scaleX = 1/scaleX;
+        _snaps.addChild(snap);
+        return snap;
+    }
+
+    private function setSnapSize(snapTime:Boolean = false):void
+    {
+        var len:int = _snaps.numChildren;
+        for (var i:int =0; i<len; i++)
+        {
+            if(snapTime)
+                SnapLine(_snaps.getChildAt(i)).reset();
+
+            _snaps.getChildAt(i).scaleX = 1/scaleX;
+        }
+    }
+
+    public function setSnapTime(snap:SnapLine, percent:Number):void
+    {
+        snap.x = percent * _back.width;
+        snap.scaleX = 1/scaleX;
+    }
+
+
 }
 }

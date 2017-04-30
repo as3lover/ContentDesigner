@@ -142,6 +142,8 @@ public class AnimationControl
 
         object.topics = Main.topics.object;
 
+        object.snapList = Main.snapList.object;
+
         return object;
     }
 
