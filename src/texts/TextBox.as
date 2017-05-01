@@ -7,9 +7,12 @@ import fl.text.TLFTextField;
 
 import flash.display.Bitmap;
 import flash.display.Sprite;
+import flash.events.MouseEvent;
 import flash.text.TextFieldType;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
+
+import flashx.textLayout.events.SelectionEvent;
 
 import flashx.textLayout.formats.Direction;
 
@@ -21,6 +24,9 @@ public class TextBox extends Sprite
 {
     private var _box:TLFTextField;
     private var _fmt:TextFormat;
+
+    private var i1:int = -1;
+    private var i2:int = -1;
 
     public function TextBox()
     {
@@ -50,6 +56,20 @@ public class TextBox extends Sprite
         font = Fonts.YEKAN;
 
         addChild(_box);
+
+        _box.addEventListener(MouseEvent.MOUSE_UP, changeSelection);
+    }
+
+    private function changeSelection(e:MouseEvent):void
+    {
+        var a:int = _box.selectionBeginIndex;
+        var b:int = _box.selectionEndIndex;
+        if(i1 != a || i2 != b)
+        {
+            i1 = a;
+            i2 = b;
+            Main.panel.show();
+        }
     }
 
     private function padding():void
@@ -60,10 +80,14 @@ public class TextBox extends Sprite
         _box.paddingRight = 10;
     }
 
-    private function setFormat()
+    public function setFormat(format:TextFormat=null)
     {
-        _box.defaultTextFormat = _fmt;
-        _box.setTextFormat(_fmt);
+        var newFormat:TextFormat = _fmt;
+        if(format)
+                newFormat = format;
+
+        _box.defaultTextFormat = newFormat;
+        _box.setTextFormat(newFormat);
         padding();
     }
 
@@ -153,5 +177,24 @@ public class TextBox extends Sprite
         return Utils.textBoxToBitmap(_box);
     }
 
+    public function getBitmap(quality:Number):Bitmap
+    {
+        return Utils.textBoxToBitmap(_box, quality)
+    }
+
+    public function get box():TLFTextField
+    {
+        return _box;
+    }
+
+    public function get format():TextFormat
+    {
+        return _fmt;
+    }
+
+    public function set format(format:TextFormat):void
+    {
+        setFormat(format);
+    }
 }
 }

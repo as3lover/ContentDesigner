@@ -90,8 +90,6 @@ public class Topics extends Sprite
         else
             topic.addEventListener('clicked', clickOnTopic);
 
-
-
         sort(addTopic(topic));
         ToolTip.add(topic, Utils.timeFormat(topic.time*1000));
         addChild(topic);

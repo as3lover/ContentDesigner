@@ -10,6 +10,7 @@ import flash.events.MouseEvent;
 import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
 import items.Item;
+import items.ItemText;
 import items.TextItem;
 import items.TimePanel;
 
@@ -45,6 +46,7 @@ public class Main extends Sprite
     public static var snapList:SnapList;
     public static var quiz:Quiz;
     public static const target:Object = {x:20, y:40, w:600, h:337};
+    public static var loadedTime:Number;
 
     public function Main()
     {
@@ -105,7 +107,8 @@ public class Main extends Sprite
         function addText(e:ContextMenuEvent):void
         {
             Main.changed = true;
-            addObject(new TextItem(removeAnimation, true))
+            //addObject(new TextItem(removeAnimation, true))
+            addObject(new ItemText(removeAnimation, true))
         }
 
         var topic = new ContextMenuItem("Add Topic");

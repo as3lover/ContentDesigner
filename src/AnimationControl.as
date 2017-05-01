@@ -105,7 +105,7 @@ public class AnimationControl
                     AnimateObject(_list[j]).object.setIndex();
                 }
                 Main.changed = false;
-                time = Utils.time;
+                Main.timeLine.setTimeByTopic(Main.loadedTime);
                 return;
             }
 

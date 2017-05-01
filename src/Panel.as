@@ -16,7 +16,6 @@ import src2.Utils;
 
 public class Panel extends Sprite
 {
-    private  var selectedText:TextItem;
     private var _opened:Boolean;
     private var _size:NumericStepper;
     private var _leading:NumericStepper;
@@ -93,7 +92,7 @@ public class Panel extends Sprite
 
     private function selectFont(event:Event):void
     {
-        selectedText.setFont(_fontList.selectedItem.data as String);
+        Main.textEditor.setFont(_fontList.selectedItem.data as String);
     }
 
     private function numberChange(e:Event):void
@@ -101,15 +100,15 @@ public class Panel extends Sprite
         switch(e.target)
         {
             case _size:
-                selectedText.setSize(e.target.value);
+                Main.textEditor.setSize(e.target.value);
                 break;
 
             case _leading:
-                selectedText.setLeading(e.target.value);
+                Main.textEditor.setLeading(e.target.value);
                 break;
 
             case _space:
-                selectedText.setSpace((e.target.value/10)-2);
+                Main.textEditor.setSpace((e.target.value/10)-2);
                 break;
         }
     }
@@ -131,19 +130,19 @@ public class Panel extends Sprite
         return _opened;
     }
 
-    public function show(textI:TextItem):void
+    public function show():void
     {
-        selectedText = textI;
-        _size.value = textI.getSize();
-        _space.value = (textI.getSpace() + 2)*10;
-        _leading.value = textI.getLeading();
-        _selector.color = textI.getColor();
+        trace('show')
+        _size.value = Main.textEditor.getSize();
+        _space.value = (Main.textEditor.getSpace() + 2)*10;
+        _leading.value = Main.textEditor.getLeading();
+        _selector.color = Main.textEditor.getColor();
         visible = true;
     }
 
     private function changeColor (color:uint):void
     {
-        selectedText.setColor(color);
+        Main.textEditor.setColor(color);
     }
 
     public function hide():void

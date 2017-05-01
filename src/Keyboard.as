@@ -36,10 +36,18 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
+        if(Main.textEditor.visible)
+        {
+            if(e.keyCode == 13 && e.ctrlKey)
+                Main.textEditor.register();
+            else if(e.keyCode == 27)
+                Main.textEditor.onCancel(null);
+
+            return;
+        }
+
         if(Main._progress.visible)
                 return;
-
-        trace('onKeyDown', Main.STAGE.focus);
 
         if(Main.STAGE.focus is TextField && !(Main.STAGE.focus.parent is TitleBar))
                 return;
@@ -53,8 +61,7 @@ public class Keyboard
             return;
             */
 
-        if(Main.textEditor.visible)
-                return;
+
 
         switch (e.keyCode)
         {
@@ -138,6 +145,10 @@ public class Keyboard
 
             case 34:// Page Down
                 Main.timeLine.stepDown();
+                break;
+
+            case 27:// Esc
+                Main.transformer.deselect();
                 break;
         }
     }

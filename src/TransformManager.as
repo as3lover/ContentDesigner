@@ -15,6 +15,7 @@ import flash.text.TextField;
 import flash.utils.setTimeout;
 
 import items.Item;
+import items.ItemText;
 
 import items.TextItem;
 
@@ -37,13 +38,44 @@ public class TransformManager
         this.area = area;
 
         _tool = new TransformTool(new ControlSetStandard());
-        area.addChild(_tool)
+        area.addChild(_tool);
         stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageDown);
         stage.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
         area.addEventListener(MouseEvent.MOUSE_DOWN, _tool.deselect);
-        stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
-        area.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown)
+        stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+        area.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+        stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 
+        /*
+        Main.dragManager.target.doubleClickEnabled = true;
+        Main.dragManager.target.addEventListener(MouseEvent.DOUBLE_CLICK, double1, true, 0);
+        Main.dragManager.target.addEventListener(MouseEvent.DOUBLE_CLICK, double2, false, 0);
+        Main.dragManager.target.addEventListener(MouseEvent.DOUBLE_CLICK, double3, true, 999);
+        Main.dragManager.target.addEventListener(MouseEvent.DOUBLE_CLICK, double4, false, 999);
+        */
+    }
+
+    /*
+    private function double1(event:MouseEvent):void {double()}
+    private function double2(event:MouseEvent):void {double()}
+    private function double3(event:MouseEvent):void {double()}
+    private function double4(event:MouseEvent):void {double()}
+
+    private function double():void
+    {
+        trace('double on target')
+        if(target && target is ItemText)
+               ItemText(target).double();
+    }
+    */
+    
+    private function onMouseUp(event:MouseEvent):void
+    {
+        if(target && target.changed)
+        {
+            _tool.target = null;
+            _tool.target = target;
+        }
     }
 
     private function onKeyDown(e:KeyboardEvent):void
@@ -127,7 +159,8 @@ public class TransformManager
     private function deselectObject(item:Item):void
     {
         item.changed
-        Main.panel.hide();
+        if(!Main.textEditor.visible)
+            Main.panel.hide();
         Main.timePanel.hide();
     }
 
@@ -138,7 +171,8 @@ public class TransformManager
             //area.setChildIndex(target, area.numChildren-1);
             area.setChildIndex(_tool, area.numChildren-1);
             Main.timePanel.show(item);
-            if(item is TextItem)Main.panel.show(item as TextItem);
+            //if(item is TextItem)Main.panel.show(item as TextItem);
+            //if(item is ItemText)Main.panel.show(item as ItemText);
         }
     }
 
@@ -158,8 +192,8 @@ public class TransformManager
         trace('copy');
         if(target)
         {
-            if(target is TextItem)
-                _clipBoardItem = new TextItem(Main.removeAnimation);
+            if(target is ItemText)
+                _clipBoardItem = new ItemText(Main.removeAnimation, false, false);
             else
                 _clipBoardItem = new Item(Main.removeAnimation, target.path);
 
@@ -274,6 +308,11 @@ public class TransformManager
             deselect();
             t.editable = true;
             //Main.timePanel.show(t);
+        }
+        else if(target is ItemText)
+        {
+            var tt:ItemText = ItemText(target);
+            tt.edit();
         }
     }
 

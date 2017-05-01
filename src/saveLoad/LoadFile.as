@@ -9,6 +9,7 @@ import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
 
 import items.Item;
+import items.ItemText;
 import items.TextItem;
 
 public class LoadFile
@@ -87,7 +88,7 @@ public class LoadFile
             var holder:Item
 
             if(obj.type == 'text')
-                holder = new TextItem(Main.removeAnimation);
+                holder = new ItemText(Main.removeAnimation);
             else
                 holder = new Item(Main.removeAnimation, obj.path);
 
@@ -97,9 +98,9 @@ public class LoadFile
             Main.animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration);
         }
 
+        Main.loadedTime = time;
         Main.animationControl.loadItems();
         Main.animationControl.number = number;
-        Main.timeLine.currentSec = time;
         Main.changed = false;
         if(sound)
         {

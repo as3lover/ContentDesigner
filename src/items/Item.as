@@ -14,6 +14,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.filesystem.File;
+import flash.geom.Matrix;
 import flash.net.URLRequest;
 
 import saveLoad.saveItem;
@@ -371,8 +372,17 @@ public class Item extends Sprite
 
     public function set bitmap(value:Bitmap):void
     {
+        if(_bitmap && _bitmap.parent)
+            _bitmap.parent.removeChild(_bitmap);
+
         _bitmap = value;
-        addChild(value);
+        addChild(_bitmap);
+    }
+
+
+    public function get bitmap():Bitmap
+    {
+        return _bitmap;
     }
 
     public function get number():int
@@ -392,6 +402,52 @@ public class Item extends Sprite
             Main.transformer.select(null);
             Main.transformer.select(this);
         }
+    }
+
+    public override function set x(x:Number):void
+    {
+        x = insideX(x);
+        super.x = x;
+    }
+
+    public override function get x():Number
+    {
+        x = super.x;
+        return super.x;
+
+    }
+
+    private function insideX(x:Number):Number
+    {
+        if(x < width/2)
+            x = width/2;
+        else if(x > Main.target.w-width/2)
+            x = Main.target.w-width/2;
+
+        return x;
+    }
+
+    public override function set y(y:Number):void
+    {
+        y = insideY(y);
+        super.y = y;
+    }
+
+    public override function get y():Number
+    {
+        y = super.y;
+        return super.y;
+
+    }
+
+    private function insideY(y:Number):Number
+    {
+        if(y < height/2)
+            y = height/2;
+        else if(y > Main.target.h-height/2)
+            y = Main.target.h-height/2;
+
+        return y;
     }
 }
 }

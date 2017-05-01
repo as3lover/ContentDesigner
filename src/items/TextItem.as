@@ -384,7 +384,7 @@ public class TextItem extends Item
             _box.addEventListener(Event.CHANGE, changeTextt);
             Main.transformer.select(null);
             Main.STAGE.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
-            Main.panel.show(this);
+            //Main.panel.show(this);
             Main.timePanel.show(this);
             setFocus();
         }

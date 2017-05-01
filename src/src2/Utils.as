@@ -21,6 +21,9 @@ import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
 import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
@@ -156,8 +159,10 @@ public class Utils
         return bit;
     }
 
-    public static function textBoxToBitmap(textBox):Bitmap
+    public static function textBoxToBitmap(textBox, quality:Number = 3):Bitmap
     {
+        Main.STAGE.focus = null;
+
         var x = textBox.x;
         var y = textBox.y;
         var border:Boolean = textBox.border;
@@ -169,9 +174,9 @@ public class Utils
             parent = textBox.parent;
             index = parent.getChildIndex(textBox);
         }
-        textBox.scaleX = textBox.scaleY = scale * 3;
+        textBox.scaleX = textBox.scaleY = scale * quality;
         textBox.y = 0;
-        textBox.x = - (textBox.width - textBox.textWidth * 3);
+        textBox.x = - (textBox.width - textBox.textWidth * quality);
         textBox.border = false;
 
         var padding:int = 50;
@@ -180,10 +185,11 @@ public class Utils
         var sprite:Sprite = new Sprite();
         sprite.addChild(textBox);
 
-        var snapshot:BitmapData = new BitmapData(padding + textBox.textWidth * 3, padding + textBox.textHeight * 3, true, 0x00000000);
+        var snapshot:BitmapData = new BitmapData(padding + textBox.textWidth * quality, padding + textBox.textHeight * quality, true, 0x00000000);
         snapshot.draw(sprite, new Matrix());
 
-        var bit:Bitmap = new Bitmap(snapshot);
+        //var bit:Bitmap = new Bitmap(snapshot);
+        var bit:Bitmap = new Bitmap(trimAlpha(snapshot));
         bit.smoothing = true;
 
         textBox.scaleX = textBox.scaleY = scale;
@@ -193,8 +199,16 @@ public class Utils
         if(parent)
             parent.addChildAt(textBox, index);
 
-        bit.scaleX = bit.scaleY = 1/3;
+        bit.scaleX = bit.scaleY = 1/quality;
         return bit;
+    }
+
+    public static function trimAlpha(source:BitmapData):BitmapData
+    {
+        var notAlphaBounds:Rectangle = source.getColorBoundsRect(0xFF000000, 0x00000000, false);
+        var trimed:BitmapData = new BitmapData(notAlphaBounds.width, notAlphaBounds.height, true, 0x00000000);
+        trimed.copyPixels(source, notAlphaBounds, new Point());
+        return trimed;
     }
 
     public static function isParentOf(stage:Stage, parent:Object, child:DisplayObject):DisplayObject
