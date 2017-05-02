@@ -164,11 +164,7 @@ public class ItemText extends Item
             addChild(_mask);
         }
 
-        _mask.height = _sprite.height;
-        _mask.y = _sprite.y;
-
-        _mask.width = _sprite.width * percent;
-        _mask.x = _sprite.x + (_sprite.width - _mask.width);
+        _mask.update(bitmap.x, bitmap.y, bitmap.width, bitmap.height, _lines, percent);
 
         mask = _mask;
     }
