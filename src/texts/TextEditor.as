@@ -10,6 +10,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextFormat;
+import flash.utils.setTimeout;
 
 import src2.Button;
 import src2.Utils;
@@ -44,7 +45,7 @@ public class TextEditor extends Sprite
 
 
         var ok:Button = new Button('ثبت', 0, 0, 40);
-        ok.addEventListener(MouseEvent.CLICK, onOk)
+        ok.addEventListener(MouseEvent.CLICK, onOk);
         ok.x = _textBox.x + _textBox.width + 10;
         ok.y = 10;
         addChild(ok)
@@ -444,6 +445,13 @@ public class TextEditor extends Sprite
 
             _textBox.box.setTextFormat(format, list[i].index1, list[i].index2);
         }
+    }
+
+    public override function set visible (value:Boolean):void
+    {
+        super.visible = value;
+
+        Utils.listVisible();
     }
 
 

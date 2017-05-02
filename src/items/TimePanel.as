@@ -5,6 +5,7 @@ package items
 {
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.utils.setTimeout;
 
 import src2.Utils;
 
@@ -85,5 +86,12 @@ public class TimePanel extends Sprite
         Main.topics.visible = true;
         Main.snapList.visible = true;
     }
+
+    public override function set visible (value:Boolean):void
+    {
+        super.visible = value;
+        Utils.listVisible();
+    }
+
 }
 }

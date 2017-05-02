@@ -9,6 +9,8 @@ import fl.data.DataProvider;
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.utils.setTimeout;
+
 import items.TextItem;
 import src2.ColorSelector;
 import src2.Fonts;
@@ -148,6 +150,12 @@ public class Panel extends Sprite
     public function hide():void
     {
         visible = false;
+    }
+
+    public override function set visible (value:Boolean):void
+    {
+        super.visible = value;
+        Utils.listVisible();
     }
 
 }

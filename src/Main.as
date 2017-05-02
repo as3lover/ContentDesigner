@@ -38,7 +38,7 @@ public class Main extends Sprite
     public static var panel:Panel;
     public static var _progress:progressBar;
     private static var _changed:Boolean = false;
-    private static var _alert:AlertBox;
+    public static var _alert:AlertBox;
     public static var STAGE:Stage;
     public static var MAIN:Main;
     public static var colorPicker:ColorPicker;
@@ -83,11 +83,14 @@ public class Main extends Sprite
         topics.x = 680
         topics.y = dragManager.target.y;
         addChild(topics);
+        topics.init();
 
         snapList = new SnapList();
         snapList.x = 640;
         snapList.y = dragManager.target.y;
         addChild(snapList);
+        snapList.init();
+
 
 
         transformer = new TransformManager(stage, dragManager.target);
@@ -119,7 +122,7 @@ public class Main extends Sprite
             Main.changed = true;
             Main.topics.add(Utils.time);
         }
-        /*
+
         var quize = new ContextMenuItem("Add Quiz");
         quize.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addQuiz);
         menu.customItems.push(quize);
@@ -128,7 +131,7 @@ public class Main extends Sprite
             Main.changed = true;
             Main.topics.addQuiz(Utils.time);
         }
-        */
+
         var timeSnap = new ContextMenuItem("Snapshot");
         timeSnap.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, TimeSnap);
         menu.customItems.push(timeSnap);
@@ -323,9 +326,9 @@ public class Main extends Sprite
     }
 
 
-    public static function alert():void
+    public static function alert(type:String = 'save'):void
     {
-        _alert.alert();
+        _alert.alert(type);
 
     }
 

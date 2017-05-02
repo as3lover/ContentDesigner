@@ -11,9 +11,16 @@ public class SnapList extends Topics
         super();
     }
 
-    public override function add(seconds:Number=-1, text:String = '1', type:String = 'snap'):void
+    public override function init():void
     {
-        super.add(seconds,String(numChildren+1), 'snap');
+        _scroll = new Scroll(this, x, y, 20, 13*28-8, stage);
     }
+
+    public override function add(seconds:Number=-1, text:String = '1', type:String = 'snap'):TopicItem
+    {
+        return super.add(seconds,String(numChildren+1), 'snap');
+    }
+
+
 }
 }

@@ -25,7 +25,7 @@ public class TopicItem extends Sprite
         _type = type;
         if(type == 'topic')
         {
-            _width = 135-30;
+            _width = 100;
         }
         else
         {
@@ -126,6 +126,9 @@ public class TopicItem extends Sprite
         obj.time = time;
         obj.text = text;
         obj.type = type;
+        obj.id = id;
+        if(id)
+            obj.quiz = Main.quiz.object(id);
         return obj;
     }
 

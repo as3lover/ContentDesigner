@@ -19,7 +19,9 @@ import src2.assets;
 //Class
 public class AlertBox extends Sprite
 {
-    //Constructor
+    private var _save:DialogWizard;
+    private var _qustion:DialogWizard;
+
     public function AlertBox():void
     {
         this.addEventListener(Event.ADDED_TO_STAGE, init)
@@ -29,48 +31,63 @@ public class AlertBox extends Sprite
     {
         visible = false;
 
-        x = 800/2;
-        y = 450/2;
+        x = Main.target.x + Main.target.w/2;
+        y = Main.target.y + Main.target.h/2;
 
-        var d:Dialog = new Dialog();
-        d.addEventListener('save', saveFunc);
-        d.addEventListener('cancel', cancelFunc);
-        d.addEventListener('close', dontSaveFunc);
+        _save = new DialogWizard();
+        addChild(_save);
 
-        addChild(d);
+        _save.show('آیا تغییرات را ذخیره می کنید؟',
+                [{text:'لغو', handler:cancelFunc}, {text:'خیر', handler:dontSaveFunc}, {text:'بلی', handler:saveFunc}
+                ])
+
+
+        _qustion = new DialogWizard();
+        addChild(_qustion);
+
+        _qustion.show('سوال را می کنید؟',
+                [{text:'خیر', handler:cancelFunc}, {text:'بلی', handler:Main.quiz.confirmDelete}
+                ])
 
     }
 
-    private function saveFunc(event):void
+    private function saveFunc():void
     {
-        trace('save');
         hide();
         FileManager.saveFile();
 
     }
 
-    private function dontSaveFunc(event):void
+    private function dontSaveFunc():void
     {
-        trace('dontSave');
         hide();
         FileManager.retry();
     }
 
-    private function cancelFunc(event):void
+    private function cancelFunc():void
     {
-        trace('cancle');
         hide();
     }
 
-    private function hide():void
+    public function hide():void
     {
         Main.enable();
         visible = false;
     }
 
 
-    public function alert():void
+    public function alert(type:String):void
     {
+        for(var i:int = 0; i<numChildren; i++)
+            getChildAt(i).visible = false;
+
+        if(type == 'save')
+            _save.visible = true;
+        else if(type == 'question')
+            _qustion.visible = true;
+        else
+            return;
+
         Main.disable();
         parent.setChildIndex(this, parent.numChildren-1);
         visible = true;

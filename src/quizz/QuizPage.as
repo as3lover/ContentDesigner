@@ -8,19 +8,25 @@ import flash.display.Sprite;
 
 public class QuizPage extends Sprite
 {
-    public function QuizPage()
+    private var selectFunction:Function;
+    public function QuizPage(func:Function)
     {
+        selectFunction = func
     }
 
     public function sort():void
     {
-        trace('sort auiz')
         var t:DisplayObject;
         for (var i:int = 1; i < numChildren; i++)
         {
             t = getChildAt(i) as DisplayObject;
             t.y = getChildAt(i-1).y + getChildAt(i-1).height;
         }
+    }
+
+    public function select(childIndex:int):void
+    {
+        selectFunction(childIndex);
     }
 }
 }

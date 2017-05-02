@@ -6,6 +6,8 @@ package src2
 import flash.display.Sprite;
 import flash.events.Event;
 
+import src2.TopicItem;
+
 public class Topics extends Sprite
 {
     private var _time:Number;
@@ -13,12 +15,19 @@ public class Topics extends Sprite
     private var _list:Array;
     private var _len:int;
     private const COLOR:uint = 0x333333;
+    private var _loading:Boolean;
+    protected var _scroll:Scroll;
 
     public function Topics()
     {
         _time = -1;
         _list = new Array();
         _len = 0;
+    }
+
+    public function init():void
+    {
+        _scroll = new Scroll(this, x, y, 100, 13*28-8, stage);
     }
 
     public function set time(time:Number):void
@@ -64,7 +73,7 @@ public class Topics extends Sprite
         add(time, 'آزمون', 'quiz')
     }
 
-    public function add(seconds:Number=-1, text:String = 'عنوان جدید', type:String = 'topic'):void
+    public function add(seconds:Number=-1, text:String = 'عنوان جدید', type:String = 'topic'):TopicItem
     {
         if(seconds == -1)
                 seconds = Utils.time;
@@ -84,8 +93,11 @@ public class Topics extends Sprite
         if(type == 'quiz')
         {
             topic.addEventListener('clicked', clickOnQuiz);
-            topic.id = 'quiz_' + Math.random().toString() + Math.random().toString();
-            Main.quiz.add(topic.id);
+            if(!_loading)
+            {
+                topic.id = 'quiz_' + Math.random().toString() + Math.random().toString();
+                Main.quiz.add(topic.id);
+            }
         }
         else
             topic.addEventListener('clicked', clickOnTopic);
@@ -94,6 +106,10 @@ public class Topics extends Sprite
         ToolTip.add(topic, Utils.timeFormat(topic.time*1000));
         addChild(topic);
         time = _time;
+
+        checkScroll();
+
+        return topic;
     }
 
     private function clickOnQuiz(e:Event):void
@@ -136,7 +152,7 @@ public class Topics extends Sprite
     {
         for(i; i<len; i++)
         {
-            _list[i].y = i*28
+            _list[i].y = i*28;
             if(TopicItem(_list[i]).type == 'snap')
                 TopicItem(_list[i]).text = String(i+1)
         }
@@ -158,6 +174,17 @@ public class Topics extends Sprite
 
         sort();
         time = _time;
+
+        checkScroll();
+
+    }
+
+    private function checkScroll():void
+    {
+        if(len > 13)
+                _scroll.show();
+        else
+                _scroll.hide();
     }
 
     private function get len():int
@@ -179,11 +206,20 @@ public class Topics extends Sprite
 
     public function set object(obj:Object):void
     {
+        _loading = true;
         for(var i:String in obj)
         {
-            trace(i, obj[i].time, obj[i].text);
-            add(obj[i].time, obj[i].text, obj[i].type);
+            if(obj[i].id)
+            {
+                var t:TopicItem = add(obj[i].time, obj[i].text, 'quiz');
+                t.id = obj[i].id;
+                Main.quiz.addLoaded(t.id, obj[i].quiz);
+            }
+            else
+                add(obj[i].time, obj[i].text, obj[i].type);
         }
+        _loading = false;
+
     }
 
     //////////
@@ -195,6 +231,19 @@ public class Topics extends Sprite
         }
     }
 
+    public override function set visible (value:Boolean):void
+    {
+        if(value)
+        {
+            if(_len >= 13)
+                _scroll.visible = true;
+        }
+        else
+        {
+            _scroll.visible = false;
+        }
 
+        super.visible = value;
+    }
 }
 }

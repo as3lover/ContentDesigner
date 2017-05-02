@@ -273,5 +273,41 @@ public class Utils
         TweenPlugin.activate([TintPlugin, ColorTransformPlugin]);
         TweenMax.to(item, duration, {colorTransform:{tint:color, tintAmount:alpha}});
     }
+
+    public static function drawCirc(object:Object, x:int, y:int, radius:int, color:int = 0x333333):void
+    {
+        object.graphics.beginFill(color);
+        object.graphics.drawCircle(x, y, radius);
+        object.graphics.endFill();
+    }
+
+    public static function listVisible():void
+    {
+        if (Main.panel && Main.timePanel)
+        {
+        }
+        else
+        {
+            return;
+        }
+
+        if(Main.panel.visible ||Main.timePanel.visible)
+        {
+            if(Main.snapList)
+                Main.snapList.visible = false;
+
+            if(Main.topics)
+                Main.topics.visible = false;
+        }
+        else
+        {
+            if(Main.snapList)
+                Main.snapList.visible = true;
+
+            if(Main.topics)
+                Main.topics.visible = true;
+        }
+    }
+
 }
 }

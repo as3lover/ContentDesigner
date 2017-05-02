@@ -68,7 +68,7 @@ public class TransformManager
                ItemText(target).double();
     }
     */
-    
+
     private function onMouseUp(event:MouseEvent):void
     {
         if(target && target.changed)

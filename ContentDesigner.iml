@@ -26,10 +26,10 @@
             <entry library-id="adef9769-31a7-466f-ba8c-0ca381fa5ba6">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="42633fde-7565-43f2-9c5c-e785dd9fb1fc">
+            <entry library-id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae">
+            <entry library-id="a798bc55-731a-4d32-9214-ebc08af0a257">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -122,9 +122,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="42633fde-7565-43f2-9c5c-e785dd9fb1fc" />
+        <properties id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/assets/dialog.swc!/" />
+          <root url="jar://$MODULE_DIR$/../newColorPicker.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -132,9 +132,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="5262d3c1-bcb5-4bdd-9e98-6fe694c547ae" />
+        <properties id="a798bc55-731a-4d32-9214-ebc08af0a257" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../newColorPicker.swc!/" />
+          <root url="jar://$MODULE_DIR$/assets/DialogWizard.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
