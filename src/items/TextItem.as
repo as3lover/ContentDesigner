@@ -49,6 +49,7 @@ public class TextItem extends Item
     private var _typeEffect:ContextMenuItem;
     private var _stopType:Number = -1;
     private var _startType:Number = -1;
+    private var _mask:TextMask;
 
     public function TextItem(removeAnimation:Function, edit:Boolean = false)
     {
@@ -675,9 +676,6 @@ public class TextItem extends Item
     }
 
 
-    public function showTypeEffect():void
-    {
 
-    }
 }
 }

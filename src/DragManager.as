@@ -7,6 +7,7 @@ import fl.events.ColorPickerEvent;
 import flash.desktop.ClipboardFormats;
 import flash.desktop.NativeDragManager;
 import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.Loader;
 import flash.display.Shape;
 import flash.display.Sprite;
@@ -35,7 +36,7 @@ import src2.Utils;
 
 public class DragManager extends Sprite
 {
-    private var _target:Sprite;
+    private var _target:Target;
     private var _moveBitmap:Bitmap;
     private var _loader:Loader;
     private var onAddObject:Function;
@@ -56,7 +57,7 @@ public class DragManager extends Sprite
         _width = width;
         _height = height;
 
-        _target = new Sprite();
+        _target = new Target();
         this.color = 0x3399cc;
         _target.x = x;
         _target.y = y;
@@ -69,6 +70,10 @@ public class DragManager extends Sprite
         Utils.drawRect(_mask, x, y, width, height);
         this.addChild(_mask);
         _target.mask = _mask;
+        //
+        _image = new Bitmap(new BitmapData(100,100,true,0xffffff));
+        _image.visible = false;
+        _target.addChild(_image);
         //
         _loader = new Loader();
         //
@@ -310,15 +315,16 @@ public class DragManager extends Sprite
 
     public function setBack(image:Bitmap):void
     {
-        trace('setBack', image)
-        if(_image)
-                _target.removeChild(_image);
-
-        _image = image;
-
-        if(!_image)
+        if(image)
+        {
+            _target.removeChild(_image);
+            _image = image;
+        }
+        else
+        {
+            _image.visible = false;
             return;
-
+        }
 
         _target.addChildAt(_image, 0);
 

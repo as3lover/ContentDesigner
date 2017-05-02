@@ -249,7 +249,7 @@ public class Item extends Sprite
     public function get index():int
     {
         if(!parent)
-                return 0;
+                return 1;
         return parent.getChildIndex(this);
     }
 
@@ -258,10 +258,10 @@ public class Item extends Sprite
         if(!parent)
                 return;
 
-        if(i == -100 || i >= parent.numChildren)
-            i = parent.numChildren - 1
-        else if(i < 0)
-            i = 0;
+        if(i == -100 || i > parent.numChildren-2)
+            i = parent.numChildren - 2;
+        else if(i < 1)
+            i = 1;
 
         parent.setChildIndex(this, i);
 

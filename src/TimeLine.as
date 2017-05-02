@@ -80,7 +80,7 @@ public class TimeLine extends Sprite
         var X2:int = 620;
         var Y = 387;
         var dis:int = 10;
-        var textWidth:int = 90;
+        var textWidth:int = 150;
         var textHeigth:int = 30;
 
 
@@ -267,6 +267,9 @@ public class TimeLine extends Sprite
         stage.removeEventListener(MouseEvent.MOUSE_DOWN, onStage);
         if(_sound.loaded)
             _sound.pause();
+
+        if(Main.animationControl)
+            Main.animationControl.time = currentSec
     }
 
     private function playTimeLine():void
@@ -580,6 +583,11 @@ public class TimeLine extends Sprite
     public function addSnap(time:Number):SnapLine
     {
        return(_timeBar.addSnap(time/totalSec));
+    }
+
+    public function get paused():Boolean
+    {
+        return _paused;
     }
 }
 }

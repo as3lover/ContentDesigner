@@ -7,10 +7,8 @@ import fl.text.TLFTextField;
 
 import flash.display.Bitmap;
 import flash.display.Sprite;
-import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextFormat;
-import flash.utils.setTimeout;
 
 import src2.Button;
 import src2.Utils;
@@ -455,7 +453,10 @@ public class TextEditor extends Sprite
     }
 
 
-
+    public function get lines():int
+    {
+        return _textBox.box.numLines;
+    }
 }
 }
 

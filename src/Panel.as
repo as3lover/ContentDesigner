@@ -11,7 +11,11 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.utils.setTimeout;
 
+import items.ItemText;
+
 import items.TextItem;
+import items.TimeBox;
+
 import src2.ColorSelector;
 import src2.Fonts;
 import src2.Utils;
@@ -24,6 +28,7 @@ public class Panel extends Sprite
     private var _space:NumericStepper;
     private var _fontList:ComboBox;
     private var _selector:ColorSelector;
+    private var _typeDur:TimeBox;
 
     public function Panel()
     {
@@ -32,7 +37,7 @@ public class Panel extends Sprite
 
     private function init(e:Event):void
     {
-        hide();
+        visible = false;
 
         _selector = new ColorSelector(Main.colorPicker, changeColor);
         _selector.x = 10;
@@ -84,12 +89,34 @@ public class Panel extends Sprite
         _fontList.addEventListener(Event.OPEN, open);
         _fontList.addEventListener(Event.CLOSE, close);
 
+        ////////////////////////////////
+        ////////////////////////////////
+        _typeDur = new TimeBox();
+        _typeDur.x = 10;
+        _typeDur.y = _fontList.y + _fontList.height + 10;
+        addChild(_typeDur);
+
+        var text:Sprite;
+        text = new Sprite();
+        text.addChild(Utils.StringToBitmap('پایان تایپ'));
+        text.x = _typeDur.x + _typeDur.width + 10;
+        text.y = _typeDur.y;
+        addChild(text);
+        ////////////////////////////////
+        ////////////////////////////////
+
 
         var back:Shape = new Shape();
-        Utils.drawRect(back, 0, 0, width + 20, height - 58);
+        Utils.drawRect(back, 0, 0, width + 20, height);
         addChildAt(back, 0);
+    }
 
-        trace(width)
+    private function changeTypeDur(event:Event):void
+    {
+        if(Main.transformer.target && Main.transformer.target is ItemText)
+        {
+            ItemText(Main.transformer.target).animation.typingEndTime = _typeDur.time;
+        }
     }
 
     private function selectFont(event:Event):void
@@ -139,6 +166,17 @@ public class Panel extends Sprite
         _space.value = (Main.textEditor.getSpace() + 2)*10;
         _leading.value = Main.textEditor.getLeading();
         _selector.color = Main.textEditor.getColor();
+        if(Main.transformer.target && Main.transformer.target is ItemText)
+        {
+            _typeDur.time = ItemText(Main.transformer.target).animation.typingEndTime;
+            _typeDur.addEventListener('edited', changeTypeDur);
+            _typeDur.alpha = 1;
+        }
+        else
+        {
+            _typeDur.time = -1;
+            _typeDur.visible = .5;
+        }
         visible = true;
     }
 
@@ -149,6 +187,8 @@ public class Panel extends Sprite
 
     public function hide():void
     {
+        if(_typeDur)
+            _typeDur.removeEventListener('edited', changeTypeDur);
         visible = false;
     }
 

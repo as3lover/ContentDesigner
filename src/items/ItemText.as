@@ -20,6 +20,9 @@ public class ItemText extends Item
     private var _sprite:Sprite;
     private var _formats:Array;
     private var _defaultFormat:TextFormat;
+    private var _lines:int = 1;
+    private var _mask:TextMask;
+    public var typeEffect:Boolean = true;
 
     public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true):void
     {
@@ -93,6 +96,8 @@ public class ItemText extends Item
         _sprite.height = bitmap.height + (20*quality);
         addChild(_sprite);
 
+        _lines =  Main.textEditor.lines;
+
         changed;
     }
 
@@ -144,6 +149,37 @@ public class ItemText extends Item
     }
 
     ////////////////
+
+    public function showTypeEffect(percent:Number):void
+    {
+        if(!typeEffect || percent == 1 || Main.timeLine.paused)
+        {
+            mask = null;
+            return;
+        }
+
+        if(!_mask)
+        {
+            _mask = new TextMask();
+            addChild(_mask);
+        }
+
+        _mask.height = _sprite.height;
+        _mask.y = _sprite.y;
+
+        _mask.width = _sprite.width * percent;
+        _mask.x = _sprite.x + (_sprite.width - _mask.width);
+
+        mask = _mask;
+    }
+
+    public override function set alpha(val:Number):void
+    {
+        if(typeEffect && Utils.time < animation.typingEndTime)
+                val = 1;
+
+        super.alpha = val;
+    }
 
 
 }

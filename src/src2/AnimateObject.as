@@ -7,6 +7,8 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 
 import items.Item;
+import items.ItemText;
+import items.ItemText;
 import items.TextItem;
 
 public class AnimateObject extends EventDispatcher
@@ -18,6 +20,7 @@ public class AnimateObject extends EventDispatcher
     private var _hideDuration:Number = 1;
     private var _time:Number = -1;
     private var _changeEvent:Event;
+    private var _typingEndTime:Number = -1;
 
 
     public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
@@ -28,7 +31,7 @@ public class AnimateObject extends EventDispatcher
         _object.addEventListener(Event.CLEAR, onClear);
         _object.addEventListener(Event.ADDED, onAdd);
         _object.addEventListener('startTime', changeStartTime);
-        trace('AnimateObject');
+
         this.startTime = startTime;
     }
 
@@ -78,15 +81,29 @@ public class AnimateObject extends EventDispatcher
 
         _time = value;
 
+        var showDuration:Number = _showDuration;
+        if(_object is ItemText )
+        {
+            if(_typingEndTime == -1)
+            {
+                ItemText(_object).typeEffect = false;
+            }
+            else
+            {
+                showDuration = _typingEndTime - _startTime;
+                ItemText(_object).typeEffect = true;
+            }
+        }
+
         if(time < _startTime)
         {
             hide();
         }
-        else if (time < _startTime + _showDuration)
+        else if (time < _startTime + showDuration)
         {
-            show((time - _startTime) / _showDuration);
+            show((time - _startTime) / showDuration);
         }
-        else if (time < _stopTime || _stopTime < _startTime + _showDuration)
+        else if (time < _stopTime || _stopTime < _startTime + showDuration)
         {
             show();
         }
@@ -125,8 +142,10 @@ public class AnimateObject extends EventDispatcher
     {
         _object.setState();
         _object.alpha = percent;
-        if(_object is TextItem)
-                TextItem(_object).showTypeEffect();
+
+        if(_object is ItemText)
+            ItemText(_object).showTypeEffect(percent);
+
         if(percent == 1)
                 return;
 
@@ -195,7 +214,20 @@ public class AnimateObject extends EventDispatcher
         obj.stopTime = stopTime;
         obj.showDuration = _showDuration;
         obj.hideDuration = _hideDuration;
+        obj.typingEndTime = _typingEndTime;
         return obj;
+    }
+
+    public function set typingEndTime(typeDuration:Number):void
+    {
+        if(typeDuration == 0)
+            typeDuration = -1;
+        _typingEndTime = typeDuration;
+    }
+
+    public function get typingEndTime():Number
+    {
+        return _typingEndTime;
     }
 }
 }

@@ -10,6 +10,7 @@ import flash.events.Event;
 import flash.events.FocusEvent;
 import flash.events.KeyboardEvent;
 import flash.text.TextField;
+import flash.text.TextFieldType;
 import flash.text.TextFormat;
 
 import src2.Utils;
@@ -106,6 +107,15 @@ public class TimeBox extends Sprite
     public function get time():Number
     {
         return _time;
+    }
+
+    public override function set alpha(a:Number):void
+    {
+        super.alpha = a;
+        if(a == 1)
+                _text.type = TextFieldType.INPUT;
+        else
+                _text.type = TextFieldType.DYNAMIC;
     }
 }
 }
