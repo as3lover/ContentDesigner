@@ -71,9 +71,9 @@ public class Panel extends Sprite
 
 
         var fonts:Array = new Array();
-        for(var i:String in Fonts.FONTS)
+        for(var i:int = 0; i<Fonts.FONTS.length; i++)
         {
-            fonts.push({label:i, data:Fonts.FONTS[i]})
+            fonts.push({label:Fonts.FONTS[i], data:Fonts.FONTS[i]})
         }
 
         _fontList = new ComboBox();
@@ -166,6 +166,7 @@ public class Panel extends Sprite
         _space.value = (Main.textEditor.getSpace() + 2)*10;
         _leading.value = Main.textEditor.getLeading();
         _selector.color = Main.textEditor.getColor();
+        _fontList.selectedIndex = Utils.getObjectIndex(Fonts.FONTS, Main.textEditor.getFont());
         if(Main.transformer.target && Main.transformer.target is ItemText)
         {
             _typeDur.time = ItemText(Main.transformer.target).animation.typingEndTime;

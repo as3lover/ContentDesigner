@@ -52,8 +52,8 @@ public class Main extends Sprite
     {
         colorPicker = new ColorPicker();
         addChild(colorPicker);
-        colorPicker.x = 800/2;
-        colorPicker.y = 450/2;
+        colorPicker.x = target.x + target.w/2;
+        colorPicker.y = target.y + target.h/2;
 
         this.addEventListener(Event.ADDED_TO_STAGE, init);
     }

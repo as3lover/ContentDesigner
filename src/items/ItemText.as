@@ -68,7 +68,7 @@ public class ItemText extends Item
 
     private function func(text:String):void
     {
-        if(text == '')
+        if(text == '' || text == ' ' || text == '  ')
         {
             this.remove();
             return;

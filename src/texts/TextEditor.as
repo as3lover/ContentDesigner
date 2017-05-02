@@ -10,6 +10,8 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextFormat;
 
+import flashx.textLayout.edit.EditManager;
+
 import src2.Button;
 import src2.Utils;
 
@@ -59,6 +61,8 @@ public class TextEditor extends Sprite
     {
         Main.panel.hide();
         hide();
+        if(!_format)
+            _function('');
     }
 
     private function onOk(event:MouseEvent):void
@@ -94,7 +98,14 @@ public class TextEditor extends Sprite
         visible = toEdit;
         _function = func;
         if(toEdit == false)
-                func();
+        {
+            func();
+            return;
+        }
+
+        _textBox.box.textFlow.interactionManager = new EditManager()
+        _textBox.box.textFlow.interactionManager.selectRange( _textBox.box.text.length,  _textBox.box.text.length);
+        _textBox.box.textFlow.interactionManager.setFocus();
     }
 
     public function get bitmap():Bitmap
@@ -288,6 +299,11 @@ public class TextEditor extends Sprite
         return getProp('size') as Number;
     }
 
+    public function getFont():String
+    {
+        return getProp('font') as String;
+    }
+
     public function getLeading():Number
     {
         return getProp('leading') as Number;
@@ -323,7 +339,7 @@ public class TextEditor extends Sprite
         if(i2>_textBox.box.length)
             i2 = _textBox.box.length;
 
-        format = _textBox.box.getTextFormat(i1, i2)
+        format = _textBox.box.getTextFormat(i1, i2);
 
         return format[prop];
     }

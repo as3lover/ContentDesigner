@@ -7,10 +7,29 @@ public class Fonts
 {
     public static const YEKAN:String = 'B Yekan';
     public static const NAZANIN:String = 'B Nazanin';
-    public static const FONTS:Object = {YEKAN:'B Yekan', NAZANIN:'B Nazanin', NAZANIN_BOLD:'B Nazanin Bold',
-                                        ELHAM:'B Elham', ELHAM_BOLD:'B Elham Bold', DAVAT:'B Davat', ESFAHAN:'B Esfehan',
-                                        HAMID:'B Hamid'
-                                       };
+    public static const FONTS:Array =
+            [
+                'B Davat',
+                'B Elham',
+                'B Elham Bold',
+                'B Esfehan',
+                'B Hamid',
+                'B Nazanin',
+                'B Nazanin Bold',
+                'B Titr',
+                'B Yekan',
+                'Gandom',
+                'mj Tehran',
+                'mj Titr DF',
+
+
+
+
+
+
+
+
+            ];
 
     [Embed(source="../../assets/fonts/B Yekan.TTF",
             fontName = "B Yekan",
@@ -83,6 +102,42 @@ public class Fonts
             advancedAntiAliasing="true",
             embedAsCFF="true")]
     private var HamidFont:Class;
+
+    [Embed(source="../../assets/fonts/B Titr.TTF",
+            fontName = "B Titr",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var BTitrFont:Class;
+
+    [Embed(source="../../assets/fonts/gandom.TTF",
+            fontName = "Gandom",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var GandomFont:Class;
+
+    [Embed(source="../../assets/fonts/mj tehran.TTF",
+            fontName = "mj Tehran",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var MJ_TehranFont:Class;
+
+    [Embed(source="../../assets/fonts/mj Titr DF.TTF",
+            fontName = "mj Titr DF",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var MJ_Titr_Df_Font:Class;
 
     public function Fonts()
     {

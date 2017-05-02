@@ -35,7 +35,7 @@ public class TextBox extends Sprite
 
         _fmt.letterSpacing = -0;
         //fmt.lineSpacing = 19;
-        //fmt.leading = 0;  //فاصله بین خطوط
+        _fmt.leading = 0;  //فاصله بین خطوط
         _fmt.leftMargin = 0;
         _fmt.align = TextFormatAlign.RIGHT; //راست چین
         //fmt.align = "justify";
