@@ -419,10 +419,10 @@ public class Item extends Sprite
 
     private function insideX(x:Number):Number
     {
-        if(x < width/2)
-            x = width/2;
-        else if(x > Main.target.w-width/2)
-            x = Main.target.w-width/2;
+        if(x < 0)
+            x = 0;
+        else if(x > Main.target.w)
+            x = Main.target.w;
 
         return x;
     }
@@ -442,10 +442,10 @@ public class Item extends Sprite
 
     private function insideY(y:Number):Number
     {
-        if(y < height/2)
-            y = height/2;
-        else if(y > Main.target.h-height/2)
-            y = Main.target.h-height/2;
+        if(y <0)
+            y = 0;
+        else if(y > Main.target.h)
+            y = Main.target.h;
 
         return y;
     }
