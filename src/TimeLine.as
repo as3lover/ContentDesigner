@@ -172,7 +172,7 @@ public class TimeLine extends Sprite
         _currentBox.y = _timeBar.y + _timeBar.height;
         _totalBox.y = _currentBox.y;
 
-        _totalBox.selectable = _currentBox.selectable = false;
+        //_totalBox.selectable = _currentBox.selectable = false;
 
         _t = new TextFormat();
         _t2 = new TextFormat();
@@ -185,9 +185,9 @@ public class TimeLine extends Sprite
         _t2.align = _t.align = TextFormatAlign.LEFT;
         _t3.align = TextFormatAlign.RIGHT;
 
-        //_currentBox.type = 'input';
-        //_currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
-        //_currentBox.addEventListener(FocusEvent.FOCUS_OUT, focusOutCurrentBox);
+        _currentBox.type = 'input';
+        _currentBox.addEventListener(FocusEvent.FOCUS_IN, focusInCurrentBox);
+        _currentBox.addEventListener(FocusEvent.FOCUS_OUT, focusOutCurrentBox);
 
         addChild(_currentBox);
         addChild(_totalBox);
@@ -198,10 +198,14 @@ public class TimeLine extends Sprite
         currentSec = 0;
 
 
-        var cover:Sprite = new Sprite();
+        var cover:Sprite;
+
+        /*
+        cover = new Sprite();
         Utils.drawRect(cover,_currentBox.x,_currentBox.y,_currentBox.width,_currentBox.height);
         cover.alpha = 0;
         addChild(cover);
+        */
 
         cover = new Sprite();
         Utils.drawRect(cover,_totalBox.x,_totalBox.y,_totalBox.width,_totalBox.height);
@@ -209,8 +213,6 @@ public class TimeLine extends Sprite
         addChild(cover);
 
     }
-
-
 
 
     //////////////////////
@@ -440,6 +442,8 @@ public class TimeLine extends Sprite
 
     private function key(e:KeyboardEvent):void
     {
+        _currentBox.setTextFormat(_t);
+
         if(e.keyCode == 13)
         {
             changeTime();

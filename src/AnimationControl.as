@@ -4,6 +4,7 @@
 package
 {
 import flash.events.Event;
+import flash.events.MouseEvent;
 import flash.utils.setTimeout;
 
 import items.Item;
@@ -250,13 +251,79 @@ public class AnimationControl
         _list = [];
     }
 
-    public function hideAll():void
+    private function get visibleList():Array
     {
+        var newList:Array = new Array();
         _length = _list.length;
         for(var i:int = 0; i<_length; i++)
         {
             if(AnimateObject(_list[i]).object.visible)
-                AnimateObject(_list[i]).object.Hide();
+                newList.push(_list[i]);
+        }
+
+        return newList;
+    }
+
+    public function hideAll():void
+    {
+        var list:Array = visibleList;
+        _length = list.length;
+
+        for(var i:int = 0; i<_length; i++)
+        {
+            AnimateObject(list[i]).object.Hide();
+        }
+    }
+
+
+    public function showAll():void
+    {
+        var list:Array = visibleList;
+        _length = list.length;
+
+        for(var i:int = 0; i<_length; i++)
+        {
+            AnimateObject(list[i]).object.Show();
+        }
+    }
+
+    public function showAllNew():void
+    {
+        var list:Array = visibleList;
+
+        Main.hightLight(TimeLine);
+        Main.STAGE.addEventListener(MouseEvent.MOUSE_UP, onUp);
+        function onUp(e:MouseEvent):void
+        {
+            Main.hightLight();
+            Main.STAGE.removeEventListener(MouseEvent.MOUSE_UP, onUp);
+
+            _length = list.length;
+
+            for(var i:int = 0; i<_length; i++)
+            {
+                AnimateObject(list[i]).object.Show();
+            }
+        }
+    }
+
+    public function hideAllNew():void
+    {
+        var list:Array = visibleList;
+
+        Main.hightLight(TimeLine);
+        Main.STAGE.addEventListener(MouseEvent.MOUSE_UP, onUp);
+        function onUp(e:MouseEvent):void
+        {
+            Main.hightLight();
+            Main.STAGE.removeEventListener(MouseEvent.MOUSE_UP, onUp);
+
+            _length = list.length;
+
+            for (var i:int = 0; i < _length; i++)
+            {
+                AnimateObject(list[i]).object.Hide();
+            }
         }
     }
 }
