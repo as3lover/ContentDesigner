@@ -274,7 +274,7 @@ public class Item extends Sprite
 
     public function get all():Object
     {
-        var obj:Object = new Object();
+        var obj = new Object();
         obj.x = _x;
         obj.y = _y;
         obj.scaleX = _scaleX;
@@ -338,7 +338,7 @@ public class Item extends Sprite
 
     public function save(dir:String):void
     {
-        var newDir:String = dir;
+        var newDir = dir;
         var newName:String = 'image_' + String(number) + '.pic';
 
         saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);

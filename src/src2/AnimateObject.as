@@ -15,7 +15,7 @@ public class AnimateObject extends EventDispatcher
 {
     private var _object:Item;
     private var _startTime:Number;
-    private var _showDuration:Number = 1;
+    private var _showDuration:Number = .5;
     private var _stopTime:Number = -1;
     private var _hideDuration:Number = 1;
     private var _time:Number = -1;
