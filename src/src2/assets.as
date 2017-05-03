@@ -22,6 +22,10 @@ public class assets
     [Embed(source="../../assets/buttons/file.png")]
     public static var File:Class;
 
+    [Embed(source="../../assets/buttons/bold.png")]
+    public static var Bold:Class;
 
+    [Embed(source="../../assets/buttons/bold2.png")]
+    public static var Bold2:Class;
 }
 }

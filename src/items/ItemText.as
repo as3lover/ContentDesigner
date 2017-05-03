@@ -85,8 +85,8 @@ public class ItemText extends Item
     private function update():void
     {
         bitmap = Main.textEditor.getBitmaap(quality);
-        bitmap.scaleX = 1;
-        bitmap.scaleY = 1;
+        bitmap.scaleX = 1.15;
+        bitmap.scaleY = 1.15;
         bitmap.x = - bitmap.width/2;
         bitmap.y = - bitmap.height/2;
 

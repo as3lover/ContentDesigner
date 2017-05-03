@@ -11,13 +11,18 @@ public class Fonts
             [
                 'B Davat',
                 'B Elham',
-                'B Elham Bold',
-                'B Esfehan',
+                'B Esfehan Bold',
                 'B Hamid',
+                'B Mitra',
+                'B Mitra Bold',
                 'B Nazanin',
                 'B Nazanin Bold',
                 'B Titr',
+                'B Traffic',
+                'B Traffic Bold',
                 'B Yekan',
+                'B Zar',
+                'B Zar Bold',
                 'Gandom',
                 'mj Tehran',
                 'mj Titr DF',
@@ -40,6 +45,24 @@ public class Fonts
             embedAsCFF="true")]
     private var YekanFont:Class;
 
+    [Embed(source="../../assets/fonts/B Mitra.TTF",
+            fontName = "B Mitra",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var MitraFont:Class;
+
+    [Embed(source="../../assets/fonts/B Mitra Bold.TTF",
+            fontName = "B Mitra Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var MitraBoldFont:Class;
+
     [Embed(source="../../assets/fonts/B Nazanin.TTF",
             fontName = "B Nazanin",
             mimeType = "application/x-font",
@@ -48,6 +71,24 @@ public class Fonts
             advancedAntiAliasing="true",
             embedAsCFF="true")]
     private var NazaninFont:Class;
+
+    [Embed(source="../../assets/fonts/B Traffic Bold.TTF",
+            fontName = "B Traffic Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var TrafficBoldFont:Class;
+
+    [Embed(source="../../assets/fonts/B Traffic.TTF",
+            fontName = "B Traffic",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var TrafficFont:Class;
 
     [Embed(source="../../assets/fonts/B Nazanin Bold.TTF",
             fontName = "B Nazanin Bold",
@@ -76,17 +117,8 @@ public class Fonts
             embedAsCFF="true")]
     private var ElhamFont:Class;
 
-    [Embed(source="../../assets/fonts/B Elm Bold.TTF",
-            fontName = "B Elham Bold",
-            mimeType = "application/x-font",
-            fontWeight="normal",
-            fontStyle="normal",
-            advancedAntiAliasing="true",
-            embedAsCFF="true")]
-    private var ElhamBoldFont:Class;
-
     [Embed(source="../../assets/fonts/B Esfehan Bold.TTF",
-            fontName = "B Esfehan",
+            fontName = "B Esfehan Bold",
             mimeType = "application/x-font",
             fontWeight="normal",
             fontStyle="normal",
@@ -103,7 +135,8 @@ public class Fonts
             embedAsCFF="true")]
     private var HamidFont:Class;
 
-    [Embed(source="../../assets/fonts/B Titr.TTF",
+
+    [Embed(source="../../assets/fonts/B Titr Bold.TTF",
             fontName = "B Titr",
             mimeType = "application/x-font",
             fontWeight="normal",
@@ -111,6 +144,24 @@ public class Fonts
             advancedAntiAliasing="true",
             embedAsCFF="true")]
     private var BTitrFont:Class;
+
+    [Embed(source="../../assets/fonts/B Zar Bold.TTF",
+            fontName = "B Zar Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var BZarBoldFont:Class;
+
+    [Embed(source="../../assets/fonts/B Zar.TTF",
+            fontName = "B Zar",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var BZarFont:Class;
 
     [Embed(source="../../assets/fonts/gandom.TTF",
             fontName = "Gandom",

@@ -20,9 +20,10 @@ public class TextEditor extends Sprite
     private var _textBox:TextBox;
     private var _function:Function;
     protected var cancel:Button;
-    private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading'];
+    private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading', 'bold'];
     private var _fmt:TextFormat;
     private var _format:Array;
+    private const props:int = formatProps.length;
 
 
     public function TextEditor(x:int,y:int,width:int,height:int, color:uint=0xcccccc)
@@ -180,6 +181,7 @@ public class TextEditor extends Sprite
                 obj.color = f2.color;
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
+                obj.bold = f2.bold;
                 formats.push({format:obj, index1:i, index2:i})
             }
             f1 = f2
@@ -191,7 +193,7 @@ public class TextEditor extends Sprite
 
     private function formatCompare(f1:TextFormat, f2:TextFormat):Boolean
     {
-        for(var i:int=0; i<5; i++)
+        for(var i:int=0; i<props; i++)
         {
             if(f1[formatProps[i]] != f2[formatProps[i]])
                 return false
@@ -236,6 +238,7 @@ public class TextEditor extends Sprite
                 obj.color = f2.color;
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
+                obj.bold = f2.bold;
                 formats.push({format:obj, index1:i, index2:i})
             }
             f1 = f2
@@ -282,7 +285,7 @@ public class TextEditor extends Sprite
 
     private function formatEquals(f1:TextFormat, f2:TextFormat):Boolean
     {
-        for(var i:int=0; i<5; i++)
+        for(var i:int=0; i<props; i++)
         {
             if(f1[formatProps[i]] != f2[formatProps[i]])
             {
@@ -319,6 +322,11 @@ public class TextEditor extends Sprite
         return getProp('color') as uint;
     }
 
+    public function getBold():Boolean
+    {
+        return getProp('bold') as Boolean;
+    }
+
     public function getProp(prop:String):Object
     {
         var format:TextFormat;
@@ -328,8 +336,29 @@ public class TextEditor extends Sprite
 
         if(i1 == i2)
         {
-            i1 = 0;
-            i2 = 1;
+            if(_textBox.box.length > 0)
+            {
+                i1 = _textBox.box.caretIndex;
+                if(i1 < _textBox.box.length - 2)
+                {
+                    i2 = i1+1;
+                }
+                else if (i1 > 0)
+                {
+                    i2 = i1;
+                    i1--;
+                }
+                else
+                {
+                    i1 = 0;
+                    i2 = 1;
+                }
+            }
+            else
+            {
+                i1 = 0;
+                i2 = 0;
+            }
         }
         else if(i1+1 < i2)
         {
@@ -374,6 +403,11 @@ public class TextEditor extends Sprite
     public function setFont(font:String):void
     {
         setTextFormat('font', font);
+    }
+
+    public function setBold(bold:Boolean):void
+    {
+        setTextFormat('bold', bold);
     }
 
     private function setTextFormat(prop:String, value:Object):void
@@ -423,6 +457,7 @@ public class TextEditor extends Sprite
                 obj.color = f2.color;
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
+                obj.bold = f2.bold;
                 formats.push({format:obj, index1:i, index2:i+1})
             }
             f1 = f2
@@ -473,6 +508,7 @@ public class TextEditor extends Sprite
     {
         return _textBox.box.numLines;
     }
+
 }
 }
 

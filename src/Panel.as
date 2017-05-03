@@ -29,6 +29,7 @@ public class Panel extends Sprite
     private var _fontList:ComboBox;
     private var _selector:ColorSelector;
     private var _typeDur:TimeBox;
+    private var _bold:Bold;
 
     public function Panel()
     {
@@ -43,6 +44,11 @@ public class Panel extends Sprite
         _selector.x = 10;
         _selector.y = 10;
         addChild(_selector);
+
+        _bold = new Bold(setBold);
+        _bold.x = _selector.x + _selector.width + 10;
+        _bold.y = _selector.y;
+        addChild(_bold);
 
         _size = Utils.numericStepper(this, 1,100,1, _selector.x, _selector.y + _selector.height + 10, 60, numberChange);
         _leading = Utils.numericStepper(this, 0,100,1, _size.x, _size.y + _size.height + 10, 60, numberChange);
@@ -78,6 +84,7 @@ public class Panel extends Sprite
 
         _fontList = new ComboBox();
         _fontList.dropdownWidth = 130;
+        _fontList.rowCount = 12;
         _fontList.width = 130;
         _fontList.move(150, 50);
         _fontList.prompt = "Select Font";
@@ -111,6 +118,38 @@ public class Panel extends Sprite
         addChildAt(back, 0);
     }
 
+    private function setBold(bold:Boolean):Boolean
+    {
+        Main.textEditor.setBold(bold);
+
+        var font:String = _fontList.selectedLabel;
+        if(!bold && font.indexOf('Bold') > -1)
+        {
+            font = font.slice(0, font.length - 5);
+            var index:int = Utils.getObjectIndex(Fonts.FONTS, font);
+            if (index != -1)
+            {
+                _fontList.selectedIndex = index;
+                Main.textEditor.setFont(font);
+                return true;
+            }
+        }
+        else if (bold && font.indexOf('Bold') == -1)
+        {
+            font = font + ' Bold';
+            var index:int = Utils.getObjectIndex(Fonts.FONTS, font);
+            if (index != -1)
+            {
+                _fontList.selectedIndex = index;
+                Main.textEditor.setFont(font);
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
     private function changeTypeDur(event:Event):void
     {
         if(Main.transformer.target && Main.transformer.target is ItemText)
@@ -122,6 +161,30 @@ public class Panel extends Sprite
     private function selectFont(event:Event):void
     {
         Main.textEditor.setFont(_fontList.selectedItem.data as String);
+
+        setBoldStatus();
+    }
+
+    private function setBoldStatus():void
+    {
+        var font:String = _fontList.selectedLabel;
+        if(font.indexOf('Bold') > -1)
+        {
+            _bold.bold = true;
+        }
+        else
+        {
+            font = font + ' Bold';
+            var index:int = Utils.getObjectIndex(Fonts.FONTS, font);
+            if (index != -1)
+            {
+                _bold.bold = false;
+            }
+            else
+            {
+                _bold.disable();
+            }
+        }
     }
 
     private function numberChange(e:Event):void
@@ -166,7 +229,9 @@ public class Panel extends Sprite
         _space.value = (Main.textEditor.getSpace() + 2)*10;
         _leading.value = Main.textEditor.getLeading();
         _selector.color = Main.textEditor.getColor();
+        //_bold.bold = Main.textEditor.getBold();
         _fontList.selectedIndex = Utils.getObjectIndex(Fonts.FONTS, Main.textEditor.getFont());
+        setBoldStatus();
         if(Main.transformer.target && Main.transformer.target is ItemText)
         {
             _typeDur.time = ItemText(Main.transformer.target).animation.typingEndTime;
