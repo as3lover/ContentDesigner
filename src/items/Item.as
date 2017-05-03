@@ -177,7 +177,7 @@ public class Item extends Sprite
         }
     }
 
-    public function newMotion(type:String)
+    public function newMotion(type:String):void
     {
         motion = type;
         preview();
@@ -216,7 +216,7 @@ public class Item extends Sprite
     {
         Main.hightLight(TimeLine);
         stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
-        function onUp(e:MouseEvent)
+        function onUp(e:MouseEvent):void
         {
             Main.hightLight();
             stage.removeEventListener(MouseEvent.MOUSE_UP, onUp);
@@ -228,7 +228,7 @@ public class Item extends Sprite
     {
         Main.hightLight(TimeLine);
         stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
-        function onUp(e:MouseEvent)
+        function onUp(e:MouseEvent):void
         {
             Main.hightLight();
             stage.removeEventListener(MouseEvent.MOUSE_UP, onUp);
@@ -274,7 +274,7 @@ public class Item extends Sprite
 
     public function get all():Object
     {
-        var obj = new Object();
+        var obj:Object = new Object();
         obj.x = _x;
         obj.y = _y;
         obj.scaleX = _scaleX;
@@ -289,7 +289,7 @@ public class Item extends Sprite
         return obj;
     }
 
-    public function set all(obj:Object)
+    public function set all(obj:Object):void
     {
         _x = obj.x;
         _y = obj.y;
@@ -338,7 +338,7 @@ public class Item extends Sprite
 
     public function save(dir:String):void
     {
-        var newDir = dir;
+        var newDir:String = dir;
         var newName:String = 'image_' + String(number) + '.pic';
 
         saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);

@@ -319,7 +319,7 @@ public class TextItem extends Item
         _box.paddingRight = 10;
     }
 
-    private function setFormat()
+    private function setFormat():void
     {
         _box.defaultTextFormat = _fmt;
         _box.setTextFormat(_fmt);
@@ -620,7 +620,7 @@ public class TextItem extends Item
         return obj;
     }
 
-    public override function set all(obj:Object)
+    public override function set all(obj:Object):void
     {
         _box.text = obj.text;
         _box.width = obj.textWidth;

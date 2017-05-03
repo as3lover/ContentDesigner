@@ -25,19 +25,19 @@ public class ItemMenu
     {
         menu = new ContextMenu();
 
-        var hide = new ContextMenuItem("Hide Now");
+        var hide:ContextMenuItem = new ContextMenuItem("Hide Now");
         hide.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Hide);
 
-        var hideTime = new ContextMenuItem("Hide At New Time");
+        var hideTime:ContextMenuItem = new ContextMenuItem("Hide At New Time");
         hideTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, HideNew);
 
-        var show = new ContextMenuItem("Show Now");
+        var show:ContextMenuItem = new ContextMenuItem("Show Now");
         show.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Show);
 
-        var showTime = new ContextMenuItem("Show At New Time");
+        var showTime:ContextMenuItem = new ContextMenuItem("Show At New Time");
         showTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, ShowNew);
         //
-        var motion = _motion = new ContextMenuItem("Motion");
+        var motion:ContextMenuItem = _motion = new ContextMenuItem("Motion");
         motion.submenu = new NativeMenu();
         subMotion(motion, Consts.fade, true);
         subMotion(motion, Consts.upToDown);
@@ -80,7 +80,7 @@ public class ItemMenu
         Item(e.contextMenuOwner).Show();
     }
 
-    private function subMotion(motion:ContextMenuItem, type:String, checked:Boolean = false)
+    private function subMotion(motion:ContextMenuItem, type:String, checked:Boolean = false):void
     {
         motion.submenu.addItem(subMenu(type, setMotion, type,checked));
     }

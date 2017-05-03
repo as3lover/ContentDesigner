@@ -112,7 +112,7 @@ public class Utils
         return false;
     }
 
-    public static function removeItemAtIndex(list:Array, index:int)
+    public static function removeItemAtIndex(list:Array, index:int):void
     {
         list.splice(index, 1);
     }
@@ -163,11 +163,11 @@ public class Utils
     {
         Main.STAGE.focus = null;
 
-        var x = textBox.x;
-        var y = textBox.y;
+        var x:Number = textBox.x;
+        var y:Number = textBox.y;
         var border:Boolean = textBox.border;
         var scale:Number = textBox.scaleX;
-        var parent;
+        var parent:Object;
         var index:int;
         if(textBox.parent)
         {

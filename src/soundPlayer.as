@@ -13,9 +13,9 @@
 	{
 		public var mySound:Sound;
 		public var myChannel:SoundChannel;
-		var myTransform:SoundTransform;
-		var lastPosition:Number;
-		var played:Boolean;
+		private var myTransform:SoundTransform;
+        private var lastPosition:Number;
+        private var played:Boolean;
 		
 		public var duration:Number;
 		public var playing:Boolean;
@@ -36,7 +36,7 @@
 		}
 
 		/////////////// Play
-		public function load(file:String)
+		public function load(file:String):void
 		{
             _loaded = false;
 			playing = false;
@@ -70,7 +70,7 @@
 			this.addEventListener(Event.EXIT_FRAME,ef);
 		}
 		
-		function ef(e:Event)
+		function ef(e:Event):void
 		{
 			duration = mySound.length / 1000;
 			
@@ -87,7 +87,7 @@
 
 		}
 		
-		private function onLoadeded(e:Event = null)
+		private function onLoadeded(e:Event = null):void
 		{
 			this.removeEventListener(Event.EXIT_FRAME,ef);
 			mySound.removeEventListener(Event.COMPLETE,onLoadeded);
@@ -111,7 +111,7 @@
 			dispatchEvent(new Event('duration'));
 		}
 		
-		private function finished(e:Event)
+		private function finished(e:Event):void
 		{
 			dispatchEvent(new Event('finish'));
 		}
@@ -154,13 +154,13 @@
 		
 
 		/////////////// Stop
-		public function Stop()
+		public function Stop():void
 		{
 			myChannel.stop();
 			lastPosition = 0;
 			played = false;
 		}
-		public function end()
+		public function end():void
 		{
 			Stop();
 			myChannel = null;
@@ -168,14 +168,14 @@
 		}
 
 		/////////////// setTimePercent
-		public function setPercent(percent:Number)
+		public function setPercent(percent:Number):void
 		{
 			setTime(percent * mySound.length / 1000);
 
 		}
 		
 		/////////////// setTimeSecond
-		public function setTime(second:Number)
+		public function setTime(second:Number):void
 		{
 			if(!playing || second+buffer > mySound.length)
 			{
@@ -207,7 +207,7 @@
 		}
 
 		/////////////// getPercent
-		function getPercent():Number
+		private function getPercent():Number
 		{
 			return myChannel.position / mySound.length;
 		}
@@ -226,7 +226,7 @@
 		}
 		
 		/////////////// addZero
-		function addZero(num:Number):String
+		private function addZero(num:Number):String
 		{
 			if ((num < 10))
 			{

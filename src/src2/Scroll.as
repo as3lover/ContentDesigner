@@ -45,7 +45,7 @@ public class Scroll extends Sprite
 
     }
 
-    public function show()
+    public function show():void
     {
         if(!_object.parent)
             return;

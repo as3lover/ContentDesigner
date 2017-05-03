@@ -28,7 +28,7 @@ public class saveItem extends EventDispatcher
             return;
         }
 
-        var file = new File(currentPath);
+        var file:File = new File(currentPath);
         var temp:File = File.createTempDirectory();
         var des:File = new File(temp.nativePath + '/' + file.name);
 
@@ -39,7 +39,7 @@ public class saveItem extends EventDispatcher
 
 
         setTimeout(t,10);
-        function t()
+        function t():void
         {
             if(des.exists)
                 rename();
@@ -47,7 +47,7 @@ public class saveItem extends EventDispatcher
                 setTimeout(t,10);
         }
 
-        function rename()
+        function rename():void
         {
             file = des;
             des = new File(temp.nativePath + '/' + newName);
@@ -61,7 +61,7 @@ public class saveItem extends EventDispatcher
             catch (e){}
 
             setTimeout(tt,10);
-            function tt()
+            function tt():void
             {
                 if(des.exists)
                 {
@@ -77,7 +77,7 @@ public class saveItem extends EventDispatcher
         }
     }
 
-    public static function move(path1:String, path2:String, afterMove:Function)
+    public static function move(path1:String, path2:String, afterMove:Function):void
     {
         var file1:File = new File(path1);
         if(!file1.exists || path1 == path2)
@@ -91,7 +91,7 @@ public class saveItem extends EventDispatcher
         file1.moveTo(file2, true);
 
         setTimeout(t,10);
-        function t()
+        function t():void
         {
             if(file2.exists)
             {

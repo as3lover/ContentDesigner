@@ -46,7 +46,7 @@ import flash.events.Event;
             _contextMenu.display(_stage, 0, 24);
         }
 
-        function selectItem(menuEvent:Event):void
+        private function selectItem(menuEvent:Event):void
         {
             switch(menuEvent.target.label)
 			{

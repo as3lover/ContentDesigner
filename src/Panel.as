@@ -103,7 +103,6 @@ public class Panel extends Sprite
         _typeDur.y = _fontList.y + _fontList.height + 10;
         addChild(_typeDur);
 
-        var text:Sprite;
         text = new Sprite();
         text.addChild(Utils.StringToBitmap('پایان تایپ'));
         text.x = _typeDur.x + _typeDur.width + 10;
@@ -137,7 +136,7 @@ public class Panel extends Sprite
         else if (bold && font.indexOf('Bold') == -1)
         {
             font = font + ' Bold';
-            var index:int = Utils.getObjectIndex(Fonts.FONTS, font);
+            index = Utils.getObjectIndex(Fonts.FONTS, font);
             if (index != -1)
             {
                 _fontList.selectedIndex = index;

@@ -8,7 +8,7 @@ public class HightLigher
     import com.greensock.*;
     import com.greensock.plugins.*;
 
-    private static var _obj;
+    private static var _obj:Object;
 
     public static function add(obj, tintAmount:Number = .5):void
     {

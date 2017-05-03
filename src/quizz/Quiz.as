@@ -141,7 +141,7 @@ public class Quiz extends Sprite
         show(id);
     }
 
-    public function addLoaded(id:String, quiz:Array)
+    public function addLoaded(id:String, quiz:Array):void
     {
         _list[id] = quiz;
     }

@@ -80,7 +80,7 @@ public class TextBox extends Sprite
         _box.paddingRight = 10;
     }
 
-    public function setFormat(format:TextFormat=null)
+    public function setFormat(format:TextFormat=null):void
     {
         var newFormat:TextFormat = _fmt;
         if(format)

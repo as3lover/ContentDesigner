@@ -123,7 +123,7 @@ public class ItemText extends Item
         return obj;
     }
 
-    public override function set all(obj:Object)
+    public override function set all(obj:Object):void
     {
         _text = obj.text;
         _formats = obj.formats;

@@ -54,7 +54,7 @@ public class FileForSave extends EventDispatcher
     {
         var path:String = file.nativePath;
         var name:String = file.name;
-        var path:String = path.slice(0, - name.length);
+        path = path.slice(0, - name.length);
         folder = new File(path);
     }
     private function conformExtension(fileDef:String):String

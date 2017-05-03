@@ -102,9 +102,9 @@ public class Main extends Sprite
 
 
         //////////// MENU //////////
-        var menu = new ContextMenu();
+        var menu:ContextMenu = new ContextMenu();
 
-        var textbox = new ContextMenuItem("Add Text");
+        var textbox:ContextMenuItem = new ContextMenuItem("Add Text");
         textbox.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addText);
         menu.customItems.push(textbox);
         function addText(e:ContextMenuEvent):void
@@ -114,7 +114,7 @@ public class Main extends Sprite
             addObject(new ItemText(removeAnimation, true))
         }
 
-        var topic = new ContextMenuItem("Add Topic");
+        var topic:ContextMenuItem = new ContextMenuItem("Add Topic");
         topic.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addTopic);
         menu.customItems.push(topic);
         function addTopic(e:ContextMenuEvent):void
@@ -123,7 +123,7 @@ public class Main extends Sprite
             Main.topics.add(Utils.time);
         }
 
-        var quize = new ContextMenuItem("Add Quiz");
+        var quize:ContextMenuItem = new ContextMenuItem("Add Quiz");
         quize.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, addQuiz);
         menu.customItems.push(quize);
         function addQuiz(e:ContextMenuEvent):void
@@ -132,7 +132,7 @@ public class Main extends Sprite
             Main.topics.addQuiz(Utils.time);
         }
 
-        var timeSnap = new ContextMenuItem("Snapshot");
+        var timeSnap:ContextMenuItem = new ContextMenuItem("Snapshot");
         timeSnap.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, TimeSnap);
         menu.customItems.push(timeSnap);
         function TimeSnap(e:ContextMenuEvent):void
@@ -141,7 +141,7 @@ public class Main extends Sprite
             snapList.add();
         }
 
-        var hideAll = new ContextMenuItem("Hide All");
+        var hideAll:ContextMenuItem = new ContextMenuItem("Hide All");
         hideAll.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, HideAll);
         menu.customItems.push(hideAll);
         function HideAll(e:ContextMenuEvent):void
@@ -150,7 +150,7 @@ public class Main extends Sprite
             animationControl.hideAll();
         }
 
-        var hideSome = new ContextMenuItem("Hide Items by Click");
+        var hideSome:ContextMenuItem = new ContextMenuItem("Hide Items by Click");
         hideSome.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, HideSome);
         menu.customItems.push(hideSome);
         function HideSome(e:ContextMenuEvent):void
@@ -159,7 +159,7 @@ public class Main extends Sprite
             stage.addEventListener(MouseEvent.MOUSE_DOWN, onDown, true);
             function onDown(e:MouseEvent):void
             {
-                var item;
+                var item:Object;
 
                 if(e.target is Item)
                         item = e.target;
@@ -182,7 +182,7 @@ public class Main extends Sprite
             }
         }
 
-        var back = new ContextMenuItem("Background Image ...");
+        var back:ContextMenuItem = new ContextMenuItem("Background Image ...");
         back.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Back);
         menu.customItems.push(back);
 

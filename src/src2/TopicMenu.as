@@ -25,22 +25,22 @@ public class TopicMenu
     {
         menu = new ContextMenu();
 
-        var setTime = new ContextMenuItem("Set Current Time");
+        var setTime:ContextMenuItem = new ContextMenuItem("Set Current Time");
         setTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, setCurTime);
         menu.customItems.push(setTime);
 
         if(type == 'topic')
         {
-            var Text = new ContextMenuItem("Change Text");
+            var Text:ContextMenuItem = new ContextMenuItem("Change Text");
             Text.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, text);
             menu.customItems.push(Text);
         }
 
-        var Time = new ContextMenuItem("Change Time");
+        var Time:ContextMenuItem = new ContextMenuItem("Change Time");
         Time.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, time);
         menu.customItems.push(Time);
 
-        var Delete = new ContextMenuItem("Delete");
+        var Delete:ContextMenuItem = new ContextMenuItem("Delete");
         Delete.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, deleteTopic);
         menu.customItems.push(Delete);
 

@@ -23,7 +23,7 @@ public class Button extends Sprite
         this.text = text;
     }
 
-    public function setProps(obj:Object)
+    public function setProps(obj:Object):void
     {
         for (var i:String in obj)
         {

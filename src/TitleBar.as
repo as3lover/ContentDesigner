@@ -213,7 +213,7 @@ public class TitleBar extends Sprite
 
     }
 
-    function resizeMain()
+    private function resizeMain():void
     {
         var area:AutoFitArea = new AutoFitArea(stage, 0, 0, stage.nativeWindow.width, stage.nativeWindow.height);
         area.attach(_area);

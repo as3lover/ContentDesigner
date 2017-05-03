@@ -95,7 +95,7 @@ public class AnimationControl
         var i:int = 0;
         load()
 
-        function load()
+        function load():void
         {
             if(i>=len)
             {
@@ -148,7 +148,7 @@ public class AnimationControl
         return object;
     }
 
-    public function reSave()
+    public function reSave():void
     {
         saveFiles();
     }
@@ -161,7 +161,7 @@ public class AnimationControl
         var len:int = _list.length;
         save()
 
-        function save()
+        function save():void
         {
             if(i>=len)
             {
@@ -187,7 +187,7 @@ public class AnimationControl
             setTimeout(save, 10);
         }
 
-        function move()
+        function move():void
         {
             if(i>=len)
             {

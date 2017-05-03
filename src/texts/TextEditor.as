@@ -74,7 +74,7 @@ public class TextEditor extends Sprite
         hide();
     }
 
-    public function register()
+    public function register():void
     {
         onOk(null);
     }

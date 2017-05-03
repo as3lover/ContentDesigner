@@ -78,7 +78,7 @@ public class TimeLine extends Sprite
 
         var X:int = 20;
         var X2:int = 620;
-        var Y = 387;
+        var Y:int = 387;
         var dis:int = 10;
         var textWidth:int = 150;
         var textHeigth:int = 30;

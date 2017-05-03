@@ -80,7 +80,7 @@ public class Text extends Sprite
         return sprite;
     }
 
-    public static function TextBox(text:String, color:uint=0x000000, font:String="B Yekan", size:int=16 ,width:int= 260, height:int=35)
+    public static function TextBox(text:String, color:uint=0x000000, font:String="B Yekan", size:int=16 ,width:int= 260, height:int=35):void
     {
         var fmt:TextFormat = new TextFormat();
         fmt.color = color; // رنگ فونت

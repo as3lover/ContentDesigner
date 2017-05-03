@@ -76,7 +76,7 @@ public class TimePanel extends Sprite
         Main.snapList.visible = false;
     }
 
-    public function hide()
+    public function hide():void
     {
         _item = null;
         _start.removeEventListener('edited', change);

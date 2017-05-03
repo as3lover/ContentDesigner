@@ -155,7 +155,7 @@ public class AnimateObject extends EventDispatcher
         }
     }
 
-    private function setProp(prop:String, percent:Number)
+    private function setProp(prop:String, percent:Number):void
     {
         _object[prop] -= percent * (_object[prop] - _object.startProps[prop]);
     }

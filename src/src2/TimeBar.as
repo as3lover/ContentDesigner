@@ -79,7 +79,7 @@ public class TimeBar extends Sprite
         x = _handleX - _bar.width*scaleX
     }
 
-    public function start()
+    public function start():void
     {
         addOnDown();
     }
@@ -98,7 +98,7 @@ public class TimeBar extends Sprite
             _handle.removeEventListener(MouseEvent.MOUSE_DOWN, onDown);
     }
 
-    public function stop()
+    public function stop():void
     {
         removeOnDown();
         removeEventListener(Event.ENTER_FRAME, check);
@@ -254,7 +254,7 @@ public class TimeBar extends Sprite
         setSnapSize(true);
     }
 
-    function drawLine(i:Number)
+    private function drawLine(i:Number):void
     {
         var step:int=0;
         for(i; i<_originalWidth; i+=_step)

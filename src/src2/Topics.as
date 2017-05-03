@@ -136,7 +136,7 @@ public class Topics extends Sprite
         return i;
     }
 
-    public function changeTime(topic:TopicItem, seconds:Number)
+    public function changeTime(topic:TopicItem, seconds:Number):void
     {
         Utils.removeObjectFromArray(_list, topic);
         _len--;
@@ -158,7 +158,7 @@ public class Topics extends Sprite
         }
     }
 
-    public function remove(topic:TopicItem)
+    public function remove(topic:TopicItem):void
     {
         topic.removeEventListener('clicked', clickOnTopic);
         topic.removeEventListener('clicked', clickOnQuiz);
