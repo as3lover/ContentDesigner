@@ -217,6 +217,7 @@ public class TransformManager
             Main.transformer.add(_clipBoardItem, true);
             Main.animationControl.add(_clipBoardItem, Utils.time)
             select(_clipBoardItem);
+            _clipBoardItem.addToHistory(History.ADD);
             _clipBoardItem = null;
         }
     }
@@ -236,7 +237,7 @@ public class TransformManager
     {
         var obj:Item = Item(_tool.target);
         _tool.target = null;
-        obj.remove();
+        obj.remove(true);
         onStage();
     }
 

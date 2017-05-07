@@ -4,12 +4,31 @@
     <option name="desktopPackageType" value="captive runtime bundle" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/items/Item.as" line="248" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/src/items/Item.as" line="325" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ef98d20-093e-4332-984c-61a04f537c4f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/History.as" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ContentDesigner/Main.swf" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AnimationControl.as" afterPath="$PROJECT_DIR$/src/AnimationControl.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DragManager.as" afterPath="$PROJECT_DIR$/src/DragManager.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Keyboard.as" afterPath="$PROJECT_DIR$/src/Keyboard.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.as" afterPath="$PROJECT_DIR$/src/Main.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Panel.as" afterPath="$PROJECT_DIR$/src/Panel.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TimeLine.as" afterPath="$PROJECT_DIR$/src/TimeLine.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TitleBar.as" afterPath="$PROJECT_DIR$/src/TitleBar.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TransformManager.as" afterPath="$PROJECT_DIR$/src/TransformManager.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/items/Item.as" afterPath="$PROJECT_DIR$/src/items/Item.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/items/ItemMenu.as" afterPath="$PROJECT_DIR$/src/items/ItemMenu.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/items/ItemText.as" afterPath="$PROJECT_DIR$/src/items/ItemText.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/src2/AnimateObject.as" afterPath="$PROJECT_DIR$/src/src2/AnimateObject.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/src2/Consts.as" afterPath="$PROJECT_DIR$/src/src2/Consts.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/src2/TopicItem.as" afterPath="$PROJECT_DIR$/src/src2/TopicItem.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/src2/Topics.as" afterPath="$PROJECT_DIR$/src/src2/Topics.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/texts/TextBox.as" afterPath="$PROJECT_DIR$/src/texts/TextBox.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/texts/TextEditor.as" afterPath="$PROJECT_DIR$/src/texts/TextEditor.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/text2.txt" afterPath="$PROJECT_DIR$/text2.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,11 +47,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Item.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ItemMenu.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/items/ItemMenu.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="124" column="21" lean-forward="false" selection-start-line="124" selection-start-column="21" selection-end-line="124" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Consts.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src2/Consts.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Item.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/items/Item.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="447" column="30" lean-forward="true" selection-start-line="447" selection-start-column="30" selection-end-line="447" selection-end-column="30" />
+            <state relative-caret-position="66">
+              <caret line="545" column="27" lean-forward="false" selection-start-line="545" selection-start-column="27" selection-end-line="545" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#59#90#0" expanded="true" />
@@ -41,34 +80,86 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnimateObject.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/src2/AnimateObject.as">
+      <file leaf-file-name="Keyboard.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Keyboard.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="19" column="41" lean-forward="true" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
-              <folding />
+            <state relative-caret-position="-2114">
+              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemText.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/items/ItemText.as">
+      <file leaf-file-name="TextEditor.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/texts/TextEditor.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="130" column="15" lean-forward="false" selection-start-line="130" selection-start-column="15" selection-end-line="130" selection-end-column="15" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
+                <element signature="n#!!doc" expanded="true" />
                 <element signature="e#60#88#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextItem.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/items/TextItem.as">
+      <file leaf-file-name="TextBox.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/texts/TextBox.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="642" column="15" lean-forward="false" selection-start-line="642" selection-start-column="15" selection-end-line="642" selection-end-column="15" />
+            <state relative-caret-position="453">
+              <caret line="260" column="19" lean-forward="true" selection-start-line="260" selection-start-column="19" selection-end-line="260" selection-end-column="19" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SnapList.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src2/SnapList.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="62">
+              <caret line="15" column="43" lean-forward="false" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Topics.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src2/Topics.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="318">
+              <caret line="251" column="9" lean-forward="true" selection-start-line="251" selection-start-column="9" selection-end-line="251" selection-end-column="9" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TopicItem.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/src2/TopicItem.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="33" column="27" lean-forward="false" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Panel.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Panel.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="224" column="41" lean-forward="false" selection-start-line="224" selection-start-column="41" selection-end-line="224" selection-end-column="41" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#54#82#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,36 +175,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>type</find>
-      <find>== -</find>
-      <find>_pa</find>
-      <find>if(_pa</find>
-      <find>type =</find>
-      <find>hide</find>
-      <find>cha</find>
-      <find>.all</find>
-      <find>19</find>
-      <find>lea</find>
-      <find>6</find>
-      <find>canc</find>
-      <find>color</find>
-      <find>(1/lines)</find>
-      <find>5</find>
-      <find>size</find>
-      <find>comp</find>
-      <find>Esfehan</find>
-      <find>titr</find>
-      <find>edi</find>
-      <find>setb</find>
+      <find>cut</find>
+      <find>past</find>
+      <find>set start</find>
+      <find>set time</find>
+      <find>set st</find>
+      <find>set s</find>
+      <find>CHANGE</find>
+      <find>set ti</find>
+      <find>add(</find>
+      <find>line.</find>
+      <find>timelin</find>
+      <find>select(</find>
+      <find>'startTime'</find>
+      <find>sele</find>
+      <find>set sta</find>
       <find>show</find>
-      <find>hideall</find>
-      <find>startTime</find>
-      <find>event</find>
-      <find>'start</find>
-      <find>.text</find>
-      <find>showt</find>
-      <find>focus</find>
-      <find>all</find>
+      <find>show(</find>
+      <find>text</find>
+      <find>preview</find>
+      <find>addt</find>
+      <find>trace</find>
+      <find>set index</find>
+      <find>right</find>
+      <find>16</find>
+      <find>space</find>
+      <find>set</find>
+      <find>setf</find>
+      <find>focu</find>
+      <find>_box.typ</find>
+      <find>Event.CHANGE</find>
     </findStrings>
     <replaceStrings>
       <replace>Milli</replace>
@@ -135,6 +226,7 @@
       <replace>_answer</replace>
       <replace>ext':</replace>
       <replace>p</replace>
+      <replace>_shift</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -148,8 +240,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/src2/ToolTip.as" />
-        <option value="$PROJECT_DIR$/src/src2/SnapBar.as" />
         <option value="$PROJECT_DIR$/src/src2/Snap.as" />
         <option value="$PROJECT_DIR$/src/src2/SnapLine.as" />
         <option value="$PROJECT_DIR$/src/Question.as" />
@@ -157,14 +247,11 @@
         <option value="$PROJECT_DIR$/src/quizText.as" />
         <option value="$PROJECT_DIR$/src/QuizPage.as" />
         <option value="$PROJECT_DIR$/../TransformTool/src/as/com/senocular/display/transform/TransformTool.as" />
-        <option value="$PROJECT_DIR$/src/Keyboard.as" />
         <option value="$PROJECT_DIR$/src/quizz/QuizPage.as" />
         <option value="$PROJECT_DIR$/src/quizz/quizText.as" />
         <option value="$PROJECT_DIR$/src/AlertBox.as" />
-        <option value="$PROJECT_DIR$/src/src2/TopicItem.as" />
         <option value="$PROJECT_DIR$/src/src2/SnapList.as" />
         <option value="$PROJECT_DIR$/src/Target.as" />
-        <option value="$PROJECT_DIR$/src/DragManager.as" />
         <option value="$PROJECT_DIR$/src/bitmapBrowser.as" />
         <option value="$PROJECT_DIR$/src/items/TimeBox.as" />
         <option value="$PROJECT_DIR$/src/saveLoad/LoadFile.as" />
@@ -173,11 +260,6 @@
         <option value="$PROJECT_DIR$/src/Bold.as" />
         <option value="$PROJECT_DIR$/src/src2/Fonts.as" />
         <option value="$PROJECT_DIR$/src/FileMenu.as" />
-        <option value="$PROJECT_DIR$/src/Panel.as" />
-        <option value="$PROJECT_DIR$/src/TitleBar.as" />
-        <option value="$PROJECT_DIR$/src/TransformManager.as" />
-        <option value="$PROJECT_DIR$/src/items/ItemMenu.as" />
-        <option value="$PROJECT_DIR$/src/items/ItemText.as" />
         <option value="$PROJECT_DIR$/src/items/TextItem.as" />
         <option value="$PROJECT_DIR$/src/items/TimePanel.as" />
         <option value="$PROJECT_DIR$/src/quizz/Quiz.as" />
@@ -187,18 +269,28 @@
         <option value="$PROJECT_DIR$/src/src2/Scroll.as" />
         <option value="$PROJECT_DIR$/src/src2/TimeBar.as" />
         <option value="$PROJECT_DIR$/src/src2/TopicMenu.as" />
-        <option value="$PROJECT_DIR$/src/src2/Topics.as" />
         <option value="$PROJECT_DIR$/src/src2/Utils.as" />
         <option value="$PROJECT_DIR$/src/texts/Text.as" />
-        <option value="$PROJECT_DIR$/src/texts/TextBox.as" />
-        <option value="$PROJECT_DIR$/src/texts/TextEditor.as" />
         <option value="$PROJECT_DIR$/src/FileForSave.as" />
         <option value="$PROJECT_DIR$/src/saveLoad/saveItem.as" />
-        <option value="$PROJECT_DIR$/src/AnimationControl.as" />
+        <option value="$PROJECT_DIR$/src/TitleBar.as" />
+        <option value="$PROJECT_DIR$/src/DragManager.as" />
         <option value="$PROJECT_DIR$/src/Main.as" />
+        <option value="$PROJECT_DIR$/src/TransformManager.as" />
+        <option value="$PROJECT_DIR$/src/items/ItemText.as" />
         <option value="$PROJECT_DIR$/src/TimeLine.as" />
+        <option value="$PROJECT_DIR$/src/AnimationControl.as" />
         <option value="$PROJECT_DIR$/src/src2/AnimateObject.as" />
+        <option value="$PROJECT_DIR$/src/History.as" />
+        <option value="$PROJECT_DIR$/src/src2/Consts.as" />
         <option value="$PROJECT_DIR$/src/items/Item.as" />
+        <option value="$PROJECT_DIR$/src/items/ItemMenu.as" />
+        <option value="$PROJECT_DIR$/src/Keyboard.as" />
+        <option value="$PROJECT_DIR$/src/Panel.as" />
+        <option value="$PROJECT_DIR$/src/texts/TextEditor.as" />
+        <option value="$PROJECT_DIR$/src/src2/TopicItem.as" />
+        <option value="$PROJECT_DIR$/src/src2/Topics.as" />
+        <option value="$PROJECT_DIR$/src/texts/TextBox.as" />
       </list>
     </option>
   </component>
@@ -254,24 +346,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ContentDesigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ContentDesigner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="texts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -811,16 +885,16 @@
       <workItem from="1493192470558" duration="45139000" />
       <workItem from="1493286251884" duration="11433000" />
       <workItem from="1493364168078" duration="56000" />
-      <workItem from="1493364279778" duration="112683000" />
+      <workItem from="1493364279778" duration="153055000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="532236000" />
+    <option name="totallyTimeSpent" value="572608000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -834,7 +908,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4031496" sideWeight="0.77306" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4031496" sideWeight="0.77306" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32125986" sideWeight="0.7715959" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -905,25 +979,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Adobe/Adobe Animate CC 2017/Common/Configuration/ActionScript 3.0/libs/textLayout.swc!/library.swf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="1062" column="29" lean-forward="false" selection-start-line="1062" selection-start-column="29" selection-end-line="1062" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/quizz/quizText.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#60#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src2/ToolTip.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-73">
@@ -948,36 +1003,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Keyboard.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15">
-          <caret line="110" column="36" lean-forward="true" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/texts/MainTextEditor.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src2/TopicItem.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src2/SnapList.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="15" column="43" lean-forward="false" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -992,44 +1021,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DragManager.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="315" column="23" lean-forward="true" selection-start-line="315" selection-start-column="23" selection-end-line="315" selection-end-column="23" />
-          <folding>
-            <element signature="e#11#41#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bitmapBrowser.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="41" column="23" lean-forward="false" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Softwares/Adobe/AIRSDK_Compiler/frameworks/libs/air/airglobal.swc!/library.swf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="1175" column="29" lean-forward="false" selection-start-line="1175" selection-start-column="29" selection-end-line="1175" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saveLoad/LoadFile.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="97" column="120" lean-forward="false" selection-start-line="97" selection-start-column="120" selection-end-line="97" selection-end-column="120" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FileManager.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="64" column="24" lean-forward="false" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1099,30 +1094,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Panel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="138" column="17" lean-forward="false" selection-start-line="138" selection-start-column="17" selection-end-line="138" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TitleBar.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="215" column="38" lean-forward="false" selection-start-line="215" selection-start-column="38" selection-end-line="215" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TransformManager.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="103" column="20" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/quizz/Quiz.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
@@ -1170,31 +1141,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/src2/TimeBar.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="256" column="12" lean-forward="false" selection-start-line="256" selection-start-column="12" selection-end-line="256" selection-end-column="12" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src2/TopicMenu.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src2/Topics.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="160" column="48" lean-forward="false" selection-start-line="160" selection-start-column="48" selection-end-line="160" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1214,25 +1165,6 @@
         <state relative-caret-position="134">
           <caret line="82" column="140" lean-forward="false" selection-start-line="82" selection-start-column="140" selection-end-line="82" selection-end-column="140" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/texts/TextBox.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="82" column="58" lean-forward="false" selection-start-line="82" selection-start-column="58" selection-end-line="82" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/texts/TextEditor.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="76" column="35" lean-forward="false" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#60#88#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1270,63 +1202,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-125">
-          <caret line="211" column="83" lean-forward="false" selection-start-line="211" selection-start-column="83" selection-end-line="211" selection-end-column="83" />
-          <folding>
-            <element signature="e#11#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/items/TimePanel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/items/TimeBox.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-138">
           <caret line="26" column="20" lean-forward="false" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TimeLine.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="444" column="38" lean-forward="false" selection-start-line="444" selection-start-column="38" selection-end-line="444" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#51#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AnimationControl.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="327" column="5" lean-forward="false" selection-start-line="327" selection-start-column="5" selection-end-line="327" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/items/ItemMenu.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="104" column="37" lean-forward="true" selection-start-line="104" selection-start-column="37" selection-end-line="104" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/src2/AnimateObject.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="19" column="41" lean-forward="true" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -1339,23 +1218,227 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/TitleBar.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="297" column="12" lean-forward="false" selection-start-line="297" selection-start-column="12" selection-end-line="297" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="112" column="23" lean-forward="false" selection-start-line="112" selection-start-column="23" selection-end-line="112" selection-end-column="23" />
+          <folding>
+            <element signature="e#11#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DragManager.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="249" column="15" lean-forward="false" selection-start-line="249" selection-start-column="15" selection-end-line="249" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/items/ItemText.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="130" column="15" lean-forward="false" selection-start-line="130" selection-start-column="15" selection-end-line="130" selection-end-column="15" />
+        <state relative-caret-position="209">
+          <caret line="80" column="12" lean-forward="false" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="12" />
           <folding>
             <element signature="e#60#88#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/TransformManager.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="327" column="24" lean-forward="false" selection-start-line="327" selection-start-column="24" selection-end-line="327" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Softwares/Adobe/AIRSDK_Compiler/frameworks/libs/air/airglobal.swc!/library.swf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="1870" column="29" lean-forward="false" selection-start-line="1870" selection-start-column="29" selection-end-line="1870" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/TimeBar.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="289" column="22" lean-forward="true" selection-start-line="289" selection-start-column="22" selection-end-line="289" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TimeLine.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="567" column="32" lean-forward="false" selection-start-line="567" selection-start-column="32" selection-end-line="567" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#51#83#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/items/TimePanel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="56" column="28" lean-forward="false" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FileManager.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="64" column="23" lean-forward="true" selection-start-line="64" selection-start-column="23" selection-end-line="64" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saveLoad/LoadFile.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="97" column="40" lean-forward="false" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AnimationControl.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="106" column="55" lean-forward="false" selection-start-line="106" selection-start-column="55" selection-end-line="106" selection-end-column="55" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/AnimateObject.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="311" column="16" lean-forward="false" selection-start-line="311" selection-start-column="16" selection-end-line="311" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/History.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="142" column="28" lean-forward="false" selection-start-line="142" selection-start-column="28" selection-end-line="142" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#53#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/Consts.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/items/ItemMenu.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="124" column="21" lean-forward="false" selection-start-line="124" selection-start-column="21" selection-end-line="124" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/items/Item.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="447" column="30" lean-forward="true" selection-start-line="447" selection-start-column="30" selection-end-line="447" selection-end-column="30" />
+        <state relative-caret-position="66">
+          <caret line="545" column="27" lean-forward="false" selection-start-line="545" selection-start-column="27" selection-end-line="545" selection-end-column="27" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#59#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Panel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="224" column="41" lean-forward="false" selection-start-line="224" selection-start-column="41" selection-end-line="224" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#54#82#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/texts/TextEditor.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#60#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/SnapList.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="15" column="43" lean-forward="false" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/TopicItem.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="33" column="27" lean-forward="false" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src2/Topics.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="251" column="9" lean-forward="true" selection-start-line="251" selection-start-column="9" selection-end-line="251" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Keyboard.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2114">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/texts/TextBox.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="260" column="19" lean-forward="true" selection-start-line="260" selection-start-column="19" selection-end-line="260" selection-end-column="19" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

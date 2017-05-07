@@ -16,6 +16,12 @@ public class Consts
     public static const zoom: String = 'zoom';
     public static const rotate: String = 'rotate';
     public static const fade:String = 'fade';
+    public static const ARRANGE:Object = {
+        BACK:'back',
+        FRONT:'front',
+        BACK_LEVEL:'back level',
+        FRONT_LEVEL:'front level'
+    };
     
     public function Consts()
     {

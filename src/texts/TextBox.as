@@ -7,12 +7,14 @@ import fl.text.TLFTextField;
 
 import flash.display.Bitmap;
 import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextFieldType;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
-import flashx.textLayout.events.SelectionEvent;
+import flashx.textLayout.edit.EditManager;
 
 import flashx.textLayout.formats.Direction;
 
@@ -40,7 +42,7 @@ public class TextBox extends Sprite
         _fmt.align = TextFormatAlign.RIGHT; //راست چین
         //fmt.align = "justify";
         //fmt.align = "right";
-        size = 16;
+        size = 12;
 
         _box.defaultTextFormat = _fmt;
         _box.border = true;
@@ -58,6 +60,46 @@ public class TextBox extends Sprite
         addChild(_box);
 
         _box.addEventListener(MouseEvent.MOUSE_UP, changeSelection);
+        _box.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, true);
+        _box.addEventListener(Event.CHANGE, onChange);
+    }
+
+    private function onKeyDown(e:KeyboardEvent):void
+    {
+        if(e.keyCode == 32 && e.ctrlKey)
+        {
+            e.stopImmediatePropagation();
+            var index:int = _box.caretIndex;
+            _box.text = _box.text.substring(0, index) + String.fromCharCode(8204)  + _box.text.substring(index);
+            setFocus(index+1,index+1);
+            _box.wordWrap = true;
+        }
+    }
+
+    private function onChange(event:Event):void
+    {
+        if(box.text.indexOf(String.fromCharCode(8204,32)) != -1)
+        {
+            _box.removeEventListener(Event.CHANGE, onChange);
+            var index:int = _box.caretIndex;
+            _box.text = _box.text.replace(String.fromCharCode(8204,32), String.fromCharCode(8204));
+            setFocus(index-1,index-1);
+            _box.wordWrap = true;
+            _box.addEventListener(Event.CHANGE, onChange);
+        }
+
+        if(box.text.indexOf(String.fromCharCode(172)) != -1)
+        {
+            _box.removeEventListener(Event.CHANGE, onChange);
+            var index:int = _box.caretIndex;
+            while(box.text.indexOf(String.fromCharCode(172)) != -1)
+            {
+                _box.text = _box.text.replace(String.fromCharCode(172), String.fromCharCode(8204));
+            }
+            setFocus(index,index);
+            _box.wordWrap = true;
+            _box.addEventListener(Event.CHANGE, onChange);
+        }
     }
 
     private function changeSelection(e:MouseEvent):void
@@ -88,6 +130,7 @@ public class TextBox extends Sprite
 
         _box.defaultTextFormat = newFormat;
         _box.setTextFormat(newFormat);
+        _box.wordWrap = true;
         padding();
     }
 
@@ -195,6 +238,36 @@ public class TextBox extends Sprite
     public function set format(format:TextFormat):void
     {
         setFormat(format);
+    }
+
+    public function setFocus(i1:int, i2:int):void
+    {
+        if(i1 < 0)
+            i1 = 0;
+
+        if(i2 < 0)
+            i2 = 0;
+
+        if(i1 > _box.length)
+            i1 = _box.length;
+
+        if(i2 > _box.length)
+            i2 = _box.length;
+
+        if(i1 > i2)
+        {
+            var t:int = i1;
+            i1 = i2;
+            i2 = t;
+        }
+
+        _box.textFlow.interactionManager = new EditManager();
+        try
+        {
+            _box.textFlow.interactionManager.selectRange(i1, i2);
+        }
+        catch (e){}
+        _box.textFlow.interactionManager.setFocus();
     }
 }
 }

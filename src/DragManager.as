@@ -247,6 +247,8 @@ public class DragManager extends Sprite
 
         onAddObject(holder);
 
+        holder.addToHistory(History.ADD);
+
         _moveBitmap = null;
 
     }

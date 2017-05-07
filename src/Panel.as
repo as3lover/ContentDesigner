@@ -9,11 +9,9 @@ import fl.data.DataProvider;
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.utils.setTimeout;
 
 import items.ItemText;
 
-import items.TextItem;
 import items.TimeBox;
 
 import src2.ColorSelector;

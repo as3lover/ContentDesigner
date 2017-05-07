@@ -6,11 +6,9 @@ package items
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextFormat;
-import flash.ui.ContextMenu;
 import flash.utils.getTimer;
 import flash.utils.setTimeout;
 
-import src2.Consts;
 import src2.Utils;
 
 public class ItemText extends Item
@@ -23,6 +21,7 @@ public class ItemText extends Item
     private var _lines:int = 1;
     private var _mask:TextMask;
     public var typeEffect:Boolean = true;
+    private var _toEdit:Boolean;
 
     public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true):void
     {
@@ -37,7 +36,9 @@ public class ItemText extends Item
         {
             x = Main.dragManager.target.mouseX;
             y = Main.dragManager.target.mouseY;
+            _toEdit = toEdit;
         }
+
 
         _sprite = new Sprite();
         Utils.drawRect(_sprite, 0,0,100,40);
@@ -61,7 +62,6 @@ public class ItemText extends Item
 
     public function edit():void
     {
-        changed;
         Main.textEditor.show(_text, func, false, _formats);
         Main.panel.show();
     }
@@ -70,13 +70,42 @@ public class ItemText extends Item
     {
         if(text == '' || text == ' ' || text == '  ')
         {
-            this.remove();
+            this.remove(false);
             return;
         }
 
-        _text = text;
-        _formats = Main.textEditor.formats;
-        _defaultFormat = Main.textEditor.fmt;
+        if(_toEdit)
+        {
+            _toEdit = false;
+            Main.addObject(this);
+            setProps();
+            addToHistory(History.ADD);
+
+            sett();
+        }
+        else
+        {
+            var value:Object = {from:{}, to:{}};
+
+            value.from.text = _text;
+            value.from.formats = _formats;
+
+            sett();
+
+            value.to.text = _text;
+            value.to.formats = _formats;
+
+            addToHistory(History.TEXT, value);
+        }
+
+        function sett():void
+        {
+            _text = text;
+            _formats = Main.textEditor.formats;
+            _defaultFormat = Main.textEditor.fmt;
+        }
+
+
 
         update();
         updateTransform();
@@ -175,6 +204,14 @@ public class ItemText extends Item
                 val = 1;
 
         super.alpha = val;
+    }
+
+
+    public function setTextAndFormat(text:String, formats:Array):void
+    {
+        _text = text;
+        _formats = formats;
+        load();
     }
 
 

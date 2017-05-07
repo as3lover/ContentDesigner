@@ -442,7 +442,7 @@ public class TimeLine extends Sprite
 
     private function key(e:KeyboardEvent):void
     {
-        _currentBox.setTextFormat(_t);
+        _currentBox.setTextFormat(_t)
 
         if(e.keyCode == 13)
         {
@@ -560,6 +560,8 @@ public class TimeLine extends Sprite
     {
         if(!_animation)
                 return;
+
+        trace('changeAnim');
 
         var stop:Number = _animation.stopTime;
         if(stop == -1)

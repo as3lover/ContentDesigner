@@ -8,6 +8,10 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 
+import items.Item;
+
+import src2.Consts;
+
 public class Keyboard
 {
     private var _lastTextField:Object;
@@ -132,23 +136,46 @@ public class Keyboard
                 break;
 
             case 35:// End
-                Main.timeLine.changePercent(1);
+                if(Main.transformer.target)
+                    Item.setIndexByUser(Consts.ARRANGE.BACK,Main.transformer.target);
+                else
+                    Main.timeLine.changePercent(1);
                 break;
 
             case 36:// Home
-                Main.timeLine.changePercent(0);
+                if(Main.transformer.target)
+                    Item.setIndexByUser(Consts.ARRANGE.FRONT,Main.transformer.target);
+                else
+                    Main.timeLine.changePercent(0);
                 break;
 
             case 33:// Page up
-                Main.timeLine.stepUp();
+                    if(Main.transformer.target)
+                        Item.setIndexByUser(Consts.ARRANGE.FRONT_LEVEL,Main.transformer.target);
+                    else
+                        Main.timeLine.stepUp();
+
                 break;
 
             case 34:// Page Down
-                Main.timeLine.stepDown();
+                if(Main.transformer.target)
+                    Item.setIndexByUser(Consts.ARRANGE.BACK_LEVEL,Main.transformer.target);
+                else
+                    Main.timeLine.stepDown();
                 break;
 
             case 27:// Esc
                 Main.transformer.deselect();
+                break;
+
+            case 89:// Y >> Redo
+                if(e.ctrlKey)
+                    History.redo();
+                break;
+
+            case 90:// Z >> Undo
+                if(e.ctrlKey)
+                    History.undo();
                 break;
         }
     }

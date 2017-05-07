@@ -53,11 +53,11 @@ public class ItemMenu
         //
         var arrange:ContextMenuItem = new ContextMenuItem("Arrange");
         arrange.submenu = new NativeMenu();
-        arrange.submenu.addItem(subMenu('پایین ترین', this.arrange, 'back'));
-        arrange.submenu.addItem(subMenu('بالاترین', this.arrange, 'front'));
+        arrange.submenu.addItem(subMenu('پایین ترین', this.arrange, Consts.ARRANGE.BACK));
+        arrange.submenu.addItem(subMenu('بالاترین', this.arrange, Consts.ARRANGE.FRONT));
         arrange.submenu.addItem(new NativeMenuItem("", true));
-        arrange.submenu.addItem(subMenu('پایین تر', this.arrange, 'backLevel'));
-        arrange.submenu.addItem(subMenu('بالاتر', this.arrange, 'frontLevel'));
+        arrange.submenu.addItem(subMenu('پایین تر', this.arrange, Consts.ARRANGE.BACK_LEVEL));
+        arrange.submenu.addItem(subMenu('بالاتر', this.arrange, Consts.ARRANGE.FRONT_LEVEL));
         //
         menu.customItems.push(hide);
         menu.customItems.push(hideTime);
@@ -122,26 +122,9 @@ public class ItemMenu
     {
         if(!currentItem)
                 return;
-
-        switch(e.target.data)
-        {
-            case 'front':
-                currentItem.index = -100;
-                break;
-
-            case 'back':
-                currentItem.index = 0;
-                break;
-
-            case 'frontLevel':
-                currentItem.index++;
-                break;
-
-            case 'backLevel':
-                currentItem.index--;
-                break;
-        }
-
+        Item.setIndexByUser(e.target.data, currentItem)
     }
+
+
 }
 }

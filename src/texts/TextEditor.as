@@ -74,7 +74,7 @@ public class TextEditor extends Sprite
         hide();
     }
 
-    public function register():void
+    public function register()
     {
         onOk(null);
     }
@@ -104,10 +104,10 @@ public class TextEditor extends Sprite
             return;
         }
 
-        _textBox.box.textFlow.interactionManager = new EditManager()
-        _textBox.box.textFlow.interactionManager.selectRange( _textBox.box.text.length,  _textBox.box.text.length);
-        _textBox.box.textFlow.interactionManager.setFocus();
+        _textBox.setFocus(_textBox.box.text.length,  _textBox.box.text.length);
     }
+
+
 
     public function get bitmap():Bitmap
     {
@@ -430,6 +430,7 @@ public class TextEditor extends Sprite
             list[i].format[prop] = value;
         }
         setSomeFormat = list;
+        _box.wordWrap = true;
     }
 
     private function getSomeFormat(i:int, length:int):Array

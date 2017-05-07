@@ -295,7 +295,7 @@ public class TitleBar extends Sprite
     public static function set changed(changed:Boolean):void
     {
         if(changed)
-                title = appName +_file + '*';
+            title = appName +_file + '*';
         else
             title = appName +_file;
     }

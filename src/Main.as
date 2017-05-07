@@ -111,7 +111,8 @@ public class Main extends Sprite
         {
             Main.changed = true;
             //addObject(new TextItem(removeAnimation, true))
-            addObject(new ItemText(removeAnimation, true))
+            //addObject(new ItemText(removeAnimation, true))
+            new ItemText(removeAnimation, true);
         }
 
         var topic:ContextMenuItem = new ContextMenuItem("Topic");
@@ -332,6 +333,7 @@ public class Main extends Sprite
         dragManager.reset();
         topics.reset();
         snapList.reset();
+        History.reset();
         Main.changed = false;
     }
 

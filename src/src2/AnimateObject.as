@@ -16,11 +16,11 @@ public class AnimateObject extends EventDispatcher
     private var _object:Item;
     private var _startTime:Number;
     private var _showDuration:Number = .5;
-    private var _stopTime:Number = -1;
+    public var _stopTime:Number = -1;
     private var _hideDuration:Number = 1;
     private var _time:Number = -1;
     private var _changeEvent:Event;
-    private var _typingEndTime:Number = -1;
+    public var _typingEndTime:Number = -1;
 
 
     public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
@@ -32,7 +32,8 @@ public class AnimateObject extends EventDispatcher
         _object.addEventListener(Event.ADDED, onAdd);
         _object.addEventListener('startTime', changeStartTime);
 
-        this.startTime = startTime;
+        //this.startTime = startTime;
+        _startTime = startTime;
     }
 
     private function changeStartTime(event:Event):void
@@ -167,8 +168,22 @@ public class AnimateObject extends EventDispatcher
 
     public function set startTime(value:Number):void
     {
+        var stop:Number = _stopTime;
+        if(_stopTime < value)
+                stop = Main.timeLine.totalSec;
+
+        History.add(_object, History.TIME,{
+            from:{startTime:_startTime, stopTime:_stopTime},
+            to:{startTime:value, stopTime:stop}
+        });
+
+
+        if(Main.timeLine.totalSec < stop || Main.timeLine.totalSec < value)
+            Main.timeLine.totalSec = Math.max(stop, value);
+
         _startTime = value;
-        trace('start', value);
+        _stopTime = stop;
+
         if(Utils.time < _startTime)
             Main.timeLine.setTimeByTopic(_startTime);
 
@@ -182,12 +197,22 @@ public class AnimateObject extends EventDispatcher
 
     public function set stopTime(value:Number):void
     {
+        var start:Number = _startTime;
         if(value < _startTime + _showDuration && value != -1)
-            value = _startTime + _showDuration;
+        {
+            start = 0;
+        }
 
+        History.add(_object, History.TIME,{
+            from:{startTime:_startTime, stopTime:_stopTime},
+            to:{startTime:start, stopTime:value}
+        });
+
+        if(Main.timeLine.totalSec < start || Main.timeLine.totalSec < value)
+            Main.timeLine.totalSec = Math.max(start, value);
 
         _stopTime = value;
-        trace('stop', value);
+        _startTime = start;
 
         if(Utils.time > _stopTime)
             Main.timeLine.setTimeByTopic(_stopTime);
@@ -218,16 +243,73 @@ public class AnimateObject extends EventDispatcher
         return obj;
     }
 
-    public function set typingEndTime(typeDuration:Number):void
+    public function set typingEndTime(value:Number):void
     {
-        if(typeDuration == 0)
-            typeDuration = -1;
-        _typingEndTime = typeDuration;
+        if(value <= 0)
+            value = -1;
+        if(value > Main.timeLine.totalSec)
+                value = Main.timeLine.totalSec;
+
+
+        History.add(_object, History.TIME,{
+            from:{typingEndTime:_typingEndTime},
+            to:{typingEndTime:value}
+        });
+
+        _typingEndTime = value;
+
     }
 
     public function get typingEndTime():Number
     {
         return _typingEndTime;
+    }
+
+    public function get showDuration():Number
+    {
+        return _showDuration;
+    }
+
+    public function get hideDuration():Number
+    {
+        return _hideDuration;
+    }
+
+    public function set showDuration(showDuration:Number):void
+    {
+        _showDuration = showDuration;
+        dispatchChangeEvent();
+
+    }
+
+    public function set hideDuration(hideDuration:Number):void
+    {
+        _hideDuration = hideDuration;
+        dispatchChangeEvent();
+
+    }
+
+    public function setValues(values:Object):void
+    {
+        for (var i:String in values)
+        {
+            trace(i, values[i])
+            this[String('_' + i)] = values[i];
+        }
+        /*
+        _startTime = values.startTime;
+        _stopTime = values.stopTime;
+        _hideDuration = values.hideDuration;
+        _showDuration = values.showDuration;
+
+        trace(values.startTime, values.stopTime, values.showDuration, values.hideDuration);
+        */
+    }
+
+    private function set _index(value:int):void
+    {
+        _object._index = value;
+        _object.index = value;
     }
 }
 }

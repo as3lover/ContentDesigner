@@ -245,5 +245,18 @@ public class Topics extends Sprite
 
         super.visible = value;
     }
+
+    public function select(topicItem:TopicItem):void
+    {
+        for (var i:int = 0; i<0; i++)
+        {
+            if(getChildAt(i) is TopicItem)
+            {
+                TopicItem(getChildAt(i)).select = false;
+            }
+        }
+
+        topicItem.select = true;
+    }
 }
 }

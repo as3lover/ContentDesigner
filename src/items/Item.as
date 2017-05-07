@@ -14,7 +14,6 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.filesystem.File;
-import flash.geom.Matrix;
 import flash.net.URLRequest;
 
 import saveLoad.saveItem;
@@ -22,6 +21,7 @@ import saveLoad.saveItem;
 import src2.AnimateObject;
 
 import src2.Consts;
+import src2.Utils;
 
 public class Item extends Sprite
 {
@@ -41,7 +41,7 @@ public class Item extends Sprite
 
     private var _number:int = -1;
 
-    private var _index:int;
+    public var _index:int;
     protected var _bitmap:Bitmap;
     private var _pathHolder:Object={};
     private const _eventComplete:Event = new Event(Event.COMPLETE);
@@ -66,12 +66,16 @@ public class Item extends Sprite
 
     private function rightClick(event:MouseEvent):void
     {
+        trace(x,y,rotation,scaleX,scaleY,'-', animation.showDuration, animation.hideDuration, animation.typingEndTime, animation.startTime, animation.stopTime)
         ItemMenu.currentItem = this;
         changed;
+        Main.transformer.select(this);
     }
 
-    public function remove():void
+    public function remove(byUser:Boolean):void
     {
+        var index:int = this.index;
+
         if(parent)
         {
             parent.removeChild(this)
@@ -81,6 +85,10 @@ public class Item extends Sprite
         {
             _removeAnimation(this)
         }
+
+        if(byUser)
+            addToHistory(History.REMOVE, {index:index})
+
     }
 
     public function setProps():void
@@ -108,12 +116,77 @@ public class Item extends Sprite
     {
         if(_x != x || _y != y || _scaleX != scaleX || _scaleY != scaleY || _rotation != rotation)
         {
+            var value:Object = {from:{}, to:{}};
+
+            if(_x != x) setHistoryValue('x', value);
+            if(_y != y) setHistoryValue('y', value);
+            if(_scaleX != scaleX) setHistoryValue('scaleX', value);
+            if(_scaleY != scaleY) setHistoryValue('scaleY', value);
+            if(_rotation != rotation) setHistoryValue('rotation', value);
+
+
             Main.changed = true;
             setProps();
+
+            addToHistory(History.TRANSFORM, value);
+
             return true;
         }
         return false;
     }
+
+    private function setHistoryValue(i:String, value:Object):void
+    {
+        trace(i, this[i]);
+        value.from[i] = this[String('_' + i)];
+        value.to[i] = this[i];
+    }
+
+
+    public function addToHistory(type:String = History.TRANSFORM, value:Object = null):void
+    {
+        switch (type)
+        {
+            case History.ADD:
+                setAnimation();
+                break;
+
+            case History.TRANSFORM:
+                if(value == null)
+                    value = {x:_x, y:_y, rotation:_rotation, scaleX:_scaleX, scaleY:_scaleY};
+                break;
+
+            case History.REMOVE:
+                setAnimation();
+
+                break;
+
+            case History.TEXT:
+                if(value == null)
+                    return;
+                break;
+
+            case History.INDEX:
+                if(value == null)
+                    return;
+                break;
+        }
+
+        function setAnimation():void
+        {
+            if(value == null)
+                value = new Object();
+
+            value.startTime = animation.startTime;
+            value.stopTime = animation.stopTime;
+            value.showDuration = animation.showDuration;
+            value.hideDuration = animation.hideDuration;
+        }
+
+        History.add(this, type, value);
+    }
+
+
 
     public function set onChange(value:Function):void
     {
@@ -204,11 +277,15 @@ public class Item extends Sprite
     public function Hide():void
     {
         dispatchEvent(new Event(Event.CLEAR));
+        Main.transformer.select(this);
+        alpha = 1;
     }
 
     public function Show():void
     {
         dispatchEvent(new Event('startTime'));
+        Main.transformer.select(this);
+        alpha = 1;
         //preview();
     }
 
@@ -258,13 +335,25 @@ public class Item extends Sprite
         if(!parent)
                 return;
 
+        i = correctIndex(i);
+
+        if(i != _index)
+        {
+            addToHistory(History.INDEX, {from:{index:_index} , to:{index:i}});
+            _index = i;
+        }
+
+        parent.setChildIndex(this, i);
+    }
+
+    public function correctIndex(i:int):int
+    {
         if(i == -100 || i > parent.numChildren-2)
             i = parent.numChildren - 2;
         else if(i < 1)
             i = 1;
 
-        parent.setChildIndex(this, i);
-
+        return i;
     }
 
     public function get path():String
@@ -301,8 +390,8 @@ public class Item extends Sprite
         _index = obj.index;
         _number = obj.number;
         _fileName = obj.fileName;
-
     }
+
 
     public function load():void
     {
@@ -333,7 +422,11 @@ public class Item extends Sprite
 
     public function setIndex():void
     {
-        index = _index;
+        if(!parent)
+                return;
+
+        _index = correctIndex(_index);
+        parent.swapChildren(this, parent.getChildAt(_index));
     }
 
     public function save(dir:String):void
@@ -448,6 +541,28 @@ public class Item extends Sprite
             y = Main.target.h;
 
         return y;
+    }
+
+    public static function setIndexByUser(data:String, item:Item):void
+    {
+        switch(data)
+        {
+            case Consts.ARRANGE.FRONT:
+                item.index = -100;
+                break;
+
+            case Consts.ARRANGE.BACK:
+                item.index = 1;
+                break;
+
+            case Consts.ARRANGE.FRONT_LEVEL:
+                item.index++;
+                break;
+
+            case Consts.ARRANGE.BACK_LEVEL:
+                item.index--;
+                break;
+        }
     }
 }
 }

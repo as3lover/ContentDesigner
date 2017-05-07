@@ -81,10 +81,10 @@ public class AnimationControl
     public function addLoaded(holder:Item, startTime:Number, stopTime:Number, showDuration:Number, hideDuration:Number, typingEndTime:Number):void
     {
         var anim:AnimateObject = new AnimateObject(holder, startTime, true);
-        anim.stopTime = stopTime
+        anim._stopTime = stopTime;
         anim.duration(showDuration, hideDuration);
         anim.time = 0;
-        anim.typingEndTime = typingEndTime;
+        anim._typingEndTime = typingEndTime;
 
         _list.push(anim);
         holder.animation = anim;

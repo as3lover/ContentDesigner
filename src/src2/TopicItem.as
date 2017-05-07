@@ -31,6 +31,7 @@ public class TopicItem extends Sprite
         {
             _width = 20;
             snapLine = Main.timeLine.addSnap(seconds);
+            select = false;
         }
 
         _remove = remove;
@@ -46,6 +47,8 @@ public class TopicItem extends Sprite
     private function onClick(event:MouseEvent):void
     {
         trace('topic', time);
+        if(_type == 'quiz', parent)
+            Topics(parent).select(this)
         dispatchEvent(_evt);
     }
 
@@ -145,6 +148,14 @@ public class TopicItem extends Sprite
     public function set id(value:String):void
     {
         _id = value;
+    }
+
+    public function set select(select:Boolean):void
+    {
+        if(select)
+                alpha = 1;
+        else
+                alpha = .6;
     }
 }
 }
