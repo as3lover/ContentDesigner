@@ -11,6 +11,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 
 import items.ItemText;
+import items.TextItem;
 
 import items.TimeBox;
 
@@ -28,6 +29,7 @@ public class Panel extends Sprite
     private var _selector:ColorSelector;
     private var _typeDur:TimeBox;
     private var _bold:Bold;
+    private var _item:ItemText;
 
     public function Panel()
     {
@@ -149,9 +151,9 @@ public class Panel extends Sprite
 
     private function changeTypeDur(event:Event):void
     {
-        if(Main.transformer.target && Main.transformer.target is ItemText)
+        if(_item)
         {
-            ItemText(Main.transformer.target).animation.typingEndTime = _typeDur.time;
+            _item.animation.typingEndTime = _typeDur.time;
         }
     }
 
@@ -219,9 +221,11 @@ public class Panel extends Sprite
         return _opened;
     }
 
-    public function show():void
+    public function show(item:ItemText = null):void
     {
-        trace('show')
+        trace('show');
+        if(item)
+            _item = item;
         _size.value = Main.textEditor.getSize();
         _space.value = (Main.textEditor.getSpace() + 2)*10;
         _leading.value = Main.textEditor.getLeading();
@@ -229,16 +233,16 @@ public class Panel extends Sprite
         //_bold.bold = Main.textEditor.getBold();
         _fontList.selectedIndex = Utils.getObjectIndex(Fonts.FONTS, Main.textEditor.getFont());
         setBoldStatus();
-        if(Main.transformer.target && Main.transformer.target is ItemText)
+        if(_item && _item.animation)
         {
-            _typeDur.time = ItemText(Main.transformer.target).animation.typingEndTime;
+            _typeDur.time = _item.animation.typingEndTime;
             _typeDur.addEventListener('edited', changeTypeDur);
             _typeDur.alpha = 1;
         }
         else
         {
             _typeDur.time = -1;
-            _typeDur.visible = .5;
+            _typeDur.alpha = .5;
         }
         visible = true;
     }
@@ -252,6 +256,7 @@ public class Panel extends Sprite
     {
         if(_typeDur)
             _typeDur.removeEventListener('edited', changeTypeDur);
+        _item = null;
         visible = false;
     }
 

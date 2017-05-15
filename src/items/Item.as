@@ -12,6 +12,7 @@ import flash.display.LoaderInfo;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.filesystem.File;
 import flash.net.URLRequest;
@@ -69,7 +70,7 @@ public class Item extends Sprite
         trace(x,y,rotation,scaleX,scaleY,'-', animation.showDuration, animation.hideDuration, animation.typingEndTime, animation.startTime, animation.stopTime)
         ItemMenu.currentItem = this;
         changed;
-        Main.transformer.select(this);
+        ObjectManager.target = this;
     }
 
     public function remove(byUser:Boolean):void
@@ -277,14 +278,14 @@ public class Item extends Sprite
     public function Hide():void
     {
         dispatchEvent(new Event(Event.CLEAR));
-        Main.transformer.select(this);
+        ObjectManager.target = this;
         alpha = 1;
     }
 
     public function Show():void
     {
         dispatchEvent(new Event('startTime'));
-        Main.transformer.select(this);
+        ObjectManager.target = this;
         alpha = 1;
         //preview();
     }
@@ -348,8 +349,8 @@ public class Item extends Sprite
 
     public function correctIndex(i:int):int
     {
-        if(i == -100 || i > parent.numChildren-2)
-            i = parent.numChildren - 2;
+        if(i == -100 || i > parent.numChildren-1)
+            i = parent.numChildren - 1;
         else if(i < 1)
             i = 1;
 
@@ -406,6 +407,14 @@ public class Item extends Sprite
         }
 
         loader.load(new URLRequest(_path));
+        loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
+
+        function onError(event:IOErrorEvent):void
+        {
+            trace('Can Not Load File:', _path);
+            dispatchEvent(new Event(Event.COMPLETE));
+            //remove(false);
+        }
 
         function onComplete (event:Event):void
         {
@@ -415,10 +424,10 @@ public class Item extends Sprite
             bit.x = -bit.width/2;
             bit.y = -bit.height/2;
             bitmap = bit;
-            //trace('complete', _path);
             dispatchEvent(new Event(Event.COMPLETE));
         }
     }
+
 
     public function setIndex():void
     {
@@ -437,9 +446,11 @@ public class Item extends Sprite
         saveItem.copyAndRename(_path, newDir, newName, _pathHolder, after);
         function after():void
         {
-            trace('renamed:')
+            /*
+            trace('renamed:');
             trace(_pathHolder.currentPath);
             trace(_pathHolder.newPath);
+            */
             _path = _pathHolder.currentPath;
             dispatchComplete();
         }
@@ -451,7 +462,7 @@ public class Item extends Sprite
         function after():void
         {
             _path = _pathHolder.newPath;
-            trace('saved path', _path)
+            //trace('saved path', _path);
             var f:File = new File(_path);
             _fileName = f.name;
             dispatchComplete();
@@ -469,6 +480,7 @@ public class Item extends Sprite
             _bitmap.parent.removeChild(_bitmap);
 
         _bitmap = value;
+        _bitmap.smoothing = true;
         addChild(_bitmap);
     }
 
@@ -490,10 +502,10 @@ public class Item extends Sprite
 
     public function updateTransform():void
     {
-        if(Main.transformer.target == this)
+        if(ObjectManager.target == this)
         {
-            Main.transformer.select(null);
-            Main.transformer.select(this);
+            ObjectManager.target = null;
+            ObjectManager.target = this;
         }
     }
 
@@ -563,6 +575,16 @@ public class Item extends Sprite
                 item.index--;
                 break;
         }
+    }
+
+    public function get insideWidth():Number
+    {
+        return bitmap.width * scaleX;
+    }
+
+    public function get insideWHeight():Number
+    {
+        return bitmap.height * scaleY;
     }
 }
 }

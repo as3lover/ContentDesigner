@@ -30,7 +30,6 @@ public class Main extends Sprite
 {
     public static var timeLine:TimeLine;
     public static var dragManager:DragManager;
-    public static var transformer:TransformManager;
     public static var animationControl:AnimationControl;
     public static var topics:Topics;
     public static var textEditor:TextEditor;
@@ -92,10 +91,7 @@ public class Main extends Sprite
         snapList.init();
 
 
-
-        transformer = new TransformManager(stage, dragManager.target);
-
-        timeLine = new TimeLine(transformer, updateAnimation);
+        timeLine = new TimeLine(updateAnimation);
         addChild(timeLine);
 
         new TitleBar(stage, this);
@@ -261,6 +257,8 @@ public class Main extends Sprite
         panel.y = timePanel.y + timePanel.height - 10;
         addChild(panel);
 
+        ObjectManager.start();
+
 
         _progress = new progressBar();
         addChild(_progress);
@@ -272,14 +270,14 @@ public class Main extends Sprite
     public static function addObject(object:Item):void
     {
         Main.changed = true;
-        transformer.add(object);
+        object.setProps();
         animationControl.add(object, timeLine.currentSec)
     }
 
 
     private function updateAnimation(seconds:Number):void
     {
-        transformer.deselect();
+        ObjectManager.deselect();
         animationControl.time = seconds;
         topics.time = seconds;
     }
@@ -311,7 +309,7 @@ public class Main extends Sprite
 
     public static function save():void
     {
-        transformer.deselect();
+        ObjectManager.deselect();
     }
 
     public static function saveFiles():void
@@ -329,7 +327,7 @@ public class Main extends Sprite
     {
         timeLine.reset();
         animationControl.reset();
-        transformer.reset();
+        ObjectManager.reset();
         dragManager.reset();
         topics.reset();
         snapList.reset();

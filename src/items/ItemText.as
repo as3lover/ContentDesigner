@@ -9,6 +9,8 @@ import flash.text.TextFormat;
 import flash.utils.getTimer;
 import flash.utils.setTimeout;
 
+import src2.AnimateObject;
+
 import src2.Utils;
 
 public class ItemText extends Item
@@ -63,7 +65,7 @@ public class ItemText extends Item
     public function edit():void
     {
         Main.textEditor.show(_text, func, false, _formats);
-        Main.panel.show();
+        Main.panel.show(this);
     }
 
     private function func(text:String):void
@@ -212,6 +214,19 @@ public class ItemText extends Item
         _text = text;
         _formats = formats;
         load();
+    }
+
+
+
+    //////////////
+    public override function get insideWidth():Number
+    {
+        return _sprite.width * scaleX;
+    }
+
+    public override function get insideWHeight():Number
+    {
+        return _sprite.height * scaleY;
     }
 
 

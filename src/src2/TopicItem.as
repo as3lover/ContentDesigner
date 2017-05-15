@@ -155,7 +155,7 @@ public class TopicItem extends Sprite
         if(select)
                 alpha = 1;
         else
-                alpha = .6;
+                alpha = .4;
     }
 }
 }

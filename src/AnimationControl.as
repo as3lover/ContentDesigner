@@ -70,11 +70,9 @@ public class AnimationControl
                 Utils.removeItemAtIndex(_list, i);
                 return;
             }
-            else
-            {
-                trace(AnimateObject(_list[i]).object.name, item.name)
-            }
         }
+
+        trace('Animation Object no Exist')
     }
 
 
@@ -122,7 +120,7 @@ public class AnimationControl
 
             Main._progress.percent = i/len;
             Main._progress.text = 'Loading Files ' + i + ' / ' + len;
-            setTimeout(load, 10);
+            setTimeout(load, 1);
         }
 
     }
@@ -160,7 +158,7 @@ public class AnimationControl
 
         var i:int = 0;
         var len:int = _list.length;
-        save()
+        save();
 
         function save():void
         {
@@ -185,7 +183,7 @@ public class AnimationControl
             Main._progress.percent = i/len;
             Main._progress.text = 'Saving Files ' + i + ' / ' + len;
 
-            setTimeout(save, 10);
+            setTimeout(save, 1);
         }
 
         function move():void
@@ -211,7 +209,7 @@ public class AnimationControl
             Main._progress.percent = i/len;
             Main._progress.text = 'Saving Settings ' + i + ' / ' + len;
 
-            setTimeout(move, 10);
+            setTimeout(move, 1);
         }
 
     }

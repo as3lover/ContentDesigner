@@ -52,6 +52,11 @@ public class Text extends Sprite
 
         var sprite:Sprite = new Sprite();
         sprite.addChild(txt)
+        if(txt.textWidth <1 || txt.textHeight < 1)
+        {
+            txt.text = 'متن پیش فرض'
+            trace('ERRORR متنی وجود ندارد')
+        }
         var snapshot:BitmapData = new BitmapData(txt.textWidth, txt.textHeight, true, 0x00000000);
         snapshot.draw(sprite, new Matrix());
         var bit:Bitmap = new Bitmap(snapshot);

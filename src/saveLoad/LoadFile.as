@@ -94,7 +94,6 @@ public class LoadFile
 
             holder.all = obj;
             Main.dragManager.target.addChild(holder);
-            Main.transformer.add(holder, true);
             Main.animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration, obj.typingEndTime);
         }
 

@@ -49,7 +49,6 @@ public class TimeLine extends Sprite
 
     private var _playBtn:Sprite
 
-    private var _transformer:TransformManager;
 
     private var _sound:soundPlayer;
     private var _lastTime:int;
@@ -65,9 +64,8 @@ public class TimeLine extends Sprite
     private const DEFAULT_TIME:int = 120;
     private var _animation:AnimateObject;
 
-    public function TimeLine(transformer:TransformManager, updateFunction)
+    public function TimeLine(updateFunction)
     {
-        _transformer = transformer;
         _updateFunc = updateFunction;
 
         _paused = true;
@@ -235,7 +233,7 @@ public class TimeLine extends Sprite
     //////////////////////Change percent by user click on timeBar
     public function changePercent(percent:Number):void
     {
-        _transformer.deselect();
+        ObjectManager.deselect();
         if(!_paused && _soundFile)
             _sound.setTime(percent * totalSec);
         else
@@ -251,7 +249,7 @@ public class TimeLine extends Sprite
     ////////////////////////////////
     public function onPausePlayBtn(event:MouseEvent = null):void
     {
-        _transformer.deselect();
+        ObjectManager.deselect();
         if(_paused)
         {
             playTimeLine();
@@ -561,7 +559,7 @@ public class TimeLine extends Sprite
         if(!_animation)
                 return;
 
-        trace('changeAnim');
+        //trace('changeAnim');
 
         var stop:Number = _animation.stopTime;
         if(stop == -1)

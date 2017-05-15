@@ -113,9 +113,15 @@ public class TimeBox extends Sprite
     {
         super.alpha = a;
         if(a == 1)
-                _text.type = TextFieldType.INPUT;
+        {
+            _text.selectable = true;
+            _text.type = TextFieldType.INPUT;
+        }
         else
-                _text.type = TextFieldType.DYNAMIC;
+        {
+            _text.type = TextFieldType.DYNAMIC;
+            _text.selectable = false;
+        }
     }
 }
 }

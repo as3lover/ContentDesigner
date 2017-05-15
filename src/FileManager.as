@@ -9,6 +9,8 @@ import flash.net.FileFilter;
 
 import saveLoad.LoadFile;
 
+import src2.Utils;
+
 public class FileManager
 {
     private static var _fileForSave:FileForSave = new FileForSave();
@@ -24,7 +26,7 @@ public class FileManager
 
     public static function newFile():void
     {
-        Main.transformer.deselect();
+        ObjectManager.deselect();
 
         if(Main.changed)
         {
@@ -39,7 +41,7 @@ public class FileManager
 
     public static function openFile():void
     {
-        Main.transformer.deselect();
+        ObjectManager.deselect();
 
         if(Main.changed)
         {
@@ -60,15 +62,22 @@ public class FileManager
 
         function selected(e:Event):void
         {
-            Main.changed = false;
             file = e.target as File;
+
+            if(Utils.pathIsWrong(file.nativePath))
+            {
+                Main.alert('wrongFile');
+                return;
+            }
+
+            Main.changed = false;
             LoadFile.load();
         }
     }
 
     public static function saveFile():void
     {
-        Main.transformer.deselect();
+        ObjectManager.deselect();
 
         if(file)
             Main.saveFiles();
@@ -78,7 +87,7 @@ public class FileManager
 
     public static function saveAsFile():void
     {
-        Main.transformer.deselect();
+        ObjectManager.deselect()//trace;
 
         _fileForSave.addEventListener(Event.COMPLETE, save);
         _fileForSave.Select();
@@ -88,6 +97,13 @@ public class FileManager
     {
         _fileForSave.removeEventListener(Event.COMPLETE, save);
         file = _fileForSave.file;
+
+        if(Utils.pathIsWrong(file.nativePath))
+        {
+            Main.alert('wrongFile');
+            return;
+        }
+
         folder = _fileForSave.folder;
         Main.changed = false;
         Main.saveFiles();
@@ -95,7 +111,7 @@ public class FileManager
 
     public static function closeFile():void
     {
-        Main.transformer.deselect();
+        ObjectManager.deselect();
 
         if (Main.changed)
         {

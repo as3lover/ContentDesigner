@@ -86,6 +86,8 @@ public class TextEditor extends Sprite
 
     public function show(text:String = '', func:Function = null, numberMode:Boolean = false, formats:Array = null, toEdit:Boolean = true):void
     {
+        ObjectManager.deselect();
+
         _textBox.text = text;
         _format = formats;
 

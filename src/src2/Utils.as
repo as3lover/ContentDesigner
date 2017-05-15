@@ -14,8 +14,6 @@ import fl.text.TLFTextField;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
-import flash.display.DisplayObject;
-import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.display.Stage;
@@ -163,6 +161,12 @@ public class Utils
     {
         Main.STAGE.focus = null;
 
+        if(textBox.textWidth < 1 || textBox.textHeight < 1)
+        {
+            textBox.text = 'متن پیش فرض';
+            trace('ERRORR متنی وجود ندارد')
+        }
+
         var x:Number = textBox.x;
         var y:Number = textBox.y;
         var border:Boolean = textBox.border;
@@ -309,5 +313,80 @@ public class Utils
         }
     }
 
+    public static function targetClass(target:DisplayObject, classType:Class):DisplayObject
+    {
+        if(target is classType)
+                return target;
+
+        return Utils.isParentOf(Main.STAGE, classType, target)
+    }
+
+    public static function globalToLocalScaleX(item:DisplayObject):Number
+    {
+        var scale:Number = 1;
+        while(item.parent)
+        {
+            item = item.parent;
+            scale *= item.scaleX;
+        }
+
+        return scale;
+    }
+
+    public static function globalToLocalScaleY(item:DisplayObject):Number
+    {
+        var scale:Number = 1;
+        while(item.parent)
+        {
+            item = item.parent;
+            scale *= item.scaleY;
+        }
+
+        return scale;
+    }
+
+    public static function distanceTwoPoints(x1:Number, y1:Number,  x2:Number, y2:Number):Number
+    {
+        var dx:Number = x1-x2;
+        var dy:Number = y1-y2;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public static function radianToDegree(radians:Number):Number
+    {
+        return radians * 180 / Math.PI;
+    }
+
+    public static function pathIsWrong(path:String):Boolean
+    {
+        for(var i:int = 0; i<path.length; i++)
+        {
+            if(path.charCodeAt(i) > 1000)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function isVisible(object:Object):Boolean
+    {
+        if(object && object is DisplayObject && object.stage)
+        {
+            var stage:Stage = object.stage;
+            while(object != stage)
+            {
+                if(!object.visible)
+                    return false;
+
+                object = object.parent;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }
 }

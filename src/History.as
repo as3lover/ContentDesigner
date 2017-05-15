@@ -45,7 +45,7 @@ public class History
         if(_current < 1)
             return;
 
-        Main.transformer.deselect();
+        ObjectManager.deselect();
         Main.changed = true;
 
         _current--;
@@ -64,12 +64,12 @@ public class History
             return;
 
 
-        Main.transformer.deselect();
+        ObjectManager.deselect();
         Main.changed = true;
 
         _item = _list[_current];
         _current++;
-        trace('redo', _current)
+        trace('redo', _current);
 
         forward(_item.object, _item.type, _item.value);
     }
@@ -139,7 +139,7 @@ public class History
     private static function changeIndex(item:Item, index:int):void
     {
         index = item.correctIndex(index);
-        trace('change index', item.index, index)
+        trace('change index', item.index, index);
         item._index = index;
         item.index = index;
     }
@@ -154,7 +154,8 @@ public class History
     {
         item.setProps();
         item.alpha = 1;
-        Main.transformer.select(item);
+        //Main.transformer.select(item);
+        ObjectManager.target = item;
     }
 
     ///////////////// Set Item Tansform
@@ -175,7 +176,7 @@ public class History
     {
         for (var i:String in value)
         {
-            trace('set',  value[i], i)
+            trace('set',  value[i], i);
             object[i] = value[i];
         }
     }
@@ -184,7 +185,6 @@ public class History
     private static function addObject(item:Item, value:Object):void
     {
         Main.dragManager.target.addChild(Item(item));
-        Main.transformer.add(Item(item), true);
         Main.animationControl.add(Item(item), value.startTime);
 
         animationValues(item, value);

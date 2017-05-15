@@ -127,6 +127,15 @@ public class DragManager extends Sprite
         currentFile = files[0];
         var arrPath:Array = currentFile.name.split('.');
         var type:String = String(arrPath[arrPath.length-1]).toLowerCase();
+
+
+        if(Utils.pathIsWrong(currentFile.nativePath))
+        {
+            Main.alert('wrongFile');
+            return;
+        }
+
+
         if (!currentFile.isDirectory && (type == 'mp3'))
         {
             NativeDragManager.acceptDragDrop(_target);
@@ -144,7 +153,7 @@ public class DragManager extends Sprite
                 return;
             }
             //
-            trace('\t new');
+            //trace('\t new');
             lastFile = currentFile.nativePath;
 
             _moveBitmap = new Bitmap();

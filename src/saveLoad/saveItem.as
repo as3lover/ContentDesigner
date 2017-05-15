@@ -18,8 +18,7 @@ public class saveItem extends EventDispatcher
 
     public static function copyAndRename(currentPath:String, newDir:String, newName:String, pathHolder:Object, afterCopy:Function):void
     {
-        trace('copy', currentPath);
-        var newPath:String = newDir + newName;
+        var newPath:String = newDir +'/' +newName;
         if(newPath == currentPath)
         {
             pathHolder.newPath = newPath;
@@ -32,19 +31,42 @@ public class saveItem extends EventDispatcher
         var temp:File = File.createTempDirectory();
         var des:File = new File(temp.nativePath + '/' + file.name);
 
-        if(currentPath.search(newDir) >= 0)
-            file.moveTo(des, true);
-        else
+        try
+        {
             file.copyTo(des, true);
+        }
+        catch (e)
+        {
+            trace('can not copy', file.nativePath);
+            pathHolder.newPath = currentPath;
+            pathHolder.currentPath = currentPath;
+            afterCopy();
+            return;
+        }
 
 
-        setTimeout(t,10);
+        var n:int = 0;
+        setTimeout(t,1);
         function t():void
         {
             if(des.exists)
                 rename();
             else
-                setTimeout(t,10);
+            {
+                trace('...RETRY...');
+                n++;
+                if(n < 300)
+                {
+                    setTimeout(t,10);
+                }
+                else
+                {
+                    pathHolder.newPath = currentPath;
+                    pathHolder.currentPath = currentPath;
+                    afterCopy();
+                    return;
+                }
+            }
         }
 
         function rename():void
@@ -52,15 +74,25 @@ public class saveItem extends EventDispatcher
             file = des;
             des = new File(temp.nativePath + '/' + newName);
 
-            try
+            if(file.nativePath != des.nativePath)
             {
-                file.moveTo(des, true);
-                trace('rename from', file.nativePath);
-                trace('rename to', des.nativePath);
+                try
+                {
+                    file.moveTo(des, true);
+                }
+                catch (e)
+                {
+                    trace('can not rename from', file.nativePath);
+                    trace('                 to', des.nativePath);
+                    pathHolder.newPath = currentPath;
+                    pathHolder.currentPath = currentPath;
+                    afterCopy();
+                    return;
+                }
             }
-            catch (e){}
 
-            setTimeout(tt,10);
+            var n:int = 0;
+            setTimeout(tt,1);
             function tt():void
             {
                 if(des.exists)
@@ -71,7 +103,20 @@ public class saveItem extends EventDispatcher
                 }
                 else
                 {
-                    setTimeout(tt,10);
+                    trace('...RETRY 2...');
+                    n++;
+                    if(n < 300)
+                    {
+                        setTimeout(tt,10);
+                    }
+                    else
+                    {
+                        trace('ERROR 5', des.nativePath , 'not Exists');
+                        pathHolder.newPath = currentPath;
+                        pathHolder.currentPath = currentPath;
+                        afterCopy();
+                        return;
+                    }
                 }
             }
         }
@@ -88,9 +133,45 @@ public class saveItem extends EventDispatcher
 
         var file2:File = new File(path2);
 
-        file1.moveTo(file2, true);
+        try
+        {
+            file1.moveTo(file2, true);
+        }
+        catch (e)
+        {
+            trace('can not move:');
+            trace('move from', file1.nativePath);
+            trace('move to  ', file2.nativePath);
 
-        setTimeout(t,10);
+            if(file2.exists)
+            {
+                trace('file2 exists');
+                try
+                {
+                    file1.deleteFile();
+                }
+                catch (e)
+                {
+                    trace('can not delete file1', file1.nativePath)
+                }
+            }
+            else
+            {
+                try
+                {
+                    file1.copyTo(file2, true);
+                    trace('copy file1 to file2')
+                }
+                catch(e)
+                {
+                    trace('can not copy file:');
+                    trace('file1:', file1.nativePath);
+                    trace('file2:', file2.nativePath);
+                }
+            }
+        }
+
+        setTimeout(t,1);
         function t():void
         {
             if(file2.exists)
@@ -99,6 +180,7 @@ public class saveItem extends EventDispatcher
             }
             else
             {
+                trace('...RETRY 3...');
                 setTimeout(t,10);
             }
         }

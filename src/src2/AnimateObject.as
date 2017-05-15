@@ -14,7 +14,7 @@ import items.TextItem;
 public class AnimateObject extends EventDispatcher
 {
     private var _object:Item;
-    private var _startTime:Number;
+    public var _startTime:Number;
     private var _showDuration:Number = .5;
     public var _stopTime:Number = -1;
     private var _hideDuration:Number = 1;
@@ -293,7 +293,7 @@ public class AnimateObject extends EventDispatcher
     {
         for (var i:String in values)
         {
-            trace(i, values[i])
+            //trace(i, values[i])
             this[String('_' + i)] = values[i];
         }
         /*

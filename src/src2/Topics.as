@@ -254,6 +254,10 @@ public class Topics extends Sprite
             {
                 TopicItem(getChildAt(i)).select = false;
             }
+            else
+            {
+                trace(getChildAt(i), typeof getChildAt(i))
+            }
         }
 
         topicItem.select = true;

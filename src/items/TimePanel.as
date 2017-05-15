@@ -52,7 +52,7 @@ public class TimePanel extends Sprite
         if(!_item)
                 return;
 
-        trace('change time on timePanel')
+        trace('change time on timePanel');
         if(e.target == _start)
             _item.animation.startTime = _start.time;
         else if(e.target == _stop)

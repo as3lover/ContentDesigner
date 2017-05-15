@@ -269,5 +269,6 @@ public class TextBox extends Sprite
         catch (e){}
         _box.textFlow.interactionManager.setFocus();
     }
+
 }
 }

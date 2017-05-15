@@ -163,7 +163,8 @@ public class Quiz extends Sprite
 
     private function onStage(e:MouseEvent):void
     {
-        if(e.target == this || Utils.isParentOf(stage, Quiz, e.target as DisplayObject))
+        return;
+        if(Utils.targetClass(e.target as DisplayObject, Quiz))
         {
             return;
         }

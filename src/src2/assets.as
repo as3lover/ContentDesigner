@@ -27,5 +27,14 @@ public class assets
 
     [Embed(source="../../assets/buttons/bold2.png")]
     public static var Bold2:Class;
+
+    [Embed(source="../../assets/buttons/move.png")]
+    public static var Move:Class;
+
+    [Embed(source="../../assets/buttons/arrow.png")]
+    public static var Arrow:Class;
+
+    [Embed(source="../../assets/buttons/rotate.png")]
+    public static var Rotate:Class;
 }
 }

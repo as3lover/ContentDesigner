@@ -21,6 +21,7 @@ public class AlertBox extends Sprite
 {
     private var _save:DialogWizard;
     private var _qustion:DialogWizard;
+    private var _wrongFileName:DialogWizard;
 
     public function AlertBox():void
     {
@@ -39,15 +40,26 @@ public class AlertBox extends Sprite
 
         _save.show('آیا تغییرات را ذخیره می کنید؟',
                 [{text:'لغو', handler:cancelFunc}, {text:'خیر', handler:dontSaveFunc}, {text:'بلی', handler:saveFunc}
-                ])
+                ]);
 
 
         _qustion = new DialogWizard();
         addChild(_qustion);
 
-        _qustion.show('سوال را می کنید؟',
+        _qustion.show('سوال را حذف می کنید؟',
                 [{text:'خیر', handler:cancelFunc}, {text:'بلی', handler:Main.quiz.confirmDelete}
-                ])
+                ]);
+
+
+        _wrongFileName = new DialogWizard();
+        addChild(_wrongFileName);
+        var str:String =
+                "\t\t\t\t\t\t\t\t\t\t"
+                + 'نام یا مسیر فایل نامعتبر است'
+
+        _wrongFileName.show(str,
+                [{text:'قبول', handler:cancelFunc}]
+        );
 
     }
 
@@ -85,6 +97,8 @@ public class AlertBox extends Sprite
             _save.visible = true;
         else if(type == 'question')
             _qustion.visible = true;
+        else if(type == 'wrongFile')
+            _wrongFileName.visible = true;
         else
             return;
 

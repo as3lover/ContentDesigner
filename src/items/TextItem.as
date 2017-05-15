@@ -383,7 +383,7 @@ public class TextItem extends Item
             _sprite.visible = false;
             //addEventListener(Event.ENTER_FRAME, ef);
             _box.addEventListener(Event.CHANGE, changeTextt);
-            Main.transformer.select(null);
+           ObjectManager.deselect();
             Main.STAGE.addEventListener(MouseEvent.MOUSE_DOWN, onStage);
             //Main.panel.show(this);
             Main.timePanel.show(this);
