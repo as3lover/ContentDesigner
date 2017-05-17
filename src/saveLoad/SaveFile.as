@@ -39,7 +39,8 @@ public class SaveFile
         myStream.addEventListener(OutputProgressEvent.OUTPUT_PROGRESS, write);
         myStream.addEventListener(Event.CLOSE, ff);
         var t:Number = getTimer();
-        myStream.writeObject(obj);
+        //myStream.writeObject(obj);
+        myStream.writeUTFBytes(JSON.stringify(obj));
         myStream.close();
 
 

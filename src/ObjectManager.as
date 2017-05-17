@@ -5,7 +5,7 @@ package
 {
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
-import flash.text.TextField;
+import flash.utils.setTimeout;
 
 import items.Item;
 import items.ItemText;
@@ -34,6 +34,8 @@ public class ObjectManager
 
         if(!target || _transformer.state == Cursor.NORMAL)
                 target = Utils.targetClass(e.target as DisplayObject, Item) as Item;
+        else if(target && _transformer.state == Cursor.MOVE)
+            target = Utils.targetClass(e.target as DisplayObject, Item) as Item;
 
         _transformer.mouseDown();
     }
@@ -52,6 +54,9 @@ public class ObjectManager
     public static function set target(item:Item):void
     {
         //trace('set ObjectManager Target', item);
+        if(_target == item)
+                return;
+
         _target = item;
         _transformer.target = item;
 
@@ -151,8 +156,11 @@ public class ObjectManager
     //////////////////////////////
     //////////////////////////////
 
-    public static function Copy():void
+    public static function Copy(item:Item = null):void
     {
+        if(item && item != target)
+            target = item;
+
         if(target)
         {
             trace('copy');
@@ -172,8 +180,11 @@ public class ObjectManager
         }
     }
 
-    public static function Cut():void
+    public static function Cut(item:Item = null):void
     {
+        if(item && item != target)
+                target = item;
+
         if(target)
         {
             trace('cut');
@@ -183,7 +194,7 @@ public class ObjectManager
         }
     }
 
-    public static function Paste(shift:Boolean = false):void
+    public static function Paste(shift:Boolean = false, rightClick:Boolean=false):void
     {
         if(_clipBoardItem)
         {
@@ -196,6 +207,12 @@ public class ObjectManager
                 _clipBoardItem.y -= 10;
                 _clipBoardItem.setProps();
             }
+            else if(rightClick)
+            {
+                _clipBoardItem.x = Main.dragManager.target.mouseX;
+                _clipBoardItem.y = Main.dragManager.target.mouseY;
+                _clipBoardItem.setProps();
+            }
             Main.dragManager.target.addChild(_clipBoardItem);
             Main.animationControl.add(_clipBoardItem, Utils.time);
             target = _clipBoardItem;
@@ -206,7 +223,7 @@ public class ObjectManager
 
     public static function DeleteKey():void
     {
-        if(target != null && !Main.textEditor.visible && !(Main.STAGE.focus is TextField))
+        if(target != null && !Main.textEditor.visible && !Main.timePanel.focus)
         {
             removeObject(target);
         }
@@ -243,6 +260,18 @@ public class ObjectManager
     public static function select(item:Item):void
     {
         target = item;
+    }
+
+    public static function Duplicate():void
+    {
+        if(!target)
+                return;
+        Copy();
+        if(_clipBoardItem)
+        {
+            target = null;
+            setTimeout(Paste, 100);
+        }
     }
 }
 }

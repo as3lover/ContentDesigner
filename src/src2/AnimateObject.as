@@ -8,8 +8,6 @@ import flash.events.EventDispatcher;
 
 import items.Item;
 import items.ItemText;
-import items.ItemText;
-import items.TextItem;
 
 public class AnimateObject extends EventDispatcher
 {
@@ -34,6 +32,7 @@ public class AnimateObject extends EventDispatcher
 
         //this.startTime = startTime;
         _startTime = startTime;
+        trace('_startTime',_startTime)
     }
 
     private function changeStartTime(event:Event):void

@@ -11,7 +11,6 @@ import flash.display.Sprite;
 import flash.events.Event;
 
 import items.ItemText;
-import items.TextItem;
 
 import items.TimeBox;
 

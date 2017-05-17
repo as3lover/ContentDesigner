@@ -22,6 +22,7 @@ import saveLoad.saveItem;
 import src2.AnimateObject;
 
 import src2.Consts;
+import src2.ToolTip;
 import src2.Utils;
 
 public class Item extends Sprite
@@ -48,6 +49,7 @@ public class Item extends Sprite
     private const _eventComplete:Event = new Event(Event.COMPLETE);
     private var _fileName:String;
     public var animation:AnimateObject;
+    public var _noExist:Boolean;
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
@@ -61,6 +63,7 @@ public class Item extends Sprite
         startProps = new Object();
         _motion = motion;
 
+        ToolTip.addOnline(this);
         this.addEventListener(MouseEvent.CONTEXT_MENU, rightClick)
     }
 
@@ -86,6 +89,8 @@ public class Item extends Sprite
         {
             _removeAnimation(this)
         }
+
+        ToolTip.removeOnline(this);
 
         if(byUser)
             addToHistory(History.REMOVE, {index:index})
@@ -130,7 +135,7 @@ public class Item extends Sprite
             setProps();
 
             addToHistory(History.TRANSFORM, value);
-
+            ToolTip.update(this);
             return true;
         }
         return false;
@@ -412,6 +417,7 @@ public class Item extends Sprite
         function onError(event:IOErrorEvent):void
         {
             trace('Can Not Load File:', _path);
+            _noExist = true;
             dispatchEvent(new Event(Event.COMPLETE));
             //remove(false);
         }
@@ -579,12 +585,36 @@ public class Item extends Sprite
 
     public function get insideWidth():Number
     {
+        trace('bitmap', bitmap);
         return bitmap.width * scaleX;
     }
 
     public function get insideWHeight():Number
     {
         return bitmap.height * scaleY;
+    }
+
+    public function get toolTipText():String
+    {
+        var str:String = '';
+        str += '  x: ' + String(normal(_x)) +'     ';
+        str += 'y: ' + String(normal(_y)) +'     ';
+        str += 'scaleX: ' + String(normal(_scaleX)) +'     ';
+        str += 'scaleY: ' + String(normal(_scaleY)) +'     ';
+        str += 'Motion: ' + String(_motion) +'     ';
+        if(animation.startTime != -1)
+            str += 'start: ' + String(Utils.timeFormat(animation.startTime * 1000)) +'     ';
+        if(animation.stopTime != -1)
+            str += 'stop: ' + String(Utils.timeFormat(animation.stopTime * 1000)) +'     ';
+        if(animation.typingEndTime != -1)
+            str += 'Type End Time: ' + String(Utils.timeFormat(animation.typingEndTime * 1000)) +'     ';
+
+        return str;
+    }
+
+    private function normal(i:Number):Number
+    {
+        return (int(i*100))/100;
     }
 }
 }

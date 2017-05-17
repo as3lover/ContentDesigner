@@ -141,7 +141,7 @@ public class TimeLine extends Sprite
 
             if(down)
             {
-                changePercent(lineBack.mouseX/lineBack.width)
+                changePercent(lineBack.mouseX/lineBack.width);
                 _timeBar.x = mask.x - ((lineBack.mouseX - line.width/2)/lineBack.width)*_timeBar.width;
             }
         }
@@ -424,7 +424,7 @@ public class TimeLine extends Sprite
     {
         if(!Utils.isParentOf(stage, this, e.target as DisplayObject))
         {
-            changeTime();
+            focusOutCurrentBox(null);
             if(stage.focus == _currentBox);
                 stage.focus = null;
         }
@@ -440,11 +440,11 @@ public class TimeLine extends Sprite
 
     private function key(e:KeyboardEvent):void
     {
-        _currentBox.setTextFormat(_t)
+        _currentBox.setTextFormat(_t);
 
         if(e.keyCode == 13)
         {
-            changeTime();
+            focusOutCurrentBox(null);
             if(stage.focus == _currentBox);
                 stage.focus = null;
         }

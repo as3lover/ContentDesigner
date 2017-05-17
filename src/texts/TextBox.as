@@ -270,5 +270,9 @@ public class TextBox extends Sprite
         _box.textFlow.interactionManager.setFocus();
     }
 
+    public function setDefaultFormat(prop:String, value:Object):void
+    {
+        _fmt[prop] = value;
+    }
 }
 }

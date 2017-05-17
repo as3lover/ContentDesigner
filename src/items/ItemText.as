@@ -24,6 +24,7 @@ public class ItemText extends Item
     private var _mask:TextMask;
     public var typeEffect:Boolean = true;
     private var _toEdit:Boolean;
+    private var _firstTime:Number;
 
     public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true):void
     {
@@ -39,6 +40,7 @@ public class ItemText extends Item
             x = Main.dragManager.target.mouseX;
             y = Main.dragManager.target.mouseY;
             _toEdit = toEdit;
+            _firstTime = Utils.time;
         }
 
 
@@ -47,8 +49,9 @@ public class ItemText extends Item
         _sprite.alpha = 0;
         addChild(_sprite);
 
+        this.doubleClickEnabled = true;
         _sprite.doubleClickEnabled = true;
-        _sprite.addEventListener(MouseEvent.DOUBLE_CLICK, double);
+        this.addEventListener(MouseEvent.DOUBLE_CLICK, double);
 
         if(toEdit)
             edit();
@@ -79,7 +82,7 @@ public class ItemText extends Item
         if(_toEdit)
         {
             _toEdit = false;
-            Main.addObject(this);
+            Main.addObject(this, _firstTime);
             setProps();
             addToHistory(History.ADD);
 

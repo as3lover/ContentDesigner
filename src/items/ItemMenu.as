@@ -37,6 +37,14 @@ public class ItemMenu
         var showTime:ContextMenuItem = new ContextMenuItem("Show At New Time");
         showTime.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, ShowNew);
         //
+
+        var cut:ContextMenuItem = new ContextMenuItem("Cut");
+        cut.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Cut);
+
+        var copy:ContextMenuItem = new ContextMenuItem("Copy");
+        copy.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Copy);
+
+        //
         var motion:ContextMenuItem = _motion = new ContextMenuItem("Motion");
         motion.submenu = new NativeMenu();
         subMotion(motion, Consts.fade, true);
@@ -67,6 +75,19 @@ public class ItemMenu
         motion.separatorBefore = true;
         menu.customItems.push(motion);
         menu.customItems.push(arrange);
+        cut.separatorBefore = true;
+        menu.customItems.push(cut);
+        menu.customItems.push(copy);
+    }
+
+    private function Cut(e:ContextMenuEvent):void
+    {
+        ObjectManager.Cut(Item(e.contextMenuOwner));
+    }
+
+    private function Copy(e:ContextMenuEvent):void
+    {
+        ObjectManager.Copy(Item(e.contextMenuOwner));
     }
 
 

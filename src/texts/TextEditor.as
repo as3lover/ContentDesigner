@@ -414,6 +414,7 @@ public class TextEditor extends Sprite
 
     private function setTextFormat(prop:String, value:Object):void
     {
+        _textBox.setDefaultFormat(prop, value);
         trace('setTextFormat',prop,value)
         var _box:TLFTextField = _textBox.box;
         var i1:int = _box.selectionBeginIndex;

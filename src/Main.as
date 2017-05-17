@@ -11,7 +11,6 @@ import flash.ui.ContextMenu;
 import flash.ui.ContextMenuItem;
 import items.Item;
 import items.ItemText;
-import items.TextItem;
 import items.TimePanel;
 
 import quizz.Quiz;
@@ -179,7 +178,7 @@ public class Main extends Sprite
         menu.customItems.push(hideSome);
         function HideSome(e:ContextMenuEvent):void
         {
-            HightLigher.add(dragManager, .1)
+            HightLigher.add(dragManager, .1);
             stage.addEventListener(MouseEvent.MOUSE_DOWN, onDown, true);
             function onDown(e:MouseEvent):void
             {
@@ -232,6 +231,16 @@ public class Main extends Sprite
         }
 
 
+        var paste:ContextMenuItem = new ContextMenuItem("Paste", true);
+        paste.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, Paste);
+        menu.customItems.push(paste);
+
+        function Paste(e):void
+        {
+            ObjectManager.Paste(false, true);
+        }
+
+
 
         dragManager.target.contextMenu = menu;
 
@@ -267,11 +276,14 @@ public class Main extends Sprite
     }
 
 
-    public static function addObject(object:Item):void
+    public static function addObject(object:Item, time:Number = -1):void
     {
+        if(time == -1)
+                time = timeLine.currentSec;
+
         Main.changed = true;
         object.setProps();
-        animationControl.add(object, timeLine.currentSec)
+        animationControl.add(object, time)
     }
 
 

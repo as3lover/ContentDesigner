@@ -65,7 +65,7 @@ public class Transformer extends Sprite
 
     public function mouseDown(e:MouseEvent = null):void
     {
-        if(state == Cursor.NORMAL)
+        if(state == Cursor.NORMAL || target == null)
                 return;
 
         ////trace('mouseDown')

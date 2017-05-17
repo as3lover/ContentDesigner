@@ -43,6 +43,9 @@ public class AnimationControl
         if(_time == value)
                 return;
 
+        if(value < 0)
+                value = 0;
+
         _time = value;
 
         _length =  _list.length;
@@ -96,6 +99,7 @@ public class AnimationControl
 
         function load():void
         {
+            var removes:Array =[];
             if(i>=len)
             {
                 trace('complete load');
@@ -103,8 +107,16 @@ public class AnimationControl
                 for(var j :int = 0; j <len; j++)
                 {
                     AnimateObject(_list[j]).object.setIndex();
+                    if(AnimateObject(_list[j]).object._noExist)
+                        removes.push(AnimateObject(_list[j]).object);
+                }
+                for(var n:int = 0; n<removes.length; n++)
+                {
+                    Item(removes[n]).remove(false);
                 }
                 Main.changed = false;
+                trace('Main.loadedTime',Main.loadedTime);
+                _time = -1;
                 Main.timeLine.setTimeByTopic(Main.loadedTime);
                 return;
             }

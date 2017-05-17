@@ -67,8 +67,7 @@ public class Keyboard
         //Delete
         if(e.charCode == 127 || e.keyCode == 46)
         {
-            if(ObjectManager.target)
-                ObjectManager.DeleteKey();
+            ObjectManager.DeleteKey();
         }
 
 
@@ -84,7 +83,7 @@ public class Keyboard
 
         if(Main.quiz.visible)
         {
-            trace('Main.quiz.visible')
+            trace('Main.quiz.visible');
             return;
         }
 
@@ -96,7 +95,7 @@ public class Keyboard
 
         if(Main.STAGE.focus is TextField && !(Main.STAGE.focus.parent is TitleBar) && Utils.isVisible(Main.STAGE.focus))
         {
-            trace('stage focus', Main.STAGE.focus)
+            trace('stage focus', Main.STAGE.focus);
             return;
         }
 
@@ -155,6 +154,11 @@ public class Keyboard
             case 88:// ctrl + X
                 if(e.ctrlKey)
                     ObjectManager.Cut();
+                break;
+
+            case 68:// ctrl + D
+                if(e.ctrlKey)
+                    ObjectManager.Duplicate();
                 break;
 
             case 83:// ctrl + S

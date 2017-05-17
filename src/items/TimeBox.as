@@ -50,6 +50,9 @@ public class TimeBox extends Sprite
 
     private function onFocus(event:FocusEvent):void
     {
+        if(parent is TimePanel)
+            (parent as TimePanel).addFocus = this;
+
         _oldText = _text.text;
         if(_text.text == 'no time')
                 _text.setSelection(0,_text.length);
@@ -68,6 +71,9 @@ public class TimeBox extends Sprite
 
     private function out(event:FocusEvent=null):void
     {
+        if(parent is TimePanel)
+            (parent as TimePanel).removeFocus = this;
+
         stage.removeEventListener(KeyboardEvent.KEY_DOWN, onDown);
         if(_oldText == _text.text)
                 return;

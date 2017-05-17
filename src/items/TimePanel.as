@@ -14,6 +14,7 @@ public class TimePanel extends Sprite
     private var _stop:TimeBox;
     private var _start:TimeBox;
     private var _item:Item;
+    private var _focus:Object;
 
     public function TimePanel()
     {
@@ -63,6 +64,9 @@ public class TimePanel extends Sprite
 
     public function show(item:Item):void
     {
+        _focus = null;
+        Main.STAGE.focus = null;
+
         _item = item;
 
         _start.time = item.animation.startTime;
@@ -78,6 +82,7 @@ public class TimePanel extends Sprite
 
     public function hide():void
     {
+        _focus = null;
         _item = null;
         _start.removeEventListener('edited', change);
         _stop.removeEventListener('edited', change);
@@ -91,6 +96,25 @@ public class TimePanel extends Sprite
     {
         super.visible = value;
         Utils.listVisible();
+    }
+
+    public function get focus():Boolean
+    {
+        if(!visible || !_focus)
+            return false;
+        else
+            return true;
+    }
+
+    public function set addFocus(item:Object):void
+    {
+        _focus = item;
+    }
+
+    public function set removeFocus(item:Object):void
+    {
+        if(_focus && _focus == item)
+                _focus = null;
     }
 
 }

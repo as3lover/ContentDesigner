@@ -21,6 +21,7 @@ public class Fonts
                 'B Traffic',
                 'B Traffic Bold',
                 'B Yekan',
+                'B Yekan Bold',
                 'B Zar',
                 'B Zar Bold',
                 'Gandom',
@@ -44,6 +45,15 @@ public class Fonts
             advancedAntiAliasing="true",
             embedAsCFF="true")]
     private var YekanFont:Class;
+
+    [Embed(source="../../assets/fonts/B Yekan Bold.TTF",
+            fontName = "B Yekan Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var YekanBoldFont:Class;
 
     [Embed(source="../../assets/fonts/B Mitra.TTF",
             fontName = "B Mitra",

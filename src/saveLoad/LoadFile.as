@@ -7,10 +7,10 @@ import flash.events.Event;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
+import flash.utils.setTimeout;
 
 import items.Item;
 import items.ItemText;
-import items.TextItem;
 
 public class LoadFile
 {
@@ -24,18 +24,76 @@ public class LoadFile
         loadObject(FileManager.file);
     }
 
-    private static function loadObject(file:File, time:Number = 0):void
+    private static function loadObject(file:File, time:Number = 0, json:Boolean = false):void
     {
-        var myStream:FileStream = new FileStream();
-        myStream.addEventListener(Event.COMPLETE, onCompleteLoad);
-        myStream.openAsync(file, FileMode.READ);
+        Main._progress.percent = 0;
+        Main._progress.text = 'Loading...\n' + file.nativePath;
+        setTimeout(loadObject2,10, file, time, json);
+    }
+    private static function loadObject2(file:File, time:Number = 0, json:Boolean = false):void
+    {
+        var fileStream:FileStream = new FileStream();
+        fileStream.open(file, FileMode.READ);
+        var str:String = fileStream.readUTFBytes(file.size);
+        fileStream.close();
+        if(str.indexOf('{') == 0)
+        {
+            afterLoad(JSON.parse(str), time);
+        }
+        else
+        {
+            var myStream:FileStream = new FileStream();
+            myStream.addEventListener(Event.COMPLETE, onCompleteLoad);
+            myStream.openAsync(file, FileMode.READ);
+        }
 
         function onCompleteLoad(evt:Event):void
         {
             afterLoad(evt.target.readObject(), time);
             evt.target.close();
         }
+
+
+
+        /*
+        var myStream:FileStream = new FileStream();
+        var myText:String = '';
+        myStream.addEventListener(Event.COMPLETE, onCompleteLoad);
+        myStream.addEventListener(ProgressEvent.PROGRESS, onProgress);
+        myStream.openAsync(file, FileMode.READ);
+
+        function onProgress(event:ProgressEvent):void
+        {
+            if (myStream.bytesAvailable)
+            {
+                myText += myStream.readUTFBytes(myStream.bytesAvailable);
+            }
+        }
+
+        function onCompleteLoad(evt:Event):void
+        {
+            if(myText.indexOf('{"time":') != -1)
+                afterLoad(JSON.parse(myText), time);
+            else
+                afterLoad(myStream.readObject(), time);
+
+            myStream.close();
+        }
+        */
+        /*
+        var myStream:FileStream = new FileStream();
+        myStream.addEventListener(Event.COMPLETE, onCompleteLoad);
+        myStream.openAsync(file, FileMode.READ);
+
+
+        function onCompleteLoad(evt:Event):void
+        {
+            afterLoad(evt.target.readObject(), time);
+            evt.target.close();
+        }
+        */
     }
+
 
     private static function afterLoad(object:Object, time:Number = 0):void
     {
@@ -97,6 +155,7 @@ public class LoadFile
             Main.animationControl.addLoaded(holder, obj.startTime, obj.stopTime, obj.showDuration, obj.hideDuration, obj.typingEndTime);
         }
 
+        trace('loaded time', time)
         Main.loadedTime = time;
         Main.animationControl.loadItems();
         Main.animationControl.number = number;
