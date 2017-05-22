@@ -101,9 +101,9 @@ public class Keyboard
         }
 
 
-        if(Main.panel.visible && !ObjectManager.target)
+        if(Main.panel.visible && !ObjectManager.selected)
         {
-            trace('Main.panel.visible && !ObjectManager.target');
+            trace('Main.panel.visible && !ObjectManager.selected');
             return;
         }
 
@@ -117,14 +117,14 @@ public class Keyboard
         switch (e.keyCode)
         {
             case 37://Left Arrow
-                    if(ObjectManager.target)
+                    if(ObjectManager.selected)
                         ObjectManager.moveLeft(e.ctrlKey, e.shiftKey);
                     else
                         Main.timeLine.stepBackward(e.ctrlKey, e.shiftKey);
                 break;
 
             case 39://Right Arrow
-                if(ObjectManager.target)
+                if(ObjectManager.selected)
                     ObjectManager.moveRight(e.ctrlKey, e.shiftKey);
                 else
                 Main.timeLine.stepForward(e.ctrlKey, e.shiftKey);
@@ -199,30 +199,30 @@ public class Keyboard
                 break;
 
             case 35:// End
-                if(ObjectManager.target)
-                    Item.setIndexByUser(Consts.ARRANGE.BACK,ObjectManager.target);
+                if(ObjectManager.selected)
+                    ObjectManager.End();
                 else
                     Main.timeLine.changePercent(1);
                 break;
 
             case 36:// Home
-                if(ObjectManager.target)
-                    Item.setIndexByUser(Consts.ARRANGE.FRONT,ObjectManager.target);
+                if(ObjectManager.selected)
+                    ObjectManager.Home();
                 else
                     Main.timeLine.changePercent(0);
                 break;
 
             case 33:// Page up
-                    if(ObjectManager.target)
-                        Item.setIndexByUser(Consts.ARRANGE.FRONT_LEVEL,ObjectManager.target);
+                    if(ObjectManager.selected)
+                        ObjectManager.PageUp();
                     else
                         Main.timeLine.stepUp();
 
                 break;
 
             case 34:// Page Down
-                if(ObjectManager.target)
-                    Item.setIndexByUser(Consts.ARRANGE.BACK_LEVEL,ObjectManager.target);
+                if(ObjectManager.selected)
+                    ObjectManager.PageDown();
                 else
                     Main.timeLine.stepDown();
                 break;
@@ -249,9 +249,11 @@ public class Keyboard
                 }
                 break;
 
-            case 77:// M >> Mirrot
+            case 77:// M >> Mirror
                 if(e.ctrlKey)
-                    ObjectManager.Miror();
+                    ObjectManager.MirorX();
+                if(e.shiftKey)
+                    ObjectManager.MirorY();
                 break;
         }
     }

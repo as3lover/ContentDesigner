@@ -6,11 +6,14 @@ package
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
+import flash.geom.Matrix;
 import flash.utils.setTimeout;
 
 import items.Item;
 import items.ItemText;
 import items.TimePanel;
+
+import src2.Consts;
 
 import src2.Utils;
 
@@ -20,6 +23,7 @@ public class ObjectManager
     private static var _target:Item;
     private static var _clipBoardItem:Item;
     private static var _selectList:Array;
+    private static var _objects:Sprite;
 
     public static function start():void
     {
@@ -37,7 +41,22 @@ public class ObjectManager
         if(!target || _transformer.state == Cursor.NORMAL)
                 target = Utils.targetClass(e.target as DisplayObject, Item) as Item;
         else if(target && _transformer.state == Cursor.MOVE)
-            target = Utils.targetClass(e.target as DisplayObject, Item) as Item;
+        {
+            var item:Item = Utils.targetClass(e.target as DisplayObject, Item) as Item;
+            if(item && _selectList)
+            {
+                var i:int = Utils.getObjectIndex(_selectList, item);
+                if(i != -1)
+                {
+                    return;
+                    _transformer.mouseDown();
+                }
+                else
+                    target = item as Item;
+            }
+            else
+                target = item;
+        }
 
         if(target)
         {
@@ -63,6 +82,35 @@ public class ObjectManager
 
     public static function set target(item:Item):void
     {
+        if(_selectList)
+        {
+            _selectList = null;
+            _transformer.selectList = null
+        }
+        /*
+        if(_selectList && _objects)
+        {
+            if(_objects && _objects.parent)
+                _objects.parent.removeChild(_objects);
+
+            var list:Array = _selectList;
+            var length:int = list.length;
+
+            for(var i:int = 0; i<length; i++)
+            {
+                Main.dragManager.target.addChildAt(Item(list[i]), Item(list[i])._index);
+                Item(list[i]).x += _objects.x * _objects.scaleX;
+                Item(list[i]).y += _objects.y * _objects.scaleY;
+                Item(list[i]).rotation += _objects.rotation;
+                Item(list[i]).scaleX *= _objects.scaleX;
+                Item(list[i]).scaleY *= _objects.scaleY;
+                Item(list[i]).changed;
+            }
+
+            _objects = null;
+            _selectList = null;
+        }
+        */
         //trace('set ObjectManager Target', item);
         if(_target == item)
                 return;
@@ -93,11 +141,49 @@ public class ObjectManager
         }
     }
 
-    public static function set selectList(value:Array):void
+    public static function set selectList(list:Array):void
     {
-        _selectList = value;
-        _transformer.selectList = value;
+        _selectList = list;
+        _transformer.selectList = list;
+         /*
+        var length:int = list.length;
 
+        _objects = new Sprite();
+
+        //_objects.rotation = int(Math.random() * 10);
+        _objects.x = -50 + int(Math.random() * 100);
+        _objects.y = -50 + int(Math.random() * 100);
+        _objects.scaleX += -.5 + int(Math.random() * 10)/10;
+        _objects.scaleY += -.5 + int(Math.random() * 10)/10;
+
+        sortList(list);
+
+        for(var i:int=0; i<length; i++)
+        {
+            Item(list[i]).resetIndex();
+        }
+
+        for(i=0; i<length; i++)
+        {
+            _objects.addChild(list[i]);
+        }
+
+        Main.dragManager.target.addChildAt(_objects, Item(list[0])._index)
+        */
+    }
+
+    private static function sortList(list:Array):void
+    {
+        var length:int = list.length;
+
+        for(var i:int=length-1; i>-1; i--)
+        {
+            for(var j:int=0; j<i; j++)
+            {
+                if(Item(list[j]).index > Item(list[j+1]).index)
+                        Utils.swapInArray(list, j, j+1)
+            }
+        }
     }
 
     public static function EnterKey()
@@ -301,7 +387,7 @@ public class ObjectManager
         }
     }
 
-    public static function Miror():void
+    public static function MirorX():void
     {
         if(!target)
             return;
@@ -309,5 +395,44 @@ public class ObjectManager
         target.scaleX = -target.scaleX;
         target.changed;
     }
+
+    public static function MirorY():void
+    {
+        if(!target)
+            return;
+
+        target.scaleY = -target.scaleY;
+        target.changed;
+    }
+
+    public static function End():void
+    {
+        Item.setIndexByUser(Consts.ARRANGE.BACK,target);
+    }
+
+    public static function Home():void
+    {
+        Item.setIndexByUser(Consts.ARRANGE.FRONT,target);
+    }
+
+    public static function PageDown():void
+    {
+        Item.setIndexByUser(Consts.ARRANGE.BACK_LEVEL,target);
+    }
+
+    public static function PageUp():void
+    {
+        Item.setIndexByUser(Consts.ARRANGE.FRONT_LEVEL,target);
+    }
+
+    public static function get selected():Boolean
+    {
+        if(target == null)
+            return false;
+        else
+            return true;
+    }
+
+
 }
 }

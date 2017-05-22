@@ -394,5 +394,12 @@ public class Utils
 
         return false;
     }
+
+    public static function swapInArray(list:Array, index1:int, index2:int):void
+    {
+        var item:Object = list[index1];
+        list[index1] = list[index2];
+        list[index2] = item;
+    }
 }
 }

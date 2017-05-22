@@ -9,7 +9,6 @@ import flash.events.MouseEvent;
 import flash.geom.Point;
 
 import items.Item;
-
 import src2.Utils;
 
 public class Transformer extends Sprite
@@ -27,8 +26,6 @@ public class Transformer extends Sprite
     private var _selectList:Array;
     private var _xPointDis:Number;
     private var _yPointDis:Number;
-    private var _xTargetCenterDis:Number;
-    private var _yTargetCenterDis:Number;
     private var _localPoint:Point;
     private var _globalPoint:Point;
     private var _targetPoint:Point;
@@ -58,7 +55,7 @@ public class Transformer extends Sprite
             ////trace('add transformer');
             Main.STAGE.addChild(this);
         }
-        else if(parent)
+        else
         {
             ////trace('remove transformer');
             if(parent)
@@ -74,17 +71,27 @@ public class Transformer extends Sprite
 
     public function set selectList(selectList:Array):void
     {
-        return;
         _selectList = selectList;
-        Main.STAGE.addChild(this);
-        Main.STAGE.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
-        Main.STAGE.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+        if(selectList)
+        {
+            Main.STAGE.addChild(this);
+        }
+        else
+        {
+            if(parent)
+                parent.removeChild(this);
+
+            Main.STAGE.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
+            Main.STAGE.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+        }
+
+        _holder.selectList = selectList;
     }
 
 
     public function mouseDown(e:MouseEvent = null):void
     {
-        if(state == Cursor.NORMAL || target == null)
+        if(state == Cursor.NORMAL || (target == null))
                 return;
 
         ////trace('mouseDown')
@@ -195,6 +202,9 @@ public class Transformer extends Sprite
     private function move():void
     {
         ////trace('move')
+        if(!target || !target.parent)
+                return;
+
         target.x = target.parent.mouseX - _xDistance;
         target.y = target.parent.mouseY - _yDistance;
         _holder.setPosition();
@@ -273,7 +283,7 @@ public class Transformer extends Sprite
         Main.STAGE.removeEventListener(KeyboardEvent.KEY_UP, onKey);
 
         _holder.moving = false;
-        if(target)
+        if(target && target is Item)
                 Item(target).changed;
 
         return;

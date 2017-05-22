@@ -34,6 +34,9 @@ public class Holder extends Sprite
     private var _over:Boolean;
     private var _moving:Boolean;
     private var _point:Sprite;
+    private var _selectList:Array;
+    private var _x:Number;
+    private var _y:Number;
 
     public function Holder()
     {
@@ -103,10 +106,20 @@ public class Holder extends Sprite
                 enable();
     }
 
+
+    public function set selectList(selectList:Array):void
+    {
+        _selectList = selectList;
+        trace(_selectList);
+
+        if(_selectList)
+            enable();
+    }
+
     //Enable Select
     private function enable():void
     {
-        ////trace('enable holder');
+        trace('enable holder');
 
         _point.x = 0;
         _point.y = 0;
@@ -122,6 +135,7 @@ public class Holder extends Sprite
         ////trace('disable holder');
         Main.STAGE.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 
+        _selectList = null;
         _curser.type = Cursor.NORMAL;
         _over = false;
         _moving = false;
@@ -160,8 +174,7 @@ public class Holder extends Sprite
 
     public function update():void
     {
-        //////trace('update holder');
-        if(!target)
+        if(target == null && _selectList == null)
                 return;
 
         setRotation();
@@ -171,18 +184,26 @@ public class Holder extends Sprite
 
     public function setRotation():void
     {
-        rotation = target.rotation;
+        if(target)
+            rotation = target.rotation;
+        else if(_selectList)
+            rotation = 0;
+
         _curser.rotation = rotation;
     }
 
     //Set Selector Size
     public function setSize():void
     {
-        if(!target || !target.parent)
+        trace('setSize 1',_selectList)
+        if((!target || !target.parent) && !_selectList)
         {
             target = null;
             return;
         }
+
+        trace('_selectList', _selectList)
+
 
         /*
         var item:Item = target as Item;
@@ -193,17 +214,60 @@ public class Holder extends Sprite
         var w:Number = Math.abs(item.insideWidth) * scaleX;
         var h:Number = Math.abs(item.insideWHeight) * scaleY;
         */
-        var item:Item = target as Item;
-        var rect:Rectangle = item.getRect(target);
-        var scaleX:Number = Utils.globalToLocalScaleX(item);
-        var scaleY:Number = Utils.globalToLocalScaleY(item);
-        var w:Number = rect.width * scaleX;
-        var h:Number = rect.height * scaleY;
+        if(target)
+        {
+            var item:Item = target as Item;
+            var rect:Rectangle = item.getRect(target);
+            var scaleX:Number = Utils.globalToLocalScaleX(item);
+            var scaleY:Number = Utils.globalToLocalScaleY(item);
+            var w:Number = rect.width * scaleX;
+            var h:Number = rect.height * scaleY;
 
-        _x1 = -w/2;
-        _x2 = w/2;
-        _y1 = -h/2;
-        _y2 = h/2;
+            _x1 = -w/2;
+            _x2 = w/2;
+            _y1 = -h/2;
+            _y2 = h/2;
+
+        }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+            var i:int;
+            var r:Rectangle = Sprite(list[0]).getBounds(Main.STAGE);
+
+            var x1:Number = r.x;
+            var y1:Number = r.y;
+            var x2:Number = r.x + r.width;
+            var y2:Number = r.y + r.height;
+
+            for(i=1; i<length; i++)
+            {
+                r = Sprite(list[i]).getBounds(Main.STAGE);
+
+                x1 = Math.min(r.x, x1);
+                y1 = Math.min(r.y , y1);
+                x2 = Math.max(x2, r.x + r.width);
+                y2 = Math.max(y2, r.y + r.height);
+
+            }
+
+            _x1 = -(x2 - x1)/2;
+            _y1 = -(y2 - y1)/2;
+            _x2 = -_x1;
+            _y2 = -_y1;
+
+            var p:Point = new Point(x1 + _x2, y1 + _y2);
+            x = p.x;
+            y = p.y;
+
+
+        }
+        else
+        {
+            return;
+        }
+
 
         with(this.graphics)
         {
@@ -228,15 +292,19 @@ public class Holder extends Sprite
     //Set Selector Position
     public function setPosition():void
     {
+        trace('setPosition1')
+
         if(!target || !target.parent)
-        {
             target = null;
-            return;
+
+
+        if(target)
+        {
+            var rect:Rectangle = target.getBounds(Main.STAGE);
+            x = rect.x + rect.width/2;
+            y = rect.y + rect.height/2;
         }
-        
-        var rect:Rectangle = target.getBounds(Main.STAGE);
-        x = rect.x + rect.width/2;
-        y = rect.y + rect.height/2;
+
     }
 
     public function get state():String
@@ -278,5 +346,6 @@ public class Holder extends Sprite
         _point.x = point.x;
         _point.y = point.y;
     }
+
 }
 }

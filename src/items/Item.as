@@ -616,5 +616,12 @@ public class Item extends Sprite
     {
         return (int(i*100))/100;
     }
+
+    public function resetIndex():void
+    {
+        if(parent)
+            _index = parent.getChildIndex(this);
+
+    }
 }
 }
