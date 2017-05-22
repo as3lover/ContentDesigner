@@ -26,7 +26,7 @@ public class ItemText extends Item
     private var _toEdit:Boolean;
     private var _firstTime:Number;
 
-    public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true):void
+    public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true, keyBoard:Boolean = false):void
     {
         super(removeAnimataion, null);
 
@@ -39,6 +39,11 @@ public class ItemText extends Item
         {
             x = Main.dragManager.target.mouseX;
             y = Main.dragManager.target.mouseY;
+            if(keyBoard);
+            {
+                x = Main.target.x + Main.target.w/2;
+                y = Main.target.y + Main.target.h/2;
+            }
             _toEdit = toEdit;
             _firstTime = Utils.time;
         }

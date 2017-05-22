@@ -10,6 +10,7 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 
 import items.Item;
+import items.ItemText;
 
 import src2.Consts;
 import src2.Utils;
@@ -53,7 +54,7 @@ public class Keyboard
 
     private function onKeyDown(e:KeyboardEvent):void
     {
-        trace('onKeyDown', e.charCode);
+        //trace('onKeyDown', e.charCode);
 
         if(e.keyCode == 17) //ctrl
             _ctrl = true;
@@ -238,6 +239,19 @@ public class Keyboard
             case 90:// Z >> Undo
                 if(e.ctrlKey)
                     History.undo();
+                break;
+
+            case 84:// T >> add Text
+                if(e.ctrlKey)
+                {
+                    Main.changed = true;
+                    new ItemText(Main.removeAnimation, true, true, true);
+                }
+                break;
+
+            case 77:// M >> Mirrot
+                if(e.ctrlKey)
+                    ObjectManager.Miror();
                 break;
         }
     }

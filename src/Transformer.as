@@ -4,7 +4,6 @@
 package
 {
 import flash.display.Sprite;
-import flash.display.Sprite;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.geom.Point;
@@ -30,7 +29,7 @@ public class Transformer extends Sprite
     private var _yPointDis:Number;
     private var _xTargetCenterDis:Number;
     private var _yTargetCenterDis:Number;
-    private var _point:Point;
+    private var _localPoint:Point;
     private var _globalPoint:Point;
     private var _targetPoint:Point;
 
@@ -90,19 +89,19 @@ public class Transformer extends Sprite
 
         ////trace('mouseDown')
 
-        _xDistance = target.parent.mouseX - target.x;
-        _yDistance = target.parent.mouseY - target.y;
-        _rotation = target.rotation;
-        _scaleX = target.scaleX;
-        _scaleY = target.scaleY;
+
         _x = target.parent.mouseX;
         _y = target.parent.mouseY;
         _xPointDis = _holder.mouseX - _holder.center.x;
         _yPointDis = _holder.mouseY - _holder.center.y;
         _globalPoint = _holder.globalCenter;
-        _point = target.parent.globalToLocal(_globalPoint);
-        _xTargetCenterDis = target.x - _point.x;
-        _yTargetCenterDis = target.y - _point.y;
+
+        _rotation = target.rotation;
+        _scaleX = target.scaleX;
+        _scaleY = target.scaleY;
+        _xDistance = _x - target.x;
+        _yDistance = _y - target.y;
+        _localPoint = target.parent.globalToLocal(_globalPoint);
         _targetPoint = target.globalToLocal(_globalPoint);
 
         _state = state;
@@ -236,8 +235,8 @@ public class Transformer extends Sprite
     private function resetPos():void
     {
         var currentPoint = target.parent.globalToLocal(target.localToGlobal(_targetPoint));
-        target.x += _point.x - currentPoint.x;
-        target.y += _point.y - currentPoint.y;
+        target.x += _localPoint.x - currentPoint.x;
+        target.y += _localPoint.y - currentPoint.y;
         _holder.setPosition();
         _holder.globalCenter = _globalPoint;
     }
@@ -254,7 +253,7 @@ public class Transformer extends Sprite
 
     private function rotate():void
     {
-        var angle:Number = Math.atan2(_y - _point.y,_x - _point.x)-Math.atan2(target.parent.mouseY - _point.y, target.parent.mouseX - _point.x);
+        var angle:Number = Math.atan2(_y - _localPoint.y,_x - _localPoint.x)-Math.atan2(target.parent.mouseY - _localPoint.y, target.parent.mouseX - _localPoint.x);
         //var angle:Number = Math.atan2(_y-target.y,_x-target.x)-Math.atan2(target.parent.mouseY-target.y,target.parent.mouseX-target.x);
         angle = Utils.radToDeg(angle);
         angle = _rotation - angle;

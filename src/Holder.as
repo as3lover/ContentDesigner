@@ -8,7 +8,6 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import flash.geom.Rectangle;
 
 import items.Item;
 
@@ -16,10 +15,6 @@ import src2.Utils;
 
 public class Holder extends Sprite
 {
-    private var _top:Sprite;
-    private var _bottom:Sprite;
-    private var _left:Sprite;
-    private var _right:Sprite;
     private var _curser:Cursor;
 
     private var _box_1:Sprite;
@@ -43,26 +38,6 @@ public class Holder extends Sprite
     public function Holder()
     {
         //Constructor
-        _top = new Sprite();
-        _top.graphics.lineStyle(1);
-        _top.graphics.lineTo(200,0);
-
-        _bottom = new Sprite();
-        _bottom.graphics.lineStyle(1);
-        _bottom.graphics.lineTo(200,0);
-
-        _left = new Sprite();
-        _left.graphics.lineStyle(1);
-        _left.graphics.lineTo(0,200);
-
-        _right = new Sprite();
-        _right.graphics.lineStyle(1);
-        _right.graphics.lineTo(0,200);
-
-        //addChild(_top);
-        //addChild(_bottom);
-        //addChild(_left);
-        //addChild(_right);
 
         _box_1 = Box(Cursor.ARROW_1);
         _box_2 = Box(Cursor.ARROW_2);
@@ -159,19 +134,27 @@ public class Holder extends Sprite
 
         var x:Number = mouseX;
         var y:Number = mouseY;
-        var dis:int = 20;
+        var dis:int = 35;
 
         _curser.type = Cursor.NORMAL;
 
-        if(_x1 <= x && x <= _x2 && _y1 <= y && y <= _y2)
+        var x1:Number = Math.min(_x1, _x2);
+        var x2:Number = Math.max(_x1, _x2);;
+        var y1:Number = Math.min(_y1, _y2);
+        var y2:Number = Math.max(_y1, _y2);
+
+        if(Keyboard.CTRL)
+                trace(int(x1), int(x), int(x2), int(y1), int(y), int(y2));
+
+        if(x1 <= x && x <= x2 && y1 <= y && y <= y2)
             _curser.type = Cursor.MOVE;
-        else if(Utils.distanceTwoPoints(x,y,_x1,_y1) < dis)
+        else if(Utils.distanceTwoPoints(x,y,x1,y1) < dis)
             _curser.type = Cursor.ROTATE_1;
-        else if(Utils.distanceTwoPoints(x,y,_x2,_y1) < dis)
+        else if(Utils.distanceTwoPoints(x,y,x2,y1) < dis)
             _curser.type = Cursor.ROTATE_2;
-        else if(Utils.distanceTwoPoints(x,y,_x2,_y2) < dis)
+        else if(Utils.distanceTwoPoints(x,y,x2,y2) < dis)
             _curser.type = Cursor.ROTATE_3;
-        else if(Utils.distanceTwoPoints(x,y,_x1,_y2) < dis)
+        else if(Utils.distanceTwoPoints(x,y,x1,y2) < dis)
             _curser.type = Cursor.ROTATE_4;
     }
 
@@ -225,7 +208,7 @@ public class Holder extends Sprite
         with(this.graphics)
         {
             clear();
-            lineStyle(1)
+            lineStyle(1);
             moveTo(_x1,_y1);
             lineTo(_x2, _y1);
             lineTo(_x2, _y2);

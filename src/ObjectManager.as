@@ -292,13 +292,22 @@ public class ObjectManager
     public static function Duplicate():void
     {
         if(!target)
-                return;
+            return;
         Copy();
         if(_clipBoardItem)
         {
             target = null;
             setTimeout(Paste, 100);
         }
+    }
+
+    public static function Miror():void
+    {
+        if(!target)
+            return;
+
+        target.scaleX = -target.scaleX;
+        target.changed;
     }
 }
 }
