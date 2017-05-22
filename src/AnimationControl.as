@@ -261,7 +261,7 @@ public class AnimationControl
         _list = [];
     }
 
-    private function get visibleList():Array
+    public function get visibleList():Array
     {
         var newList:Array = new Array();
         _length = _list.length;

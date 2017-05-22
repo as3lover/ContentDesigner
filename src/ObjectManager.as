@@ -4,6 +4,7 @@
 package
 {
 import flash.display.DisplayObject;
+import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.utils.setTimeout;
 
@@ -18,6 +19,7 @@ public class ObjectManager
     private static var _transformer:Transformer = new Transformer();
     private static var _target:Item;
     private static var _clipBoardItem:Item;
+    private static var _selectList:Array;
 
     public static function start():void
     {
@@ -37,7 +39,15 @@ public class ObjectManager
         else if(target && _transformer.state == Cursor.MOVE)
             target = Utils.targetClass(e.target as DisplayObject, Item) as Item;
 
-        _transformer.mouseDown();
+        if(target)
+        {
+            _transformer.mouseDown();
+        }
+        else if(Utils.targetClass(e.target as DisplayObject, DragManager))
+        {
+            SelectRange.start();
+        }
+
     }
 
     public static function deselect():void
@@ -58,6 +68,16 @@ public class ObjectManager
                 return;
 
         _target = item;
+
+        /*
+        var index:int = target.index;
+        item._index = index;
+        var sprite:Sprite = new Sprite();
+        item.parent.addChildAt(sprite, index);
+        sprite.addChild(item);
+        _transformer.target = sprite;
+        */
+
         _transformer.target = item;
 
         if(item)
@@ -71,6 +91,13 @@ public class ObjectManager
             Main.timePanel.hide();
             Main.timeLine.select(null)
         }
+    }
+
+    public static function set selectList(value:Array):void
+    {
+        _selectList = value;
+        _transformer.selectList = value;
+
     }
 
     public static function EnterKey()

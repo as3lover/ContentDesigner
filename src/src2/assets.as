@@ -31,6 +31,9 @@ public class assets
     [Embed(source="../../assets/buttons/move.png")]
     public static var Move:Class;
 
+    [Embed(source="../../assets/buttons/point.png")]
+    public static var Point:Class;
+
     [Embed(source="../../assets/buttons/arrow.png")]
     public static var Arrow:Class;
 

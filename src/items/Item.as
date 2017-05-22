@@ -435,7 +435,7 @@ public class Item extends Sprite
     }
 
 
-    public function setIndex():void
+    public function setIndex(index:int = -1):void
     {
         if(!parent)
                 return;

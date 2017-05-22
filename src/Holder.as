@@ -3,9 +3,12 @@
  */
 package
 {
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.geom.Rectangle;
 
 import items.Item;
 
@@ -28,13 +31,14 @@ public class Holder extends Sprite
     private var _box_7:Sprite;
     private var _box_8:Sprite;
 
-    private var _target:Item;
+    private var _target:DisplayObject;
     private var _x1:Number;
     private var _x2:Number;
     private var _y1:Number;
     private var _y2:Number;
     private var _over:Boolean;
     private var _moving:Boolean;
+    private var _point:Sprite;
 
     public function Holder()
     {
@@ -69,11 +73,13 @@ public class Holder extends Sprite
         _box_7 = Box(Cursor.ARROW_7);
         _box_8 = Box(Cursor.ARROW_8);
 
-        function Box(name:String):Sprite
+        _point = Box(Cursor.POINT, 0x000000);
+
+        function Box(name:String, color:uint = 0xff0000):Sprite
         {
             var box:Sprite = new Sprite();
             box.graphics.lineStyle(2,0xffffff);
-            box.graphics.beginFill(0xff0000);
+            box.graphics.beginFill(color);
             //box.graphics.drawRect(-4, -4, 8, 8);
             box.graphics.drawCircle(0,0,5);
             box.graphics.endFill();
@@ -106,13 +112,13 @@ public class Holder extends Sprite
 
 
     //Get Target
-    public function get target():Item
+    public function get target():DisplayObject
     {
         return _target;
     }
 
     //Set Target
-    public function set target(item:Item):void
+    public function set target(item:DisplayObject):void
     {
         ////trace('set holder target', item);
         disable();
@@ -127,6 +133,8 @@ public class Holder extends Sprite
     {
         ////trace('enable holder');
 
+        _point.x = 0;
+        _point.y = 0;
         update();
         Main.STAGE.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
         mouseMove();
@@ -151,8 +159,6 @@ public class Holder extends Sprite
 
         var x:Number = mouseX;
         var y:Number = mouseY;
-        //var dw:int = (_x2 - _x1)/3;
-        //var dh:int = (_y2 - _y1)/3;
         var dis:int = 20;
 
         _curser.type = Cursor.NORMAL;
@@ -195,13 +201,21 @@ public class Holder extends Sprite
             return;
         }
 
-        var item:Item = target;
+        /*
+        var item:Item = target as Item;
         var scaleX:Number = Utils.globalToLocalScaleX(item);
         var scaleY:Number = Utils.globalToLocalScaleY(item);
 
         ///////////////
         var w:Number = Math.abs(item.insideWidth) * scaleX;
         var h:Number = Math.abs(item.insideWHeight) * scaleY;
+        */
+        var item:Item = target as Item;
+        var rect:Rectangle = item.getRect(target);
+        var scaleX:Number = Utils.globalToLocalScaleX(item);
+        var scaleY:Number = Utils.globalToLocalScaleY(item);
+        var w:Number = rect.width * scaleX;
+        var h:Number = rect.height * scaleY;
 
         _x1 = -w/2;
         _x2 = w/2;
@@ -226,32 +240,6 @@ public class Holder extends Sprite
         _box_1.y = _box_2.y = _box_3.y = _y1;
         _box_5.y = _box_6.y = _box_7.y = _y2;
         _box_4.y = _box_8.y = 0;
-
-        return;
-
-        /////////////////
-
-        _top.width = _bottom.width = Math.abs(item.insideWidth) * scaleX;
-        _left.height = _right.height = Math.abs(item.insideWHeight) * scaleY;
-
-        _top.x = _bottom.x = _left.x = - _top.width/2;
-        _right.x = + _top.width/2;
-
-        _top.y = _left.y = _right.y = - _left.height/2;
-        _bottom.y = + _left.height/2;
-
-        _box_1.x = _box_7.x = _box_8.x = _left.x;
-        _box_3.x = _box_4.x = _box_5.x = _right.x;
-        _box_2.x = _box_6.x = 0;
-
-        _box_1.y = _box_2.y = _box_3.y = _top.y;
-        _box_5.y = _box_6.y = _box_7.y = _bottom.y;
-        _box_4.y = _box_8.y = 0;
-
-        _x1 = _left.x;
-        _x2 = _right.x;
-        _y1 = _top.y;
-        _y2 = _bottom.y;
     }
 
     //Set Selector Position
@@ -262,11 +250,10 @@ public class Holder extends Sprite
             target = null;
             return;
         }
-
-        var point:Point = target.parent.localToGlobal(new Point(target.x, target.y));
-
-        x = point.x;
-        y = point.y;
+        
+        var rect:Rectangle = target.getBounds(Main.STAGE);
+        x = rect.x + rect.width/2;
+        y = rect.y + rect.height/2;
     }
 
     public function get state():String
@@ -284,6 +271,29 @@ public class Holder extends Sprite
         _moving = value;
         _curser.visible = !value;
         mouseMove()
+    }
+
+    public function setPoint():void
+    {
+        _point.x = mouseX;
+        _point.y = mouseY
+    }
+
+    public function get center():Object
+    {
+        return {x:_point.x, y:_point.y};
+    }
+
+    public function get globalCenter():Point
+    {
+        return localToGlobal(new Point(_point.x, _point.y));
+    }
+
+    public function set globalCenter(gc:Point):void
+    {
+        var point:Point = globalToLocal(gc);
+        _point.x = point.x;
+        _point.y = point.y;
     }
 }
 }

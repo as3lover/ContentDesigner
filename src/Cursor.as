@@ -25,11 +25,14 @@ public class Cursor extends Sprite
     public static const ARROW_6:String = 'arrow 6';
     public static const ARROW_7:String = 'arrow 7';
     public static const ARROW_8:String = 'arrow 8';
+    public static const POINT:String = 'point';
+
 
     private var _move:Sprite;
     private var _arrow:Sprite;
     private var _rotate:Sprite;
     private var _type:String;
+    private var _point:Sprite;
 
     public function Cursor()
     {
@@ -42,6 +45,14 @@ public class Cursor extends Sprite
         bit.y = - bit.height / 2;
         _move.addChild(bit);
         addChild(_move);
+
+        _point = new Sprite();
+        bit = new assets.Point();
+        bit.smoothing = true;
+        bit.x = - bit.width / 2;
+        bit.y = - bit.height / 2;
+        _point.addChild(bit);
+        addChild(_point);
 
         _arrow = new Sprite();
         bit = new assets.Arrow();
@@ -72,11 +83,16 @@ public class Cursor extends Sprite
         _move.visible = false;
         _arrow.visible = false;
         _rotate.visible = false;
+        _point.visible = false;
 
         switch (type)
         {
             case MOVE:
                 _move.visible = true;
+                break;
+
+            case POINT:
+                _point.visible = true;
                 break;
 
             case ARROW_1:

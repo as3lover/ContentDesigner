@@ -323,7 +323,7 @@ public class Utils
 
     public static function globalToLocalScaleX(item:DisplayObject):Number
     {
-        var scale:Number = 1;
+        var scale:Number = item.scaleX;
         while(item.parent)
         {
             item = item.parent;
@@ -335,7 +335,7 @@ public class Utils
 
     public static function globalToLocalScaleY(item:DisplayObject):Number
     {
-        var scale:Number = 1;
+        var scale:Number = item.scaleY;
         while(item.parent)
         {
             item = item.parent;
@@ -352,9 +352,15 @@ public class Utils
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    public static function radianToDegree(radians:Number):Number
+    public static function radToDeg(radians:Number):Number
     {
         return radians * 180 / Math.PI;
+    }
+
+    public static function degToRad(degree:Number):Number
+    {
+
+        return degree * Math.PI / 180;
     }
 
     public static function pathIsWrong(path:String):Boolean
