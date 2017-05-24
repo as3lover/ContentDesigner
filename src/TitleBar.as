@@ -124,6 +124,7 @@ public class TitleBar extends Sprite
 
 
         _sizeBt = new Button('.');
+        _sizeBt.buttonMode = false;
         addChild(_sizeBt);
         _sizeBt.addEventListener(MouseEvent.MOUSE_DOWN, onSizeBt);
 

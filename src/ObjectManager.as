@@ -13,6 +13,8 @@ import items.Item;
 import items.ItemText;
 import items.TimePanel;
 
+import src2.AnimateObject;
+
 import src2.Consts;
 
 import src2.Utils;
@@ -202,7 +204,7 @@ public class ObjectManager
 
 
     ////////////////MOVE
-    public static function moveLeft(ctrlKey:Boolean, shift:Boolean):void
+    public static function moveLeft(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
         if(target)
         {
@@ -211,6 +213,8 @@ public class ObjectManager
                 d = 1;
             else if(shift)
                 d = 20;
+            else if(alt)
+                d = target.x - target.width/2;
 
             target.x -= d;
             target.changed;
@@ -218,7 +222,7 @@ public class ObjectManager
         }
     }
 
-    public static function moveUp(ctrlKey:Boolean, shift:Boolean):void
+    public static function moveUp(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
         if(target)
         {
@@ -227,6 +231,8 @@ public class ObjectManager
                 d = 1;
             else if(shift)
                 d = 20;
+            else if(alt)
+                d = target.y - target.height/2;
 
             target.y -= d;
             target.changed;
@@ -234,7 +240,7 @@ public class ObjectManager
         }
     }
 
-    public static function moveDown(ctrlKey:Boolean, shift:Boolean):void
+    public static function moveDown(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
         if(target)
         {
@@ -243,6 +249,9 @@ public class ObjectManager
                 d = 1;
             else if(shift)
                 d = 20;
+            else if(alt)
+                d = (Main.target.h - target.height/2) - target.y;
+
 
             target.y += d;
             target.changed;
@@ -250,7 +259,7 @@ public class ObjectManager
         }
     }
 
-    public static function moveRight(ctrlKey:Boolean, shift:Boolean):void
+    public static function moveRight(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
         if(target)
         {
@@ -259,6 +268,8 @@ public class ObjectManager
                 d = 1;
             else if(shift)
                 d = 20;
+            else if(alt)
+                d = (Main.target.w - target.width/2) - target.x;
 
             target.x += d;
             target.changed;
@@ -427,6 +438,7 @@ public class ObjectManager
 
     public static function get selected():Boolean
     {
+        trace('selected', target)
         if(target == null)
             return false;
         else
@@ -434,5 +446,79 @@ public class ObjectManager
     }
 
 
+    public static function ResetItem():void
+    {
+        if(target)
+        {
+            var scale:Number = 1;
+
+            if(target is ItemText)
+                scale = 1/ItemText.QUALITY;
+
+            target.scaleX = scale;
+            target.scaleY = scale;
+            target.rotation = 0;
+            target.updateTransform();
+            target.changed;
+        }
+    }
+
+    public static function selectByTab(ctrlKey:Boolean):void
+    {
+        var list:Array = Main.animationControl.visibleList;
+
+        if(list.length == 0)
+                return;
+
+        var i:int = 0;
+
+        if(target)
+        {
+           i = Utils.getObjectIndex(list, target.animation);
+
+            trace('A',i);
+
+            if(ctrlKey)
+                i--;
+            else
+                i++;
+
+            trace(i);
+
+            if(i<0)
+                i = list.length - 1;
+            else if(i >= list.length)
+                i = 0;
+
+            trace(i);
+        }
+
+        trace('B',i);
+
+        target = AnimateObject(list[i]).object;
+
+    }
+
+    public static function scaleUp():void
+    {
+        if(target)
+        {
+            target.scaleX *= 1.1;
+            target.scaleY *= 1.1;
+            target.updateTransform();
+            target.changed;
+        }
+    }
+
+    public static function scaleDown():void
+    {
+        if(target)
+        {
+            target.scaleX *= .9;
+            target.scaleY *= .9;
+            target.updateTransform();
+            target.changed;
+        }
+    }
 }
 }

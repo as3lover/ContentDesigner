@@ -295,7 +295,7 @@ public class Utils
             return;
         }
 
-        if(Main.panel.visible ||Main.timePanel.visible)
+        if(Main.panel.visible ||Main.timePanel.visible || (Main._progress && Main._progress.visible))
         {
             if(Main.snapList)
                 Main.snapList.visible = false;

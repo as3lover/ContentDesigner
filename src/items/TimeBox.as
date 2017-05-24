@@ -91,6 +91,11 @@ public class TimeBox extends Sprite
 
     public function set time(seconds:Number):void
     {
+        if(time == seconds)
+                return;
+        else
+            trace(time, seconds);
+
         var value:String = Utils.timeFormat(seconds*1000);
 
         if(value.length == 7)

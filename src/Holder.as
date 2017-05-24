@@ -148,7 +148,7 @@ public class Holder extends Sprite
 
         var x:Number = mouseX;
         var y:Number = mouseY;
-        var dis:int = 35;
+        var dis:int = 22;
 
         _curser.type = Cursor.NORMAL;
 

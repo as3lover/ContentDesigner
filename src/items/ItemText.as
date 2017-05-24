@@ -16,7 +16,7 @@ import src2.Utils;
 public class ItemText extends Item
 {
     private var _text:String;
-    private const quality:Number = 2;
+    public static const QUALITY:Number = 2;
     private var _sprite:Sprite;
     private var _formats:Array;
     private var _defaultFormat:TextFormat;
@@ -31,7 +31,7 @@ public class ItemText extends Item
         super(removeAnimataion, null);
 
         _text = '';
-        scaleX = scaleY = 1/quality;
+        scaleX = scaleY = 1/QUALITY;
         if(add)
             Main.dragManager.target.addChild(this);
 
@@ -123,16 +123,16 @@ public class ItemText extends Item
 
     private function update():void
     {
-        bitmap = Main.textEditor.getBitmaap(quality);
+        bitmap = Main.textEditor.getBitmaap(QUALITY);
         bitmap.scaleX = 1.15;
         bitmap.scaleY = 1.15;
         bitmap.x = - bitmap.width/2;
         bitmap.y = - bitmap.height/2;
 
-        _sprite.x =  bitmap.x - (10*quality);
-        _sprite.y =  bitmap.y - (10*quality);
-        _sprite.width = bitmap.width + (20*quality);
-        _sprite.height = bitmap.height + (20*quality);
+        _sprite.x =  bitmap.x - (10*QUALITY);
+        _sprite.y =  bitmap.y - (10*QUALITY);
+        _sprite.width = bitmap.width + (20*QUALITY);
+        _sprite.height = bitmap.height + (20*QUALITY);
         addChild(_sprite);
 
         _lines =  Main.textEditor.lines;

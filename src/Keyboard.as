@@ -50,6 +50,11 @@ public class Keyboard
             _ctrl = false;
         if(e.keyCode == 16)
             _shift = false;
+        if(e.keyCode == 9)
+        {
+            e.stopImmediatePropagation();
+            e.stopPropagation()
+        }
     }
 
     private function onKeyDown(e:KeyboardEvent):void
@@ -118,27 +123,27 @@ public class Keyboard
         {
             case 37://Left Arrow
                     if(ObjectManager.selected)
-                        ObjectManager.moveLeft(e.ctrlKey, e.shiftKey);
+                        ObjectManager.moveLeft(e.ctrlKey, e.shiftKey, e.altKey);
                     else
                         Main.timeLine.stepBackward(e.ctrlKey, e.shiftKey);
                 break;
 
             case 39://Right Arrow
                 if(ObjectManager.selected)
-                    ObjectManager.moveRight(e.ctrlKey, e.shiftKey);
+                    ObjectManager.moveRight(e.ctrlKey, e.shiftKey, e.altKey);
                 else
                 Main.timeLine.stepForward(e.ctrlKey, e.shiftKey);
                 break;
 
             case 38://Up
-                ObjectManager.moveUp(e.ctrlKey, e.shiftKey);
+                ObjectManager.moveUp(e.ctrlKey, e.shiftKey, e.altKey);
                 break;
 
             case 40://Down
-                ObjectManager.moveDown(e.ctrlKey, e.shiftKey);
+                ObjectManager.moveDown(e.ctrlKey, e.shiftKey, e.altKey);
                 break;
 
-            case 32://Down
+            case 32://Space
                 Main.timeLine.onPausePlayBtn();
                 break;
 
@@ -177,25 +182,42 @@ public class Keyboard
                     FileManager.openFile();
                 break;
 
+            case 78:// ctrl + N
+                if(e.ctrlKey)
+                    FileManager.newFile();
+                break;
 
             case 13:// Enter
                 ObjectManager.EnterKey();
                 break;
 
             case 187:// Plus: +/=
-                Main.timeLine.zoom(+.1);
+                    trace('+')
+                    if(ObjectManager.selected)
+                          ObjectManager.scaleUp();
+                    else
+                        Main.timeLine.zoom(+.1);
                 break;
 
             case 189:// Mines: -/_
-                Main.timeLine.zoom(-.1);
+                if(ObjectManager.selected)
+                    ObjectManager.scaleDown();
+                else
+                    Main.timeLine.zoom(-.1);
                 break;
 
             case 107:// Plus: +
-                Main.timeLine.zoom(+.1);
+                if(ObjectManager.selected)
+                    ObjectManager.scaleUp();
+                else
+                    Main.timeLine.zoom(+.1);
                 break;
 
             case 109:// Mines: -
-                Main.timeLine.zoom(-.1);
+                if(ObjectManager.selected)
+                    ObjectManager.scaleDown();
+                else
+                    Main.timeLine.zoom(-.1);
                 break;
 
             case 35:// End
@@ -254,6 +276,21 @@ public class Keyboard
                     ObjectManager.MirorX();
                 if(e.shiftKey)
                     ObjectManager.MirorY();
+                break;
+
+            case 48:// 0 >> reset scale
+                if(e.ctrlKey)
+                    ObjectManager.ResetItem();
+
+            case 96:// Numpad 0 >> reset scale
+                if(e.ctrlKey)
+                    ObjectManager.ResetItem();
+                break;
+
+            case 9:// tab
+                    ObjectManager.selectByTab(e.ctrlKey);
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
                 break;
         }
     }

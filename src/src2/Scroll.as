@@ -128,5 +128,10 @@ public class Scroll extends Sprite
         visible = false;
         _object.y = Y;
     }
+
+    public override function set visible(value:Boolean):void
+    {
+        super.visible = value;
+    }
 }
 }

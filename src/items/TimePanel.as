@@ -69,6 +69,9 @@ public class TimePanel extends Sprite
 
         _item = item;
 
+        _start.removeEventListener('edited', change);
+        _stop.removeEventListener('edited', change);
+
         _start.time = item.animation.startTime;
         _stop.time = item.animation.stopTime;
 

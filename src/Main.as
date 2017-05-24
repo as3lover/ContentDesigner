@@ -273,6 +273,8 @@ public class Main extends Sprite
         addChild(_progress);
 
         //LoadFile.load();
+        tabEnabled = false;
+        tabChildren = false;
     }
 
 
