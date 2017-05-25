@@ -132,7 +132,7 @@ public class Keyboard
                 if(ObjectManager.selected)
                     ObjectManager.moveRight(e.ctrlKey, e.shiftKey, e.altKey);
                 else
-                Main.timeLine.stepForward(e.ctrlKey, e.shiftKey);
+                    Main.timeLine.stepForward(e.ctrlKey, e.shiftKey);
                 break;
 
             case 38://Up
@@ -288,9 +288,14 @@ public class Keyboard
                 break;
 
             case 9:// tab
-                    ObjectManager.selectByTab(e.ctrlKey);
-                    e.stopImmediatePropagation();
-                    e.stopPropagation();
+                ObjectManager.selectByTab(e.ctrlKey);
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                break;
+
+            case 65:// ctrl + a
+                    if(e.ctrlKey)
+                        ObjectManager.selectAll();
                 break;
         }
     }

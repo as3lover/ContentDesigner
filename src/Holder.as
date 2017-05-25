@@ -109,6 +109,7 @@ public class Holder extends Sprite
 
     public function set selectList(selectList:Array):void
     {
+        trace('set selectList')
         _selectList = selectList;
         trace(_selectList);
 
@@ -135,6 +136,7 @@ public class Holder extends Sprite
         ////trace('disable holder');
         Main.STAGE.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 
+        trace('disable')
         _selectList = null;
         _curser.type = Cursor.NORMAL;
         _over = false;
@@ -174,6 +176,7 @@ public class Holder extends Sprite
 
     public function update():void
     {
+        trace('update', _selectList)
         if(target == null && _selectList == null)
                 return;
 
@@ -294,7 +297,7 @@ public class Holder extends Sprite
     {
         trace('setPosition1')
 
-        if(!target || !target.parent)
+        if((!target || !target.parent) && !_selectList)
             target = null;
 
 

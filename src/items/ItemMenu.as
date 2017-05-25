@@ -98,7 +98,17 @@ public class ItemMenu
 
     private function Show(e:ContextMenuEvent):void
     {
-        Item(e.contextMenuOwner).Show();
+        if(!ObjectManager.isInSelectList(Item(e.contextMenuOwner)))
+            Item(e.contextMenuOwner).Show();
+        else
+        {
+            var list:Array = ObjectManager.selectList;
+            var length:int = list.length;
+            for(var i:int = 0; i<length; i++)
+            {
+                Item(list[i]).Show();
+            }
+        }
     }
 
     private function subMotion(motion:ContextMenuItem, type:String, checked:Boolean = false):void
@@ -118,7 +128,17 @@ public class ItemMenu
 
     private function Hide(e:ContextMenuEvent):void
     {
-        Item(e.contextMenuOwner).Hide();
+        if(!ObjectManager.isInSelectList(Item(e.contextMenuOwner)))
+            Item(e.contextMenuOwner).Hide();
+        else
+        {
+            var list:Array = ObjectManager.selectList;
+            var length:int = list.length;
+            for(var i:int = 0; i<length; i++)
+            {
+                Item(list[i]).Hide();
+            }
+        }
     }
 
     private function HideNew(e:ContextMenuEvent):void

@@ -274,6 +274,19 @@ public class AnimationControl
         return newList;
     }
 
+    public function get visibleItems():Array
+    {
+        var newList:Array = new Array();
+        _length = _list.length;
+        for(var i:int = 0; i<_length; i++)
+        {
+            if(AnimateObject(_list[i]).object.visible)
+                newList.push(_list[i].object);
+        }
+
+        return newList;
+    }
+
     public function hideAll():void
     {
         var list:Array = visibleList;

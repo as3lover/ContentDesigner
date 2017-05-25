@@ -70,7 +70,9 @@ public class Item extends Sprite
 
     private function rightClick(event:MouseEvent):void
     {
-        trace(x,y,rotation,scaleX,scaleY,'-', animation.showDuration, animation.hideDuration, animation.typingEndTime, animation.startTime, animation.stopTime)
+        if(ObjectManager.isInSelectList(this))
+                return;
+
         ItemMenu.currentItem = this;
         changed;
         ObjectManager.target = this;
@@ -283,39 +285,53 @@ public class Item extends Sprite
     public function Hide():void
     {
         dispatchEvent(new Event(Event.CLEAR));
-        ObjectManager.target = this;
+        //ObjectManager.target = this;
         alpha = 1;
     }
 
     public function Show():void
     {
         dispatchEvent(new Event('startTime'));
-        ObjectManager.target = this;
+        //ObjectManager.target = this;
         alpha = 1;
         //preview();
     }
 
     public function HideNew():void
     {
+        var list:Array;
+        if(ObjectManager.isInSelectList(this))
+            list = ObjectManager.selectList;
+        else
+            list = [this];
+
         Main.hightLight(TimeLine);
         stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
         function onUp(e:MouseEvent):void
         {
             Main.hightLight();
             stage.removeEventListener(MouseEvent.MOUSE_UP, onUp);
-            Hide();
+            for(var i:int = 0; i<list.length; i++)
+                Item(list[i]).Hide();
         }
     }
 
     public function ShowNew():void
     {
+        var list:Array;
+        if(ObjectManager.isInSelectList(this))
+            list = ObjectManager.selectList;
+        else
+            list = [this];
+
         Main.hightLight(TimeLine);
         stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
         function onUp(e:MouseEvent):void
         {
             Main.hightLight();
             stage.removeEventListener(MouseEvent.MOUSE_UP, onUp);
-            Show();
+            for(var i:int = 0; i<list.length; i++)
+                Item(list[i]).Show();
         }
     }
 

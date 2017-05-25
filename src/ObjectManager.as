@@ -73,7 +73,7 @@ public class ObjectManager
 
     public static function deselect():void
     {
-        if(target)
+        if(target || _selectList)
             target = null;
     }
 
@@ -145,6 +145,15 @@ public class ObjectManager
 
     public static function set selectList(list:Array):void
     {
+        if(list.length == 0)
+                return;
+        else if(list.length == 1)
+        {
+            target = list[0];
+            return;
+        }
+
+        deselect();
         _selectList = list;
         _transformer.selectList = list;
          /*
@@ -206,36 +215,85 @@ public class ObjectManager
     ////////////////MOVE
     public static function moveLeft(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
+        if(!target && !_selectList)
+            return;
+
+        var d:int = 5;
+        if(ctrlKey)
+            d = 1;
+        else if(shift)
+            d = 20;
+
         if(target)
         {
-            var d:int = 5;
-            if(ctrlKey)
-                d = 1;
-            else if(shift)
-                d = 20;
-            else if(alt)
+            if(alt)
                 d = target.x - target.width/2;
 
-            target.x -= d;
-            target.changed;
+            moveObject(target, 'x', target.x - d);
+            _transformer.update();
+        }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+
+            if(alt)
+            {
+                d = list[0].x - list[0].width/2;
+                for(var i:int = 1; i<length; i++)
+                {
+                    d = Math.min(d, list[i].x - list[i].width/2)
+                }
+            }
+
+            for(i = 0; i<length; i++)
+            {
+                moveObject(list[i], 'x', list[i].x - d)
+            }
+
             _transformer.update();
         }
     }
 
     public static function moveUp(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
+        if(!target && !_selectList)
+            return;
+
+        var d:int = 5;
+        if(ctrlKey)
+            d = 1;
+        else if(shift)
+            d = 20;
+
         if(target)
         {
-            var d:int = 5;
-            if(ctrlKey)
-                d = 1;
-            else if(shift)
-                d = 20;
-            else if(alt)
+            if(alt)
                 d = target.y - target.height/2;
 
-            target.y -= d;
-            target.changed;
+            moveObject(target, 'y', target.y - d);
+            _transformer.update();
+        }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+
+            if(alt)
+            {
+                d = list[0].y - list[0].height/2;
+
+                for(var i:int = 1; i<length; i++)
+                {
+                    d = Math.min(d, list[i].y - list[i].height/2)
+                }
+            }
+
+            for(i = 0; i<length; i++)
+            {
+                moveObject(list[i], 'y', list[i].y - d)
+            }
+
             _transformer.update();
         }
     }
@@ -257,24 +315,103 @@ public class ObjectManager
             target.changed;
             _transformer.update();
         }
+
+
+
+
+
+
+
+
+
+
+        if(!target && !_selectList)
+            return;
+
+        var d:int = 5;
+        if(ctrlKey)
+            d = 1;
+        else if(shift)
+            d = 20;
+
+        if(target)
+        {
+            if(alt)
+                d = (Main.target.h - target.height/2) - target.y;
+
+            moveObject(target, 'y', target.y + d);
+            _transformer.update();
+        }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+
+            if(alt)
+            {
+                d = (Main.target.h - list[0].height/2) - list[0].y;
+
+                for(var i:int = 1; i<length; i++)
+                {
+                    d = Math.min(d, (Main.target.h - list[i].height/2) - list[i].y)
+                }
+            }
+
+            for(i = 0; i<length; i++)
+            {
+                moveObject(list[i], 'y', list[i].y + d)
+            }
+
+            _transformer.update();
+        }
     }
 
     public static function moveRight(ctrlKey:Boolean, shift:Boolean, alt:Boolean):void
     {
+        if(!target && !_selectList)
+                return;
+
+        var d:int = 5;
+        if(ctrlKey)
+            d = 1;
+        else if(shift)
+            d = 20;
+
         if(target)
         {
-            var d:int = 5;
-            if(ctrlKey)
-                d = 1;
-            else if(shift)
-                d = 20;
-            else if(alt)
+            if(alt)
                 d = (Main.target.w - target.width/2) - target.x;
 
-            target.x += d;
-            target.changed;
+            moveObject(target, 'x', target.x + d);
             _transformer.update();
         }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+
+            if(alt)
+            {
+                d = (Main.target.w - list[0].width/2) - list[0].x;
+                for(var i:int = 1; i<length; i++)
+                {
+                    d = Math.min(d, (Main.target.w - list[i].width/2) - list[i].x)
+                }
+            }
+
+            for(i = 0; i<length; i++)
+            {
+                moveObject(list[i], 'x', list[i].x + d)
+            }
+
+            _transformer.update();
+        }
+    }
+
+    public static function moveObject(item:Item, prop:String, value:Number):void
+    {
+        item[prop] = value;
+        item.changed;
     }
     //////////////////////////////
     //////////////////////////////
@@ -351,6 +488,15 @@ public class ObjectManager
         {
             removeObject(target);
         }
+        else if(_selectList)
+        {
+            var list:Array = _selectList;
+            var length:int = list.length;
+            for(var i:int = 0; i<length; i++)
+            {
+                removeObject(Item(list[i]));
+            }
+        }
     }
 
     private static function removeObject(obj:Item):void
@@ -418,28 +564,31 @@ public class ObjectManager
 
     public static function End():void
     {
-        Item.setIndexByUser(Consts.ARRANGE.BACK,target);
+        if(target)
+            Item.setIndexByUser(Consts.ARRANGE.BACK,target);
     }
 
     public static function Home():void
     {
-        Item.setIndexByUser(Consts.ARRANGE.FRONT,target);
+        if(target)
+            Item.setIndexByUser(Consts.ARRANGE.FRONT,target);
     }
 
     public static function PageDown():void
     {
-        Item.setIndexByUser(Consts.ARRANGE.BACK_LEVEL,target);
+        if(target)
+            Item.setIndexByUser(Consts.ARRANGE.BACK_LEVEL,target);
     }
 
     public static function PageUp():void
     {
-        Item.setIndexByUser(Consts.ARRANGE.FRONT_LEVEL,target);
+        if(target)
+            Item.setIndexByUser(Consts.ARRANGE.FRONT_LEVEL,target);
     }
 
     public static function get selected():Boolean
     {
-        trace('selected', target)
-        if(target == null)
+        if(target == null && _selectList == null)
             return false;
         else
             return true;
@@ -519,6 +668,25 @@ public class ObjectManager
             target.updateTransform();
             target.changed;
         }
+    }
+
+    public static function selectAll():void
+    {
+        selectList = Main.animationControl.visibleItems;
+    }
+
+    public static function isInSelectList(item:Item):Boolean
+    {
+        if(!_selectList || Utils.getObjectIndex(_selectList, item) == -1)
+            return false;
+        else
+            return true;
+
+    }
+
+    public static function get selectList():Array
+    {
+        return _selectList;
     }
 }
 }
