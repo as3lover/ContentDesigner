@@ -77,6 +77,7 @@ public class FileManager
 
     public static function saveFile():void
     {
+        Main.toExport = false;
         ObjectManager.deselect();
 
         if(file)
@@ -85,7 +86,20 @@ public class FileManager
             saveAsFile();
     }
 
+    public static function exportFile():void
+    {
+        Main.toExport = true;
+        saveAs();
+    }
+
+
     public static function saveAsFile():void
+    {
+        Main.toExport = false;
+        saveAs();
+    }
+
+    private static function saveAs():void
     {
         ObjectManager.deselect()//trace;
 

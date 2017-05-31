@@ -45,6 +45,7 @@ public class Main extends Sprite
     public static var quiz:Quiz;
     public static const target:Object = {x:20, y:40, w:600, h:337};
     public static var loadedTime:Number;
+    public static var toExport:Boolean;
 
     public function Main()
     {

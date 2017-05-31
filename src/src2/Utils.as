@@ -3,6 +3,7 @@
  */
 package src2
 {
+import com.adobe.images.PNGEncoder;
 import com.greensock.TweenMax;
 import com.greensock.plugins.ColorTransformPlugin;
 import com.greensock.plugins.TintPlugin;
@@ -18,6 +19,10 @@ import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
+import flash.events.OutputProgressEvent;
+import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -25,6 +30,7 @@ import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
+import flash.utils.ByteArray;
 
 public class Utils
 {
@@ -159,7 +165,8 @@ public class Utils
 
     public static function textBoxToBitmap(textBox, quality:Number = 3):Bitmap
     {
-        Main.STAGE.focus = null;
+        if(Main.STAGE)
+            Main.STAGE.focus = null;
 
         if(textBox.textWidth < 1 || textBox.textHeight < 1)
         {
@@ -400,6 +407,56 @@ public class Utils
         var item:Object = list[index1];
         list[index1] = list[index2];
         list[index2] = item;
+    }
+
+
+    ////////////////////////////////////////
+
+    public static function saveBitmap(bitmap:DisplayObject, path:String, after:Function):void
+    {
+        var scaleX:Number = bitmap.scaleX;
+        var scaleY:Number = bitmap.scaleY;
+        var rotation:Number = bitmap.rotation;
+
+        bitmap.rotation = 0;
+        bitmap.scaleX = bitmap.scaleY = 1;
+
+        var bytes:ByteArray = bitmapToBinary(bitmap);
+
+        bitmap.scaleX = scaleX;
+        bitmap.scaleY = scaleY;
+        bitmap.rotation = rotation;
+
+        var file:File = new File(path);
+        var myStream:FileStream = new FileStream();
+        myStream.openAsync(file, FileMode.WRITE);
+        myStream.addEventListener(OutputProgressEvent.OUTPUT_PROGRESS, PROGRESS);
+        myStream.addEventListener(Event.CLOSE, CLOSE);
+        myStream.writeBytes(bytes);
+        myStream.close();
+
+        function PROGRESS(e)
+        {
+            trace('PROGRESS', e);
+        }
+
+        function CLOSE(e)
+        {
+            trace('CLOSE', e);
+            after();
+        }
+    }
+
+    private static function bitmapToBinary(bitmap:DisplayObject):ByteArray
+    {
+        return PNGEncoder.encode(bitmapToData(bitmap))
+    }
+
+    private static function bitmapToData(bit:DisplayObject):BitmapData
+    {
+        var data:BitmapData = new BitmapData(bit.width, bit.height, true, 0);
+        data.draw(bit);
+        return data;
     }
 }
 }

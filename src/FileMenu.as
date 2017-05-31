@@ -11,11 +11,13 @@ import flash.events.Event;
 	public class FileMenu
 	{
 		private var _contextMenu:NativeMenu;
+        private var _stage:Stage;
+
         private const NEW:String = 'New';
         private const OPEN:String = 'Open ...';
         private const SAVE:String = 'Save';
         private const SAVE_AS:String = 'Save As ...';
-        private var _stage:Stage;
+        private const EXPORT:String = 'Export...';
 
 		public function FileMenu(stage:Stage, target:DisplayObject)
 		{
@@ -32,6 +34,7 @@ import flash.events.Event;
             addItem(menu, OPEN);
             addItem(menu, SAVE);
             addItem(menu, SAVE_AS);
+            addItem(menu, EXPORT);
             return menu;
         }
 
@@ -63,6 +66,10 @@ import flash.events.Event;
 
                 case SAVE_AS:
                     FileManager.saveAsFile();
+                    break;
+
+                case EXPORT:
+                    FileManager.exportFile();
                     break;
 
             }

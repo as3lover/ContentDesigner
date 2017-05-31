@@ -41,7 +41,7 @@ public class Item extends Sprite
     private const distance:Number = 100;
     private var _path:String;
 
-    private var _number:int = -1;
+    protected var _number:int = -1;
 
     public var _index:int;
     protected var _bitmap:Bitmap;
@@ -50,6 +50,7 @@ public class Item extends Sprite
     private var _fileName:String;
     public var animation:AnimateObject;
     public var _noExist:Boolean;
+    public static const BITMAP_SCALE:Number = .5;
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
@@ -441,8 +442,8 @@ public class Item extends Sprite
         function onComplete (event:Event):void
         {
             var bit:Bitmap = Bitmap(LoaderInfo(event.target).content);
-            bit.scaleX = .5;
-            bit.scaleY= .5;
+            bit.scaleX = Item.BITMAP_SCALE;
+            bit.scaleY= Item.BITMAP_SCALE;
             bit.x = -bit.width/2;
             bit.y = -bit.height/2;
             bitmap = bit;

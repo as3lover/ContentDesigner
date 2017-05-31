@@ -229,8 +229,7 @@ public class AnimationControl
     private function onCompleteSound(event:Event):void
     {
         SaveFile.save(saveObject, Utils.time);
-
-
+        Main.toExport = false;
         trace('============ FINISH SAVING ===============');
 
     }

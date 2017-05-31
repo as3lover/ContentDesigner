@@ -3,6 +3,7 @@
  */
 package items
 {
+import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextFormat;
@@ -25,6 +26,7 @@ public class ItemText extends Item
     public var typeEffect:Boolean = true;
     private var _toEdit:Boolean;
     private var _firstTime:Number;
+    private var _savedPng:String;
 
     public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true, keyBoard:Boolean = false):void
     {
@@ -156,9 +158,22 @@ public class ItemText extends Item
     public override function get all():Object
     {
         var obj:Object = super.all;
-        obj.text = _text;
-        obj.formats = _formats;
+
         obj.type = 'text';
+
+        if(Main.toExport)
+        {
+            obj.lines = _lines;
+            obj.fileName = _savedPng;
+            obj.scaleX *= (bitmap.scaleX / Item.BITMAP_SCALE);
+            obj.scaleY *= (bitmap.scaleY / Item.BITMAP_SCALE);
+        }
+        else
+        {
+            obj.text = _text;
+            obj.formats = _formats;
+        }
+
         return obj;
     }
 
@@ -179,7 +194,13 @@ public class ItemText extends Item
     ///////////////// save //////////////////////////
     public override function save(dir:String):void
     {
-        dispatchComplete();
+        if(Main.toExport)
+        {
+            _savedPng ='image_' + String(_number)+'.pic';
+            Utils.saveBitmap(bitmap, dir+'/'+ _savedPng,dispatchComplete);
+        }
+        else
+            dispatchComplete();
     }
     ///////////////// move //////////////////////////
     public override function move():void

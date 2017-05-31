@@ -202,8 +202,8 @@ public class DragManager extends Sprite
             point = _target.globalToLocal(point);
             _moveBitmap.x = point.x;
             _moveBitmap.y = point.y;
-            _moveBitmap.scaleX = .5;
-            _moveBitmap.scaleY = .5;
+            _moveBitmap.scaleX = Item.BITMAP_SCALE;
+            _moveBitmap.scaleY = Item.BITMAP_SCALE;
         }
     }
 
@@ -223,8 +223,8 @@ public class DragManager extends Sprite
         _moveBitmap.smoothing = true;
         _moveBitmap.alpha = .8;
 
-        _moveBitmap.scaleX = .5;
-        _moveBitmap.scaleY= .5;
+        _moveBitmap.scaleX = Item.BITMAP_SCALE;
+        _moveBitmap.scaleY = Item.BITMAP_SCALE;
     }
     private function dragOverHandler(event:NativeDragEvent):void
     {

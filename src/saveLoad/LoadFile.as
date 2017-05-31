@@ -29,9 +29,11 @@ public class LoadFile
         Main._progress.percent = 0;
         Main._progress.text = 'Loading...\n' + file.nativePath;
         setTimeout(loadObject2,10, file, time, json);
+        trace('loadObject')
     }
     private static function loadObject2(file:File, time:Number = 0, json:Boolean = false):void
     {
+        trace('loadObject2')
         var fileStream:FileStream = new FileStream();
         fileStream.open(file, FileMode.READ);
         var str:String = fileStream.readUTFBytes(file.size);
@@ -42,6 +44,7 @@ public class LoadFile
         }
         else
         {
+            trace('stream')
             var myStream:FileStream = new FileStream();
             myStream.addEventListener(Event.COMPLETE, onCompleteLoad);
             myStream.openAsync(file, FileMode.READ);
@@ -49,6 +52,7 @@ public class LoadFile
 
         function onCompleteLoad(evt:Event):void
         {
+            trace('onCompleteLoad')
             afterLoad(evt.target.readObject(), time);
             evt.target.close();
         }
@@ -97,6 +101,10 @@ public class LoadFile
 
     private static function afterLoad(object:Object, time:Number = 0):void
     {
+        for (var ss:String in object)
+        {
+            trace(ss)
+        }
         trace('afterLoad on LoadFile')
         Main.topics.reset();
 
@@ -143,7 +151,7 @@ public class LoadFile
                 continue;
             }
 
-            var holder:Item
+            var holder:Item;
 
             if(obj.type == 'text')
                 holder = new ItemText(Main.removeAnimation);
