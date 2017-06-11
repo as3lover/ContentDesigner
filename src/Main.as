@@ -213,8 +213,9 @@ public class Main extends Sprite
         var bit:bitmapBrowser = new bitmapBrowser();
         function Back(event:ContextMenuEvent):void
         {
-            bit.addEventListener(bitmapBrowser.LOADED, loadedBack);
-            bit.chooseFile();
+            dragManager.loadNewBack();
+            //bit.addEventListener(bitmapBrowser.LOADED, loadedBack);
+            // bit.chooseFile();
         }
         function loadedBack(e):void
         {

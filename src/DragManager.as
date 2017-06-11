@@ -1,9 +1,5 @@
 package {
 
-import components.ColorPicker;
-
-import fl.events.ColorPickerEvent;
-
 import flash.desktop.ClipboardFormats;
 import flash.desktop.NativeDragManager;
 import flash.display.Bitmap;
@@ -13,25 +9,24 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
-import flash.events.MouseEvent;
 import flash.events.NativeDragEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
-import flash.geom.ColorTransform;
 import flash.geom.Point;
+import flash.net.FileFilter;
 import flash.utils.ByteArray;
 import com.greensock.layout.*;
 
 import flash.utils.setTimeout;
 
 import items.Item;
-
 import org.log5f.air.extensions.mouse.NativeMouse;
 import org.log5f.air.extensions.mouse.events.NativeMouseEvent;
 
-import src2.ColorSelector;
+import saveLoad.saveItem;
 
+import src2.ColorSelector;
 import src2.Utils;
 
 public class DragManager extends Sprite
@@ -48,6 +43,13 @@ public class DragManager extends Sprite
     private var _width:int;
     private var _height:int;
     private var _color:uint;
+    private var currentFile:File;
+    private var _nativeMouse:NativeMouse;
+    private var _inTarget:Boolean;
+    private var _image:Bitmap;
+    public const BACK_NAME:String = 'back.pic';
+    private var _path:String;
+    private var _pathHolder:Object={};
 
     public function DragManager(x:int, y:int, width:int, height:int, onAddObject:Function, stage:Stage, removeAnimation:Function)
     {
@@ -114,10 +116,6 @@ public class DragManager extends Sprite
         return _color;
     }
 
-    private var currentFile:File;
-    private var _nativeMouse:NativeMouse;
-    private var _inTarget:Boolean;
-    private var _image:Bitmap;
 
     private function dragEnterHandler(event:NativeDragEvent):void
     {
@@ -322,6 +320,8 @@ public class DragManager extends Sprite
                 _target.removeChildAt(i);
             }
         }
+
+        setBack(null);
     }
 
     public function setBack(image:Bitmap):void
@@ -334,6 +334,7 @@ public class DragManager extends Sprite
         else
         {
             _image.visible = false;
+            _path = null;
             return;
         }
 
@@ -341,6 +342,61 @@ public class DragManager extends Sprite
 
         var area:AutoFitArea = new AutoFitArea(_target, 0, 0, _width, _height);
         area.attach(_image, {scaleMode:ScaleMode.PROPORTIONAL_OUTSIDE, crop:true});
+    }
+
+    public function loadBack(path:String):void
+    {
+        _path = path;
+        Utils.loadBitmap(path, setBack);
+    }
+
+    ////////////////////////////
+    public function get back():Bitmap
+    {
+        if(_image && _image.visible)
+            return _image;
+        else
+            return null;
+    }
+    ///////////////////////////////
+    public function loadNewBack():void
+    {
+        var file:File = new File();
+        file.addEventListener(Event.SELECT, onSelect);
+        file.browse([new FileFilter("Images (*.jpg, *.jpeg, *.png, *.JPG)", "*.jpg;*.jpeg;*.png; *.JPG")]);
+
+        function onSelect(e:Event):void
+        {
+            loadBack(file.nativePath)
+        }
+    }
+
+
+    //////////////////////
+    public function saveBack(dir:String,onComplete:Function):void
+    {
+        if(!back)
+        {
+            setTimeout(onComplete,5);
+            return;
+        }
+
+        saveItem.copyAndRename(_path, dir, BACK_NAME, _pathHolder, after);
+        function after():void
+        {
+            _path = _pathHolder.currentPath;
+            setTimeout(move,5);
+        }
+
+        function move():void
+        {
+            saveItem.move(_pathHolder.currentPath, _pathHolder.newPath, after);
+            function after():void
+            {
+                _path = _pathHolder.newPath;
+                setTimeout(onComplete,5);
+            }
+        }
     }
 }
 }

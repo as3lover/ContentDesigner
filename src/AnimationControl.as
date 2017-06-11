@@ -94,6 +94,11 @@ public class AnimationControl
     public function loadItems():void
     {
         var len:int = _list.length;
+        if(!len)
+        {
+            Main._progress.percent = 1;
+            return;
+        }
         var i:int = 0;
         load()
 
@@ -156,6 +161,9 @@ public class AnimationControl
 
         object.snapList = Main.snapList.object;
 
+        if(Main.dragManager.back)
+                object.back = Main.dragManager.BACK_NAME;
+
         return object;
     }
 
@@ -204,8 +212,11 @@ public class AnimationControl
             {
                 trace('complete move');
                 trace('=========================');
+                Main._progress.percent = 0;
+                Main._progress.text = 'Saving Sound...'
                 Main.timeLine.addEventListener(Event.COMPLETE, onCompleteSound);
-                Main.timeLine.saveSound(_savedDirectory);
+                //Main.timeLine.saveSound(_savedDirectory);
+                setTimeout(Main.timeLine.saveSound, 20, _savedDirectory);
                 return;
             }
 
@@ -228,6 +239,22 @@ public class AnimationControl
 
     private function onCompleteSound(event:Event):void
     {
+        Main._progress.percent = .33;
+        Main._progress.text = 'Saving Back...'
+        if(Main.dragManager.back)
+        {
+            //Main.dragManager.saveBack(completeSaving);
+            setTimeout(Main.dragManager.saveBack, 20, _savedDirectory, completeSaving);
+        }
+        else
+            completeSaving();
+
+    }
+
+    private function completeSaving():void
+    {
+        Main._progress.percent = .66;
+        Main._progress.text = 'Saving Project File...';
         SaveFile.save(saveObject, Utils.time);
         Main.toExport = false;
         trace('============ FINISH SAVING ===============');

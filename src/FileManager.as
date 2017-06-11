@@ -14,6 +14,7 @@ import src2.Utils;
 public class FileManager
 {
     private static var _fileForSave:FileForSave = new FileForSave();
+    private static var _fileForSavePDF:FileForSave = new FileForSave('pdf', ['pdf'], 'summary', 'Export PDF');
 
     private static var _file:File;
     public static var folder:File = File.documentsDirectory;
@@ -50,7 +51,7 @@ public class FileManager
             return
         }
 
-        var newFile:File
+        var newFile:File;
 
         if(file)
             newFile = FileManager.file.clone();
@@ -90,6 +91,25 @@ public class FileManager
     {
         Main.toExport = true;
         saveAs();
+    }
+
+    public static function exportPDF():void
+    {
+        _fileForSavePDF.addEventListener(Event.COMPLETE, savePDF);
+        _fileForSavePDF.Select();
+    }
+
+    private static function savePDF(event:Event):void
+    {
+        _fileForSavePDF.removeEventListener(Event.COMPLETE, savePDF);
+
+        if(Utils.pathIsWrong(_fileForSavePDF.file.nativePath))
+        {
+            Main.alert('wrongFile');
+            return;
+        }
+
+        PdfGenerator.start(_fileForSavePDF.file);
     }
 
 

@@ -159,17 +159,21 @@ public class ItemText extends Item
     {
         var obj:Object = super.all;
 
-        obj.type = 'text';
 
         if(Main.toExport)
         {
-            obj.lines = _lines;
+            if(animation.typingEndTime != -1)
+            {
+                obj.lines = _lines;
+                obj.type = 'text';
+            }
             obj.fileName = _savedPng;
             obj.scaleX *= (bitmap.scaleX / Item.BITMAP_SCALE);
             obj.scaleY *= (bitmap.scaleY / Item.BITMAP_SCALE);
         }
         else
         {
+            obj.type = 'text';
             obj.text = _text;
             obj.formats = _formats;
         }

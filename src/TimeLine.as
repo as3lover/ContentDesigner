@@ -463,7 +463,7 @@ public class TimeLine extends Sprite
             dispatchComplete();
             return;
         }
-        saveItem.copyAndRename(soundFile, dir, 'file.voice', _pathHolder, after);
+        saveItem.copyAndRename(soundFile, dir, 'sound.mp3', _pathHolder, after);
         function after():void
         {
             _soundFile = _pathHolder.currentPath;

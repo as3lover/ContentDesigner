@@ -18,6 +18,7 @@ import flash.events.Event;
         private const SAVE:String = 'Save';
         private const SAVE_AS:String = 'Save As ...';
         private const EXPORT:String = 'Export...';
+        private const PDF:String = 'PDF...';
 
 		public function FileMenu(stage:Stage, target:DisplayObject)
 		{
@@ -35,6 +36,7 @@ import flash.events.Event;
             addItem(menu, SAVE);
             addItem(menu, SAVE_AS);
             addItem(menu, EXPORT);
+            addItem(menu, PDF);
             return menu;
         }
 
@@ -70,6 +72,10 @@ import flash.events.Event;
 
                 case EXPORT:
                     FileManager.exportFile();
+                    break;
+
+                case PDF:
+                    FileManager.exportPDF();
                     break;
 
             }

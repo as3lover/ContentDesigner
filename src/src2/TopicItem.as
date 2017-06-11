@@ -44,9 +44,8 @@ public class TopicItem extends Sprite
         this.addEventListener(MouseEvent.CLICK, onClick)
     }
 
-    private function onClick(event:MouseEvent):void
+    public function onClick(e:MouseEvent=null):void
     {
-        trace('topic', time);
         if(_type == 'quiz', parent)
             Topics(parent).select(this)
         dispatchEvent(_evt);

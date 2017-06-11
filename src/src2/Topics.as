@@ -262,5 +262,15 @@ public class Topics extends Sprite
 
         topicItem.select = true;
     }
+
+    public function gotoItemTime(index:int):void
+    {
+        TopicItem(_list[index]).onClick();
+    }
+
+    public function get nums():int
+    {
+        return _len;
+    }
 }
 }

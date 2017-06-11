@@ -35,6 +35,9 @@
             <entry library-id="02122f54-eb94-4195-9f0b-f6a87fd9b772">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="e36021fc-e3a2-4f87-92c8-8f6ed2cc2d2f">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
@@ -148,6 +151,16 @@
         <properties id="02122f54-eb94-4195-9f0b-f6a87fd9b772" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/../as3corelib/src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="e36021fc-e3a2-4f87-92c8-8f6ed2cc2d2f" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../AlivePDF/alivepdf/src" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

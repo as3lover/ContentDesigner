@@ -105,7 +105,7 @@ public class LoadFile
         {
             trace(ss)
         }
-        trace('afterLoad on LoadFile')
+        trace('afterLoad on LoadFile');
         Main.topics.reset();
 
         var obj:Object;
@@ -151,6 +151,13 @@ public class LoadFile
                 continue;
             }
 
+            if(i == 'back')
+            {
+                //Main.dragManager.loadBack(obj as String);
+                Main.dragManager.loadBack(FileManager.itemsFolder + '/' + String(obj));
+                continue;
+            }
+
             var holder:Item;
 
             if(obj.type == 'text')
@@ -168,18 +175,10 @@ public class LoadFile
         Main.animationControl.loadItems();
         Main.animationControl.number = number;
         Main.changed = false;
-        if(sound)
+        if (sound)
         {
-            if (sound)
-            {
-                if(sound == 'file.voice')
-                {
-                    trace('new Sound:', FileManager.itemsFolder + '/' + sound);
-                    sound = FileManager.itemsFolder + '/' + sound;
-                }
-
-                Main.timeLine.sound = sound;
-            }
+            sound = FileManager.itemsFolder + '/' + sound;
+            Main.timeLine.sound = sound;
         }
     }
 }

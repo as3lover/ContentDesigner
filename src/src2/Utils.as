@@ -16,9 +16,12 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.display.Loader;
+import flash.display.LoaderInfo;
 import flash.display.Sprite;
 import flash.display.Stage;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.OutputProgressEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
@@ -26,6 +29,7 @@ import flash.filesystem.FileStream;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import flash.net.URLRequest;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
@@ -457,6 +461,70 @@ public class Utils
         var data:BitmapData = new BitmapData(bit.width, bit.height, true, 0);
         data.draw(bit);
         return data;
+    }
+
+    public static function loadBitmap(path:String, func:Function, smoothing:Boolean = true):void
+    {
+        var loader:Loader = new Loader();
+        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadedFile);
+
+        loader.load(new URLRequest(path));
+        loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
+
+        function onError(event:IOErrorEvent):void
+        {
+            trace('Can Not Load File:', path);
+            func(null)
+        }
+
+        function loadedFile (event:Event):void
+        {
+            var bit:Bitmap = Bitmap(LoaderInfo(event.target).content);
+            bit.smoothing = smoothing;
+            func(bit);
+        }
+    }
+
+    public static function traceObject(obj:Object, t:String =''):void
+    {
+        for(var i:String in obj)
+        {
+            if(obj[i] is Number || obj[i] is String || obj[i] is int || obj[i] is uint || obj[i] is Boolean)
+            {
+                trace(t,i,obj[i])
+            }
+            else if(obj[i] is Array)
+            {
+                trace(t,i,'Array:')
+                traceArray(obj[i], t+'\t');
+            }
+            else
+            {
+                trace(t,i);
+                traceObject(obj[i], t+'\t')
+            }
+        }
+    }
+
+    public static function traceArray(list:Array, t:String=''):void
+    {
+        for(var i:int=0; i<list.length; i++)
+        {
+            if(list[i] is Array)
+            {
+                trace(t,i,'Array:');
+                traceArray(list[i], t+'\t');
+            }
+            else if(list[i] is Number || list[i] is String || list[i] is int || list[i] is uint || list[i] is Boolean)
+            {
+                trace(t, i, list[i]);
+            }
+            else
+            {
+                trace(t,'Object:');
+                traceObject(list[i], t+'\t')
+            }
+        }
     }
 }
 }

@@ -10,21 +10,54 @@ public class FileForSave extends EventDispatcher
     import flash.filesystem.File;
     import flash.events.Event;
 
-    private var _directory:File;
     private const EXTENSION:String = "rian";
     private const VALID_EXTENSIONS_LIST:Array = ["rian"];
     private const NAME:String = 'project';
+    private const TITLE:String = "Save As";
+
+
+    private var _directory:File;
     public var file:File;
     public var folder:File;
+    private var _prevFile:File;
+
+
+    private var ext:String;
+    private var extList:Array;
+    private var name:String;
+    private var title:String;
+
+    public function FileForSave(extension:String = null, extensionsList:Array = null, name:String = null, title:String = null):void
+    {
+        if(extension)
+            ext = extension;
+        else
+            ext = EXTENSION;
+
+        if(extensionsList)
+            extList = extensionsList;
+        else
+            extList = VALID_EXTENSIONS_LIST;
+
+        if(name)
+            this.name = name;
+        else
+            this.name = NAME;
+
+        if(title)
+            this.title = title;
+        else
+            this.title = TITLE;
+    }
 
     public function Select():void
     {
-        if(FileManager.file)
-                _directory = FileManager.file.clone();
+        if(_prevFile)
+                _directory = _prevFile.clone();
         else
-            _directory = File.documentsDirectory.resolvePath(NAME + '.' + EXTENSION);
+            _directory = File.documentsDirectory.resolvePath(name + '.' + ext);
 
-        _directory.browseForSave("Save As");
+        _directory.browseForSave(title);
         _directory.addEventListener(Event.SELECT, mySaveHandler);
     }
     private function mySaveHandler(event:Event):void
@@ -40,6 +73,7 @@ public class FileForSave extends EventDispatcher
         //Create a new file object giving as input our new path with conformed file extension
         file = new File("file:///" + tmpArr.join(File.separator));
         getFolderFromFile(file);
+        _prevFile = file.clone();
         dispatchEvent(new Event(Event.COMPLETE));
         //Make save
         /*
@@ -60,12 +94,12 @@ public class FileForSave extends EventDispatcher
     private function conformExtension(fileDef:String):String
     {
         var fileExtension:String = fileDef.split(".")[1];
-        for each(var it:String in VALID_EXTENSIONS_LIST){
+        for each(var it:String in extList){
             if( fileExtension == it)
                 return fileDef;
 
         }
-        return fileDef.split(".")[0] + "." + EXTENSION;
+        return fileDef.split(".")[0] + "." + ext;
     }
 }
 }

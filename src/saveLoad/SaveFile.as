@@ -56,6 +56,8 @@ public class SaveFile
         function ff(event:Event):void
         {
             trace('finish', getTimer()-t);
+            Main._progress.percent = 1;
+            Main._progress.text = 'Finish'
         }
     }
 
