@@ -79,8 +79,9 @@ public class DragManager extends Sprite
         //
         _loader = new Loader();
         //
-        stage.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
-
+        //stage.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
+        Main.MAIN.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
+        trace(100);
         _nativeMouse = new NativeMouse();
 
         addEventListener(Event.ADDED_TO_STAGE, init);
@@ -120,6 +121,7 @@ public class DragManager extends Sprite
     private function dragEnterHandler(event:NativeDragEvent):void
     {
         //trace('dragEnterHandler');
+        Main.MAIN.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
 
         var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
         currentFile = files[0];

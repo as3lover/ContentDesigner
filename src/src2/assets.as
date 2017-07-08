@@ -39,5 +39,20 @@ public class assets
 
     [Embed(source="../../assets/buttons/rotate.png")]
     public static var Rotate:Class;
+
+    [Embed(source="../../assets/buttons/right.png")]
+    public static var Right:Class;
+
+    [Embed(source="../../assets/buttons/left.png")]
+    public static var Left:Class;
+
+    [Embed(source="../../assets/buttons/center.png")]
+    public static var Center:Class;
+
+    [Embed(source="../../assets/buttons/rtl.png")]
+    public static var Rtl:Class;
+
+    [Embed(source="../../assets/buttons/ltr.png")]
+    public static var Ltr:Class;
 }
 }

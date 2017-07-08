@@ -191,16 +191,18 @@ public class Utils
         }
         textBox.scaleX = textBox.scaleY = scale * quality;
         textBox.y = 0;
-        textBox.x = - (textBox.width - textBox.textWidth * quality);
+        //textBox.x = - (textBox.width - textBox.textWidth * quality);
+        textBox.x = 0;
         textBox.border = false;
 
-        var padding:int = 50;
-        textBox.x += padding;
+        //var padding:int = 50;
+        //textBox.x += padding;
 
         var sprite:Sprite = new Sprite();
         sprite.addChild(textBox);
 
-        var snapshot:BitmapData = new BitmapData(padding + textBox.textWidth * quality, padding + textBox.textHeight * quality, true, 0x00000000);
+        //var snapshot:BitmapData = new BitmapData(textBox.textWidth * quality, padding + textBox.textHeight * quality, true, 0x00000000);
+        var snapshot:BitmapData = new BitmapData(textBox.width, textBox.height, true, 0x00000000);
         snapshot.draw(sprite, new Matrix());
 
         //var bit:Bitmap = new Bitmap(snapshot);

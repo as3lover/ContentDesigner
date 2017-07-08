@@ -14,6 +14,8 @@ import items.ItemText;
 
 import items.TimeBox;
 
+import panels.Alignment;
+
 import src2.ColorSelector;
 import src2.Fonts;
 import src2.Utils;
@@ -29,6 +31,7 @@ public class Panel extends Sprite
     private var _typeDur:TimeBox;
     private var _bold:Bold;
     private var _item:ItemText;
+    private var _alignment:Alignment;
 
     public function Panel()
     {
@@ -97,9 +100,17 @@ public class Panel extends Sprite
 
         ////////////////////////////////
         ////////////////////////////////
+
+        _alignment = new Alignment();
+        _alignment.x = 10;
+        _alignment.y = _fontList.y + _fontList.height + 10;
+        _alignment.addEventListener(Event.CHANGE, setAlign);
+        _alignment.addEventListener(Event.LOCATION_CHANGE, setDrection);
+        addChild(_alignment);
+
         _typeDur = new TimeBox();
         _typeDur.x = 10;
-        _typeDur.y = _fontList.y + _fontList.height + 10;
+        _typeDur.y = _alignment.y + _alignment.height + 10;
         addChild(_typeDur);
 
         text = new Sprite();
@@ -115,6 +126,12 @@ public class Panel extends Sprite
         Utils.drawRect(back, 0, 0, width + 20, height);
         addChildAt(back, 0);
     }
+
+    private function setDrection(e:Event):void
+    {
+        Main.textEditor.setDirection(_alignment.direction);
+    }
+
 
     private function setBold(bold:Boolean):Boolean
     {
@@ -161,6 +178,11 @@ public class Panel extends Sprite
         Main.textEditor.setFont(_fontList.selectedItem.data as String);
 
         setBoldStatus();
+    }
+
+    private function setAlign(e:Event):void
+    {
+        Main.textEditor.setAlign(_alignment.align)
     }
 
     private function setBoldStatus():void
@@ -222,13 +244,15 @@ public class Panel extends Sprite
 
     public function show(item:ItemText = null):void
     {
-        trace('show');
+        //trace('show');
         if(item)
             _item = item;
         _size.value = Main.textEditor.getSize();
         _space.value = (Main.textEditor.getSpace() + 2)*10;
         _leading.value = Main.textEditor.getLeading();
         _selector.color = Main.textEditor.getColor();
+        _alignment.align = Main.textEditor.getAlign();
+        _alignment.direction = Main.textEditor.getDirection();
         //_bold.bold = Main.textEditor.getBold();
         _fontList.selectedIndex = Utils.getObjectIndex(Fonts.FONTS, Main.textEditor.getFont());
         setBoldStatus();

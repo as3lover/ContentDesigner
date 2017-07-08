@@ -68,7 +68,7 @@ public class ItemText extends Item
 
     public function double(e:MouseEvent = null):void
     {
-        trace('double')
+        //trace('double')
        edit();
     }
 
@@ -149,7 +149,7 @@ public class ItemText extends Item
         function afterUpdate():void
         {
             update();
-            trace('updated', getTimer());
+            //trace('updated', getTimer());
             setTimeout(dispatchComplete, 10);
         }
     }

@@ -12,6 +12,8 @@ import flash.text.TextFormat;
 
 import flashx.textLayout.edit.EditManager;
 
+import panels.Alignment;
+
 import src2.Button;
 import src2.Utils;
 
@@ -20,7 +22,7 @@ public class TextEditor extends Sprite
     private var _textBox:TextBox;
     private var _function:Function;
     protected var cancel:Button;
-    private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading', 'bold'];
+    private const formatProps:Array = ['font', 'color', 'size', 'letterSpacing', 'leading', 'bold', 'align'];
     private var _fmt:TextFormat;
     private var _format:Array;
     private const props:int = formatProps.length;
@@ -136,8 +138,18 @@ public class TextEditor extends Sprite
         var len:int = list.length;
         var format:TextFormat = new TextFormat();
 
+        _textBox.direction = Alignment.RTL;
+
+
         for(var i:int=0; i<len; i++)
         {
+            if(list[i] is String)
+            {
+
+                _textBox.direction = list[i];
+                continue;
+            }
+
             for(var p:String in list[i].format)
             {
                 format[p] =  list[i].format[p];
@@ -184,10 +196,13 @@ public class TextEditor extends Sprite
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
                 obj.bold = f2.bold;
+                obj.align = f2.align;
                 formats.push({format:obj, index1:i, index2:i})
             }
             f1 = f2
         }
+
+        formats.push(_textBox.direction);
 
         return formats;
     }
@@ -241,6 +256,7 @@ public class TextEditor extends Sprite
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
                 obj.bold = f2.bold;
+                obj.align = f2.align;
                 formats.push({format:obj, index1:i, index2:i})
             }
             f1 = f2
@@ -251,7 +267,6 @@ public class TextEditor extends Sprite
 
     public function  setFormatss(i:int,i2:int, prop:String, value:Object,box:TLFTextField):void
     {
-        trace('setFormats', prop, i,i2);
         var formats:Array=new Array();
         var lastFormat:Object = {};
         var f1:TextFormat = new TextFormat();
@@ -264,12 +279,11 @@ public class TextEditor extends Sprite
 
             if(formatEquals(f1,f2))
             {
-                trace(true)
                 lastFormat.index2 = i+1;
             }
             else
             {
-                trace(false);
+                //trace(false);
                 if(lastFormat.format)
                     formats.push(lastFormat);
 
@@ -291,7 +305,7 @@ public class TextEditor extends Sprite
         {
             if(f1[formatProps[i]] != f2[formatProps[i]])
             {
-                trace(formatProps[i],f1[formatProps[i]] , f2[formatProps[i]])
+                ////trace(formatProps[i],f1[formatProps[i]] , f2[formatProps[i]])
                 return false
             }
         }
@@ -327,6 +341,16 @@ public class TextEditor extends Sprite
     public function getBold():Boolean
     {
         return getProp('bold') as Boolean;
+    }
+
+    public function getAlign():String
+    {
+        return getProp('align') as String;
+    }
+
+    public function getDirection():String
+    {
+        return _textBox.direction;
     }
 
     public function getProp(prop:String):Object
@@ -407,18 +431,70 @@ public class TextEditor extends Sprite
         setTextFormat('font', font);
     }
 
+    public function setAlign(alignment:String):void
+    {
+        var indexes:Object;
+
+        var box:TLFTextField = _textBox.box;
+        if(box.selectionBeginIndex == box.selectionEndIndex)
+        {
+            var i1:int = box.caretIndex;
+            var i2:int;
+
+            if(i1 < box.length-1)
+            {
+                i2 = i1+1;
+            }
+            else if(i1 > 0)
+            {
+                i1--;
+                i2 = i1+1
+            }
+            else
+            {
+                i2 = i1;
+            }
+
+            setTextFormat('align', alignment, {i1:i1, i2:i2});
+        }
+        else
+        {
+            setTextFormat('align', alignment);
+        }
+
+
+
+    }
+
     public function setBold(bold:Boolean):void
     {
         setTextFormat('bold', bold);
     }
 
-    private function setTextFormat(prop:String, value:Object):void
+    public function setDirection(direction:String):void
+    {
+        _textBox.direction = direction;
+    }
+
+    private function setTextFormat(prop:String, value:Object, indexes:Object = null):void
     {
         _textBox.setDefaultFormat(prop, value);
-        trace('setTextFormat',prop,value)
+        ////trace('setTextFormat',prop,value);
         var _box:TLFTextField = _textBox.box;
-        var i1:int = _box.selectionBeginIndex;
-        var i2:int = _box.selectionEndIndex;
+        var i1:int;
+        var i2:int;
+
+
+        if(indexes)
+        {
+            i1 = indexes.i1;
+            i2 = indexes.i2;
+        }
+        else
+        {
+            i1 = _box.selectionBeginIndex;
+            i2 = _box.selectionEndIndex;
+        }
 
         if(i1 == i2)
         {
@@ -427,7 +503,7 @@ public class TextEditor extends Sprite
         }
 
         var list:Array = getSomeFormat(i1,i2);
-        trace('list.length',list.length)
+        ////trace('list.length',list.length)
         for (var i:int=0; i<list.length; i++)
         {
             list[i].format[prop] = value;
@@ -438,7 +514,7 @@ public class TextEditor extends Sprite
 
     private function getSomeFormat(i:int, length:int):Array
     {
-        trace('getSomeFormat', i, length);
+        ////trace('getSomeFormat', i, length);
 
         var formats:Array = new Array();
         var f1:TextFormat = new TextFormat();
@@ -462,6 +538,7 @@ public class TextEditor extends Sprite
                 obj.leading = f2.leading;
                 obj.letterSpacing = f2.letterSpacing;
                 obj.bold = f2.bold;
+                obj.align = f2.align;
                 formats.push({format:obj, index1:i, index2:i+1})
             }
             f1 = f2
@@ -473,7 +550,7 @@ public class TextEditor extends Sprite
 
     private function set setSomeFormat(list:Array):void
     {
-        trace('set format')
+        //trace('set format')
         var len:int = list.length;
         var format:TextFormat = new TextFormat();
 
@@ -494,7 +571,7 @@ public class TextEditor extends Sprite
                 list[i].index2 = _textBox.box.length;
             }
 
-            trace('set text format', list[i].index1, list[i].index2)
+            //trace('set text format', list[i].index1, list[i].index2)
 
             _textBox.box.setTextFormat(format, list[i].index1, list[i].index2);
         }
@@ -512,6 +589,7 @@ public class TextEditor extends Sprite
     {
         return _textBox.box.numLines;
     }
+
 
 }
 }

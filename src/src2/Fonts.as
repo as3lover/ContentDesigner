@@ -27,6 +27,16 @@ public class Fonts
                 'Gandom',
                 'mj Tehran',
                 'mj Titr DF',
+                'en Arial',
+                'en Arial Bold',
+                'en Times New Roman',
+                'en Times New Roman Bold',
+                'en Berlin',
+                'en Berlin Bold',
+                'en Colonna',
+                'en Comic',
+                'en Comic Bold'
+
 
 
 
@@ -199,6 +209,87 @@ public class Fonts
             advancedAntiAliasing="true",
             embedAsCFF="true")]
     private var MJ_Titr_Df_Font:Class;
+
+    [Embed(source="../../assets/fonts/arial.ttf",
+            fontName = "en Arial",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Arial:Class;
+
+    [Embed(source="../../assets/fonts/arialbd.ttf",
+            fontName = "en Arial Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Arial_Bold:Class;
+
+    [Embed(source="../../assets/fonts/times.ttf",
+            fontName = "en Times New Roman",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Times_New_Roman:Class;
+
+    [Embed(source="../../assets/fonts/timesbd.ttf",
+            fontName = "en Times New Roman Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Times_New_Roman_Bold:Class;
+
+    [Embed(source="../../assets/fonts/BRLNSR.TTF",
+            fontName = "en Berlin",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Berlin:Class;
+
+    [Embed(source="../../assets/fonts/BRLNSB.TTF",
+            fontName = "en Berlin Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Berlin_Bold:Class;
+
+    [Embed(source="../../assets/fonts/COLONNA.TTF",
+            fontName = "en Colonna",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Colonna:Class;
+
+    [Embed(source="../../assets/fonts/comic.ttf",
+            fontName = "en Comic",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Comic:Class;
+
+    [Embed(source="../../assets/fonts/comicbd.ttf",
+            fontName = "en Comic Bold",
+            mimeType = "application/x-font",
+            fontWeight="normal",
+            fontStyle="normal",
+            advancedAntiAliasing="true",
+            embedAsCFF="true")]
+    private var Comic_Bold:Class;
 
     public function Fonts()
     {

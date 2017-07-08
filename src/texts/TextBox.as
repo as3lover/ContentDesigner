@@ -18,6 +18,8 @@ import flashx.textLayout.edit.EditManager;
 
 import flashx.textLayout.formats.Direction;
 
+import panels.Alignment;
+
 import src2.Fonts;
 
 import src2.Utils;
@@ -29,6 +31,7 @@ public class TextBox extends Sprite
 
     private var i1:int = -1;
     private var i2:int = -1;
+    private var _direction:String;
 
     public function TextBox()
     {
@@ -54,7 +57,7 @@ public class TextBox extends Sprite
         padding();
         //_box.autoSize = TextFieldAutoSize.RIGHT;
         _box.cacheAsBitmap = true;
-        _box.direction = Direction.RTL;
+        direction = Direction.RTL;
         font = Fonts.YEKAN;
 
         addChild(_box);
@@ -205,12 +208,12 @@ public class TextBox extends Sprite
     {
         if(value)
         {
-            _box.direction = Direction.LTR;
+            direction = Direction.LTR;
             align = TextFormatAlign.LEFT;
         }
         else
         {
-            _box.direction = Direction.RTL;
+            direction = Direction.RTL;
             align = TextFormatAlign.RIGHT;
         }
     }
@@ -273,6 +276,17 @@ public class TextBox extends Sprite
     public function setDefaultFormat(prop:String, value:Object):void
     {
         _fmt[prop] = value;
+    }
+
+    public function get direction():String
+    {
+        return _direction;
+    }
+
+    public function set direction(value:String):void
+    {
+        _direction = value;
+        _box.direction = _direction;
     }
 }
 }
