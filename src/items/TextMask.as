@@ -5,6 +5,8 @@ package items
 {
 import flash.display.Sprite;
 
+import panels.Alignment;
+
 import src2.Utils;
 
 public class TextMask extends Sprite
@@ -22,7 +24,7 @@ public class TextMask extends Sprite
         addChild(s)
     }
 
-    public function update(x:int,y:int,w:int,h:int,lines:int, percent:Number):void
+    public function update(x:int,y:int,w:int,h:int,lines:int, percent:Number, dir:String):void
     {
         while(numChildren < lines)
             addLine();
@@ -58,7 +60,10 @@ public class TextMask extends Sprite
                     p = percent - p*i;
                     p = p * lines;
                     s.width = p * w;
-                    s.x = w - s.width;
+                    if(dir == Alignment.LTR)
+                        s.x = 0;
+                    else
+                        s.x = w - s.width;
                 }
             }
         }

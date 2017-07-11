@@ -256,7 +256,7 @@ public class AnimationControl
         Main._progress.percent = .66;
         Main._progress.text = 'Saving Project File...';
         SaveFile.save(saveObject, Utils.time);
-        Main.toExport = false;
+        //Main.toExport = false;
         trace('============ FINISH SAVING ===============');
 
     }

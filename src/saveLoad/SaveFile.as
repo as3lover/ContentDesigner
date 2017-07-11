@@ -58,6 +58,10 @@ public class SaveFile
             trace('finish', getTimer()-t);
             Main._progress.percent = 1;
             Main._progress.text = 'Finish'
+            if(Main.toExport)
+            {
+                FileManager.closeFile();
+            }
         }
     }
 

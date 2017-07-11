@@ -35,7 +35,7 @@ import flash.events.Event;
             addItem(menu, OPEN);
             addItem(menu, SAVE);
             addItem(menu, SAVE_AS);
-            addItem(menu, EXPORT);
+            //addItem(menu, EXPORT);
             addItem(menu, PDF);
             return menu;
         }

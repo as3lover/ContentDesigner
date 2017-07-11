@@ -27,6 +27,7 @@ public class ItemText extends Item
     private var _toEdit:Boolean;
     private var _firstTime:Number;
     private var _savedPng:String;
+    private var _direction:String;
 
     public function ItemText(removeAnimataion:Function, toEdit:Boolean = false, add:Boolean = true, keyBoard:Boolean = false):void
     {
@@ -138,6 +139,7 @@ public class ItemText extends Item
         addChild(_sprite);
 
         _lines =  Main.textEditor.lines;
+        direction =  Main.textEditor.getDirection();
 
         changed;
     }
@@ -165,6 +167,7 @@ public class ItemText extends Item
             if(animation.typingEndTime != -1)
             {
                 obj.lines = _lines;
+                obj.direction = _direction;
                 obj.type = 'text';
             }
             obj.fileName = _savedPng;
@@ -228,7 +231,7 @@ public class ItemText extends Item
             addChild(_mask);
         }
 
-        _mask.update(bitmap.x, bitmap.y, bitmap.width, bitmap.height, _lines, percent);
+        _mask.update(bitmap.x, bitmap.y, bitmap.width, bitmap.height, _lines, percent, direction);
 
         mask = _mask;
     }
@@ -263,5 +266,15 @@ public class ItemText extends Item
     }
 
 
+    public function get direction():String
+    {
+        return _direction;
+    }
+
+    public function set direction(value:String):void
+    {
+        trace('direction', value);
+        _direction = value;
+    }
 }
 }
