@@ -19,10 +19,17 @@ public class AnimateObject extends EventDispatcher
     private var _time:Number = -1;
     private var _changeEvent:Event;
     public var _typingEndTime:Number = -1;
+    private var _id:int = -1;
+    private var _sheet:int;
+    private var _position:Object;
+    private var settedID:Boolean;
+    private static var total:int=0;
+    private var _number:int;
 
 
     public function AnimateObject(object:Item, startTime:Number, loadedObject:Boolean = false):void
     {
+        _number = AnimateObject.total++;
         _changeEvent = new Event(Event.CHANGE);
 
         _object = object;
@@ -233,12 +240,29 @@ public class AnimateObject extends EventDispatcher
 
     public function get all():Object
     {
+        trace('get ID >>>>>>', id, settedID, _number);
+
+        if(id == -1)
+        {
+            //object.save(FileManager.itemsFolder);
+            //object.move();
+            trace('NOOOOOOOOOOOOOOOOOOO', object.bitmap.width, object.bitmap.height, sheet, position);
+        }
+
         var obj:Object = object.all;
         obj.startTime = startTime;
         obj.stopTime = stopTime;
         obj.showDuration = _showDuration;
         obj.hideDuration = _hideDuration;
         obj.typingEndTime = _typingEndTime;
+
+        if(id != -1)
+        {
+            obj.id = id;
+            obj.sheet = sheet;
+            obj.position = position;
+        }
+
         return obj;
     }
 
@@ -309,6 +333,38 @@ public class AnimateObject extends EventDispatcher
     {
         _object._index = value;
         _object.index = value;
+    }
+
+    public function get id():int
+    {
+        return _id;
+    }
+
+    public function set id(value:int):void
+    {
+        _id = value;
+        trace('set id', _id, _number, Main.count++);
+        settedID = true;
+    }
+
+    public function get sheet():int
+    {
+        return _sheet;
+    }
+
+    public function set sheet(value:int):void
+    {
+        _sheet = value;
+    }
+
+    public function get position():Object
+    {
+        return _position;
+    }
+
+    public function set position(value:Object):void
+    {
+        _position = value;
     }
 }
 }

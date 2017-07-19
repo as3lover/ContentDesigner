@@ -427,6 +427,8 @@ public class Utils
         bitmap.rotation = 0;
         bitmap.scaleX = bitmap.scaleY = 1;
 
+        trace('TEXT SIZE', bitmap.width, bitmap.height);
+
         var bytes:ByteArray = bitmapToBinary(bitmap);
 
         bitmap.scaleX = scaleX;
@@ -443,12 +445,12 @@ public class Utils
 
         function PROGRESS(e)
         {
-            trace('PROGRESS', e);
+            //trace('PROGRESS', e);
         }
 
         function CLOSE(e)
         {
-            trace('CLOSE', e);
+            //trace('CLOSE', e);
             after();
         }
     }
@@ -528,5 +530,63 @@ public class Utils
             }
         }
     }
+
+    public static function displayMatching(obj1:DisplayObject, obj2:DisplayObject):Number
+    {
+
+        var bitmapData1:BitmapData = displayToBitmapData(obj1);
+        var bitmapData2:BitmapData = displayToBitmapData(obj2);
+
+        var bmpDataDif:BitmapData = bitmapData1.compare(bitmapData2) as BitmapData;
+        if(!bmpDataDif)
+        {
+            var b1:Rectangle = obj1.getBounds(obj1);
+            var b2:Rectangle = obj2.getBounds(obj2);
+            if(b1.width == b2.width && b1.height == b2.height)
+                return 1;
+            else
+                return 0
+        }
+        var differentPixelCount:int = 0;
+
+        var pixelVector:Vector.<uint> =  bmpDataDif.getVector(bmpDataDif.rect);
+        var pixelCount:int = pixelVector.length;
+
+        for (var i:int = 0; i < pixelCount; i++)
+        {
+            if (pixelVector[i] != 0)
+                differentPixelCount ++;
+        }
+        return (differentPixelCount / pixelCount);
+    }
+
+    public static function displayToBitmapData(obj:DisplayObject):BitmapData
+    {
+        var data:BitmapData;
+
+        if(obj is Bitmap)
+        {
+            data =  Bitmap(obj).bitmapData;
+        }
+        else
+        {
+            data = new BitmapData(obj.width, obj.height);
+            data.draw(obj);
+        }
+
+        return data;
+    }
+
+    public static function objectToBitmap(obj:DisplayObject):Bitmap
+    {
+        return new Bitmap(displayToBitmapData(obj));
+    }
+
+
+    public static function cloneBitmap(bit:Bitmap):Bitmap
+    {
+        return new Bitmap(bit.bitmapData);
+    }
+
 }
 }

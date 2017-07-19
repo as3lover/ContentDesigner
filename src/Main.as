@@ -46,6 +46,8 @@ public class Main extends Sprite
     public static const target:Object = {x:20, y:40, w:600, h:337};
     public static var loadedTime:Number;
     public static var toExport:Boolean;
+    public static var count:int=0;
+    public static var matched:int=0;
 
     public function Main()
     {

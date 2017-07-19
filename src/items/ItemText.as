@@ -64,6 +64,7 @@ public class ItemText extends Item
         if(toEdit)
             edit();
 
+        _type = 'text'
     }
 
 
@@ -276,5 +277,6 @@ public class ItemText extends Item
         trace('direction', value);
         _direction = value;
     }
+
 }
 }

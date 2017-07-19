@@ -51,12 +51,14 @@ public class Item extends Sprite
     public var animation:AnimateObject;
     public var _noExist:Boolean;
     public static const BITMAP_SCALE:Number = .5;
+    protected var _type:String;
 
     public function Item(removeAnimataion:Function, path:String, motion:String = Consts.fade)
     {
         super();
         _removeAnimation = removeAnimataion;
         _path = path;
+        _type = 'image';
 
         var menu:ItemMenu = new ItemMenu();
         this.contextMenu = menu.menu;
@@ -639,6 +641,82 @@ public class Item extends Sprite
         if(parent)
             _index = parent.getChildIndex(this);
 
+    }
+
+    public function smallBitmap():void
+    {
+        bitmap.scaleX = bitmap.scaleY = 1;
+
+        var scale:Number;
+
+        if(_type == 'image')
+        {
+            var s:Number = Math.max(_scaleX, _scaleY);
+            if(s < 1)
+            {
+                bitmap.width *= s;
+                bitmap.height *= s;
+                _scaleX /= s;
+                _scaleY /= s;
+            }
+        }
+        else
+        {
+            _scaleX *= 1.15;
+            _scaleY *= 1.15;
+        }
+
+
+
+        if(bitmap.width > 1000)
+        {
+            scale = bitmap.width/1000;
+            bitmap.width /= scale;
+            bitmap.height /= scale;
+
+            sett();
+        }
+
+        if(bitmap.height > 1000)
+        {
+            scale = bitmap.height/1000;
+            bitmap.height /= scale;
+            bitmap.width /= scale;
+
+            sett();
+        }
+
+        function sett():void
+        {
+            _scaleX *= scale;
+            _scaleY *= scale;
+        }
+    }
+
+    public function resetBitmap(bit:Bitmap):void
+    {
+        if(bit.width != bitmap.width)
+        {
+            _scaleX *= bitmap.width/bit.width;
+        }
+        if(bit.height != bitmap.height)
+        {
+            _scaleY *= bitmap.height/bit.height;
+        }
+    }
+
+    public function correctBitmap(bit:Bitmap):void
+    {
+        var w:Number = bit.width / bitmap.width;
+        var h:Number = bit.height / bitmap.height;
+        var max:Number = Math.max(w,h);
+        if(max > 1)
+        {
+            bitmap.width *= max;
+            bitmap.height *= max;
+            _scaleX /= max;
+            _scaleY /= max;
+        }
     }
 }
 }

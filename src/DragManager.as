@@ -387,11 +387,12 @@ public class DragManager extends Sprite
         function after():void
         {
             _path = _pathHolder.currentPath;
-            setTimeout(move,5);
+            setTimeout(move,100);
         }
 
         function move():void
         {
+            trace('_pathHolder.currentPath, _pathHolder.newPath',_pathHolder.currentPath, _pathHolder.newPath)
             saveItem.move(_pathHolder.currentPath, _pathHolder.newPath, after);
             function after():void
             {
