@@ -52,7 +52,9 @@ public class FileForSave extends EventDispatcher
 
     public function Select():void
     {
-        if(_prevFile)
+        if(Main.toExport)
+            _directory = File.documentsDirectory.resolvePath(name + '.' + 'json');
+        else if(_prevFile)
                 _directory = _prevFile.clone();
         else
             _directory = File.documentsDirectory.resolvePath(name + '.' + ext);
@@ -94,7 +96,21 @@ public class FileForSave extends EventDispatcher
     private function conformExtension(fileDef:String):String
     {
         var fileExtension:String = fileDef.split(".")[1];
-        for each(var it:String in extList){
+        var it:String;
+
+        if(Main.toExport)
+        {
+            for each(it in ['json']){
+                if( fileExtension == it)
+                    return fileDef;
+
+            }
+            return fileDef.split(".")[0] + "." + 'json';
+        }
+
+
+
+        for each(it in extList){
             if( fileExtension == it)
                 return fileDef;
 

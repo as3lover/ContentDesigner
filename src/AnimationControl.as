@@ -169,7 +169,7 @@ public class AnimationControl
         object.snapList = Main.snapList.object;
 
         if(Main.dragManager.back)
-                object.back = Main.dragManager.BACK_NAME;
+                object.back = Main.dragManager.getBackName;
 
         return object;
     }

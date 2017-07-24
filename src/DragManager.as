@@ -48,6 +48,7 @@ public class DragManager extends Sprite
     private var _inTarget:Boolean;
     private var _image:Bitmap;
     public const BACK_NAME:String = 'back.pic';
+    public const BACK_NAME2:String = 'back.png';
     private var _path:String;
     private var _pathHolder:Object={};
 
@@ -383,7 +384,11 @@ public class DragManager extends Sprite
             return;
         }
 
-        saveItem.copyAndRename(_path, dir, BACK_NAME, _pathHolder, after);
+        if(Main.toExport)
+            saveItem.copyAndRename(_path, dir, BACK_NAME2, _pathHolder, after);
+        else
+            saveItem.copyAndRename(_path, dir, BACK_NAME, _pathHolder, after);
+
         function after():void
         {
             _path = _pathHolder.currentPath;
@@ -400,6 +405,14 @@ public class DragManager extends Sprite
                 setTimeout(onComplete,5);
             }
         }
+    }
+
+    public function get getBackName():String
+    {
+        if(Main.toExport)
+            return BACK_NAME2;
+        else
+            return BACK_NAME;
     }
 }
 }

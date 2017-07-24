@@ -651,7 +651,7 @@ public class Item extends Sprite
 
         if(_type == 'image')
         {
-            var s:Number = Math.max(_scaleX, _scaleY);
+            var s:Number = Math.max(Math.abs(_scaleX), Math.abs(_scaleY));
             if(s < 1)
             {
                 bitmap.width *= s;

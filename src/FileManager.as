@@ -175,7 +175,7 @@ public class FileManager
         {
             TitleBar.file = _file.nativePath;
             _itemsFolder = FileManager.file.nativePath.slice(0, FileManager.file.nativePath.length - FileManager.file.name.length)
-            + FileManager.file.name.split('.')[0] + '_files';
+            + FileManager.file.name.split('.')[0] + foldername;
             trace('item folder:', _itemsFolder)
         }
         else
@@ -183,6 +183,14 @@ public class FileManager
             TitleBar.file = 'New Project';
             _itemsFolder = null;
         }
+    }
+
+    private static function get foldername():String
+    {
+        if(Main.toExport)
+                return '';
+
+        return '_files';
     }
 
     public static function get itemsFolder():String
