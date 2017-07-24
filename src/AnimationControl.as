@@ -10,6 +10,7 @@ import flash.display.Bitmap;
 import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.utils.getTimer;
 import flash.utils.setTimeout;
 
 import items.Item;
@@ -203,8 +204,26 @@ public class AnimationControl
                 var obj2:AnimateObject;
                 var bit:Bitmap;
 
-                for(i; i<len; i++)
+
+                var sheetNum:int = 0;
+                var items:int = 0;
+                trace('All', _list.length, 'packed', bitmaps.length, 'repeat', repeats.length, 'diff', _list.length-(bitmaps.length+repeats.length));
+
+                i = 0;
+                compare();
+                function compare():void
                 {
+                    if(i>=_list.length)
+                    {
+                        if(!packer)
+                            packer = new Packer();
+
+                        packer.create(bitmaps, ids, func);
+
+                        return;
+                    }
+
+
                     obj1 = AnimateObject(_list[i]);
                     item = obj1.object;
                     item.smallBitmap();
@@ -212,9 +231,43 @@ public class AnimationControl
                     bit = item.bitmap;
 
                     var mathedId:int = -10;
+                    var j:int = ids.length-1;
+                    var total:int = j;
 
-                    for(var j:int=ids.length-1; j>-1; j--)
+                    var time1:int = getTimer();
+                    var time2:int;
+                    var numOfStack:int = 0;
+
+                    check();
+
+                    function check():void
                     {
+                        Main._progress.percent = i/_list.length;
+                        Main._progress.text = 'Comparing Item ' + String(i+1) + '/' + String(_list.length)  + ' - Mathed Items: ' + String(repeats.length);
+
+                        if(j <= -1)
+                        {
+                            if(mathedId == -10)
+                            {
+                                bitmaps.push(bit);
+                                ids.push(i);
+                                obj1.id = i;
+                            }
+                            else
+                            {
+                                obj1.id = mathedId;
+                                repeats.push(obj1);
+                                obj2.object.correctBitmap(obj1.object.bitmap);
+                            }
+
+                            i++;
+                            compare();
+
+                            return;
+                        }
+
+
+
                         obj2 = AnimateObject(_list[ids[j]]);
 
                         if(Utils.displayMatching(bit, obj2.object.bitmap) == 1)
@@ -223,34 +276,23 @@ public class AnimationControl
                             //break;
                             j = -1;
                         }
-                    }
 
+                        j--;
 
-                    if(mathedId == -10)
-                    {
-                        bitmaps.push(bit);
-                        ids.push(i);
-                        obj1.id = i;
-                    }
-                    else
-                    {
-                        obj1.id = mathedId;
-                        repeats.push(obj1);
-                        obj2.object.correctBitmap(obj1.object.bitmap);
+                        time2 = getTimer();
+                        if(time2 - time1 > 100 || numOfStack >= 35)
+                        {
+                            time1 = time2;
+                            numOfStack = 0;
+                            setTimeout(check, 1);
+                        }
+                        else
+                        {
+                            numOfStack++;
+                            check();
+                        }
                     }
                 }
-
-                if(!packer){
-                    packer = new Packer();
-                }
-
-                var sheetNum:int = 0;
-                var items:int = 0;
-                trace('All', _list.length, 'packed', bitmaps.length, 'repeat', repeats.length, 'diff', _list.length-(bitmaps.length+repeats.length));
-                trace('All', _list.length, 'packed', bitmaps.length, 'repeat', repeats.length, 'diff', _list.length-(bitmaps.length+repeats.length));
-                trace('All', _list.length, 'packed', bitmaps.length, 'repeat', repeats.length, 'diff', _list.length-(bitmaps.length+repeats.length));
-                trace('All', _list.length, 'packed', bitmaps.length, 'repeat', repeats.length, 'diff', _list.length-(bitmaps.length+repeats.length));
-                packer.create(bitmaps, ids, func);
 
                 function func(bit:Bitmap,rects:Vector.<IntegerRectangle>):void
                 {
@@ -264,20 +306,9 @@ public class AnimationControl
                         trace('NOOOOOO rects.length')
                     }
 
-                    trace('rects.length', n);
-
                     total += n;
                     if(bit == null || !bit.width || !bit.height)
                     {
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
-                        trace('finish', total, _list.length, repeats.length);
                         trace('finish', total, _list.length, repeats.length);
                         setTimeout(saveSound,1000);
                         return;
@@ -286,7 +317,7 @@ public class AnimationControl
                     sheetNum++;
 
                     Main._progress.percent = items/len;
-                    Main._progress.text = 'Creat Sheets...';
+                    Main._progress.text = 'Creat Sheets... ' + String(items) + '/' + String(len);
                     items +=  rects.length;
 
                     Utils.saveBitmap(bit, _savedDirectory+'/'+ String(sheetNum)+'.png', f);
@@ -318,8 +349,8 @@ public class AnimationControl
 
                 function f():void
                 {
-                    trace('sheetNum:' ,sheetNum);
-                    trace('repeats.length',repeats.length);
+                    //trace('sheetNum:' ,sheetNum);
+                    //trace('repeats.length',repeats.length);
                 }
 
                 return;

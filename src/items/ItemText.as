@@ -274,7 +274,6 @@ public class ItemText extends Item
 
     public function set direction(value:String):void
     {
-        trace('direction', value);
         _direction = value;
     }
 

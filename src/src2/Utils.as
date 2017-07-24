@@ -533,11 +533,45 @@ public class Utils
 
     public static function displayMatching(obj1:DisplayObject, obj2:DisplayObject):Number
     {
+        var sx1:Number = obj1.scaleX;
+        var sy1:Number = obj1.scaleY;
+        var sx2:Number = obj2.scaleX;
+        var sy2:Number = obj2.scaleY;
+
+        obj1.scaleX = obj1.scaleY = 1;
+        obj2.scaleX = obj2.scaleY = 1;
+
+        if(obj1.width != obj2.width || obj1.height != obj2.height)
+        {
+            ret();
+            return 0;
+        }
+
+        ret();
+
+        function ret()
+        {
+            obj1.scaleX = sx1;
+            obj2.scaleX = sx2;
+            obj1.scaleY = sy1;
+            obj2.scaleY = sy2;
+        }
+
+
 
         var bitmapData1:BitmapData = displayToBitmapData(obj1);
         var bitmapData2:BitmapData = displayToBitmapData(obj2);
 
-        var bmpDataDif:BitmapData = bitmapData1.compare(bitmapData2) as BitmapData;
+
+        try
+        {
+            var bmpDataDif:BitmapData = bitmapData1.compare(bitmapData2) as BitmapData;
+        }
+        catch (e)
+        {
+            return 0;
+        }
+
         if(!bmpDataDif)
         {
             var b1:Rectangle = obj1.getBounds(obj1);
@@ -547,10 +581,12 @@ public class Utils
             else
                 return 0
         }
+
         var differentPixelCount:int = 0;
 
         var pixelVector:Vector.<uint> =  bmpDataDif.getVector(bmpDataDif.rect);
         var pixelCount:int = pixelVector.length;
+
 
         for (var i:int = 0; i < pixelCount; i++)
         {

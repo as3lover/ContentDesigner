@@ -53,7 +53,7 @@ public class FileForSave extends EventDispatcher
     public function Select():void
     {
         if(Main.toExport)
-            _directory = File.documentsDirectory.resolvePath(name + '.' + 'json');
+            _directory = File.documentsDirectory.resolvePath(name + '.' + 'txt');
         else if(_prevFile)
                 _directory = _prevFile.clone();
         else
@@ -100,12 +100,12 @@ public class FileForSave extends EventDispatcher
 
         if(Main.toExport)
         {
-            for each(it in ['json']){
+            for each(it in ['txt']){
                 if( fileExtension == it)
                     return fileDef;
 
             }
-            return fileDef.split(".")[0] + "." + 'json';
+            return fileDef.split(".")[0] + "." + 'txt';
         }
 
 

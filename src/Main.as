@@ -199,7 +199,7 @@ public class Main extends Sprite
                 }
                 else
                 {
-                    trace(e.target, e.target.parent, e.target.parent.parent);
+                    //trace(e.target, e.target.parent, e.target.parent.parent);
                     HightLigher.add(null);
                     stage.removeEventListener(MouseEvent.MOUSE_DOWN, onDown, true);
                     timeLine.setTimeByTopic(Utils.time+.1);

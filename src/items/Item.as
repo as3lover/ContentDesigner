@@ -6,6 +6,7 @@ package items
 import com.greensock.TweenLite;
 
 import flash.display.Bitmap;
+import flash.display.BitmapData;
 
 import flash.display.Loader;
 import flash.display.LoaderInfo;
@@ -148,7 +149,7 @@ public class Item extends Sprite
 
     private function setHistoryValue(i:String, value:Object):void
     {
-        trace(i, this[i]);
+        //trace(i, this[i]);
         value.from[i] = this[String('_' + i)];
         value.to[i] = this[i];
     }
@@ -425,9 +426,9 @@ public class Item extends Sprite
 
         if(_fileName && FileManager.itemsFolder)
         {
-            trace('path', _path)
+            //trace('path', _path)
             _path = FileManager.itemsFolder + '/' + _fileName;
-            trace('new path:',_path)
+            //trace('new path:',_path)
         }
 
         loader.load(new URLRequest(_path));
@@ -648,6 +649,44 @@ public class Item extends Sprite
         bitmap.scaleX = bitmap.scaleY = 1;
 
         var scale:Number;
+        if(_type == 'image')
+        {
+            if(bitmap.width > 1000)
+            {
+                scale = bitmap.width/1000;
+                bitmap.width /= scale;
+                bitmap.height /= scale;
+
+                sett();
+            }
+
+            if(bitmap.height > 1000)
+            {
+                scale = bitmap.height/1000;
+                bitmap.height /= scale;
+                bitmap.width /= scale;
+
+                sett();
+            }
+        }
+
+        function sett():void
+        {
+            var copy:Sprite = new Sprite();
+            copy.addChild(bitmap);
+            bitmap.x = bitmap.y = 0;
+            var data:BitmapData = new BitmapData(copy.width, copy.height, true, 0xffffff);
+            data.draw(copy);
+            bitmap = new Bitmap(data);
+            bitmap.x = - bitmap.width/2;
+            bitmap.y = - bitmap.height/2;
+
+            _scaleX *= scale;
+            _scaleY *= scale;
+        }
+
+
+
 
         if(_type == 'image')
         {
@@ -666,31 +705,6 @@ public class Item extends Sprite
             _scaleY *= 1.15;
         }
 
-
-
-        if(bitmap.width > 1000)
-        {
-            scale = bitmap.width/1000;
-            bitmap.width /= scale;
-            bitmap.height /= scale;
-
-            sett();
-        }
-
-        if(bitmap.height > 1000)
-        {
-            scale = bitmap.height/1000;
-            bitmap.height /= scale;
-            bitmap.width /= scale;
-
-            sett();
-        }
-
-        function sett():void
-        {
-            _scaleX *= scale;
-            _scaleY *= scale;
-        }
     }
 
     public function resetBitmap(bit:Bitmap):void

@@ -82,7 +82,7 @@ public class DragManager extends Sprite
         //
         //stage.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
         Main.MAIN.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragEnterHandler);
-        trace(100);
+        //trace(100);
         _nativeMouse = new NativeMouse();
 
         addEventListener(Event.ADDED_TO_STAGE, init);
@@ -251,9 +251,9 @@ public class DragManager extends Sprite
         holder.y = _moveBitmap.y + _moveBitmap.height/2;
         _target.addChild(holder);
 
+        holder.bitmap = _moveBitmap;
         _moveBitmap.x = -_moveBitmap.width/2;
         _moveBitmap.y = -_moveBitmap.height/2;
-        holder.bitmap = _moveBitmap;
 
         onAddObject(holder);
 
@@ -397,7 +397,7 @@ public class DragManager extends Sprite
 
         function move():void
         {
-            trace('_pathHolder.currentPath, _pathHolder.newPath',_pathHolder.currentPath, _pathHolder.newPath)
+            //trace('_pathHolder.currentPath, _pathHolder.newPath',_pathHolder.currentPath, _pathHolder.newPath)
             saveItem.move(_pathHolder.currentPath, _pathHolder.newPath, after);
             function after():void
             {

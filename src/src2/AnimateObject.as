@@ -39,7 +39,6 @@ public class AnimateObject extends EventDispatcher
 
         //this.startTime = startTime;
         _startTime = startTime;
-        trace('_startTime',_startTime)
     }
 
     private function changeStartTime(event:Event):void
@@ -343,7 +342,7 @@ public class AnimateObject extends EventDispatcher
     public function set id(value:int):void
     {
         _id = value;
-        trace('set id', _id, _number, Main.count++);
+        //trace('set id', _id, _number, Main.count++);
         settedID = true;
     }
 

@@ -230,7 +230,7 @@ import flash.utils.setTimeout;
             }
 
             mInsertList = remain;
-            setTimeout(packRectangles,1000,func, sort);
+            setTimeout(packRectangles,1,func, sort);
         }
 
         /**
